@@ -24,4 +24,4 @@ View
 
 ###### Design Patterns
 
-
+![alt text](https://github.com/SofiaCardosoMartins/DownFall/blob/master/intermediate_delivery/architecture/design_patterns/design_patterns.png)
