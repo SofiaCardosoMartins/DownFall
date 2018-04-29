@@ -1,4 +1,4 @@
-# DownFall
+# ![#1589F0](https://placehold.it/15/1589F0/000000?text=+) `DownFall`
 A game based on Java and LibGDX for the LPOO course
 
 ## Architecture Design
