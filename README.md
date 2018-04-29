@@ -10,14 +10,14 @@ A game based on Java and LibGDX for the LPOO course
 
 ###### Class Diagrams
 
-**Controller**
+Controller
 
 ![alt text](https://github.com/SofiaCardosoMartins/DownFall/blob/master/intermediate_delivery/architecture/class_diagram/images/controller.png)
 
-**Model**
+Model
 
 ![alt text](https://github.com/SofiaCardosoMartins/DownFall/blob/master/intermediate_delivery/architecture/class_diagram/images/model.png)
 
-**View**
+View
 
 ![alt text](https://github.com/SofiaCardosoMartins/DownFall/blob/master/intermediate_delivery/architecture/class_diagram/images/view.png)
