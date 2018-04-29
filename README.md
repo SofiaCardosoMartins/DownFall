@@ -29,6 +29,10 @@ View
 ## GUI Design
 
 ###### Main Functionalities
+- Selecionar modo 'Single Player' ou 'Multiplayer'
+- Visualizar instruções do jogo (como superar o jogo e comandos a usar)
+- Visualizar o jogo (que acompanha o movimento de um ou de dois jogadores), bem como indicadores do seu estado (terminado com ou sem sucesso, nível do jogo, entre outros)
+
 
 ###### GUI mock-ups
 
