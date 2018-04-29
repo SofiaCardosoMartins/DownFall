@@ -65,5 +65,3 @@ View
   - Verificar a mudança de aspeto do jogo com a mudança de nível, bem como algum tipo de notificação indicativa
   - Verificar se são dadas notificações aquando da mudança de nível
   
-
-
