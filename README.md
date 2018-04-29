@@ -21,3 +21,7 @@ Model
 View
 
 ![alt text](https://github.com/SofiaCardosoMartins/DownFall/blob/master/intermediate_delivery/architecture/class_diagram/images/view.png)
+
+###### Design Patterns
+
+
