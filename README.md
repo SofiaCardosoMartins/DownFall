@@ -68,3 +68,4 @@ View
   - Verificar a atualização do valor no termómetro (contagem até ao fim) a cada subida/descida do player
   - Verificar a mudança de aspeto do jogo com a mudança de nível, bem como algum tipo de notificação indicativa
   - Verificar se são dadas notificações aquando da mudança de nível
+  
