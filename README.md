@@ -7,6 +7,7 @@ A game based on Java and LibGDX for the LPOO course
 ###### Package Diagram
 
 ![alt text](https://github.com/SofiaCardosoMartins/DownFall/blob/master/intermediate_delivery/architecture/package_diagram/package_diagram.png)
+![alt text](https://github.com/SofiaCardosoMartins/DownFall/blob/master/intermediate_delivery/architecture/package_diagram/packages_relations.png)
 
 ###### Class Diagrams
 
@@ -25,6 +26,10 @@ View
 ###### Design Patterns
 
 ![alt text](https://github.com/SofiaCardosoMartins/DownFall/blob/master/intermediate_delivery/architecture/design_patterns/design_patterns.png)
+
+###### Dynamic UML diagram 
+
+![alt text](https://github.com/SofiaCardosoMartins/DownFall/blob/master/intermediate_delivery/architecture/dynamic_diagrams/PlayerStateDiagram.jpg)
 
 ## GUI Design
 
