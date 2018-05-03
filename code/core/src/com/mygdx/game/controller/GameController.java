@@ -17,7 +17,7 @@ public class GameController implements ContactListener{
     public static final Vector2 GRAVITY = new Vector2(0,-9.8f);
     private final World world;
 
-    GameController()
+    private GameController()
     {
         world = new World(GRAVITY,true);
         world.setContactListener(this);
