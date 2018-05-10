@@ -5,6 +5,8 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.mygdx.game.DownFall;
 import com.mygdx.game.model.entities.EntityModel;
 
+import static com.mygdx.game.view.entities.AppView.PIXEL_TO_METER;
+
 public abstract class EntityView {
 
     Sprite sprite;

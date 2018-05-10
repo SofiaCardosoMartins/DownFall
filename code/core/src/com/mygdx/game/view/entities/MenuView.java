@@ -19,7 +19,7 @@ public class MenuView extends AppView {
     }
 
     @Override
-    protected void render(float delta) {
+    public void render(float delta) {
 
     }
 
@@ -30,6 +30,11 @@ public class MenuView extends AppView {
 
     @Override
     protected void drawEntities() {
+
+    }
+
+    @Override
+    protected void drawBackground(){
 
     }
 }
