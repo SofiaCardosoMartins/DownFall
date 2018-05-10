@@ -5,7 +5,7 @@ public class PlatformModel extends EntityModel {
     private float vx;
     private float vy;
 
-    PlatformModel(float x, float y)
+    public PlatformModel(float x, float y)
     {
         super(x,y);
         this.vx = 0;
@@ -16,4 +16,6 @@ public class PlatformModel extends EntityModel {
     public ModelType getType() {
         return ModelType.PLATFORM;
     }
+
+
 }

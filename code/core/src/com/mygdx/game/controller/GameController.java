@@ -7,6 +7,8 @@ import com.badlogic.gdx.physics.box2d.ContactImpulse;
 import com.badlogic.gdx.physics.box2d.ContactListener;
 import com.badlogic.gdx.physics.box2d.Manifold;
 import com.badlogic.gdx.physics.box2d.World;
+import com.mygdx.game.controller.entities.PlayerController;
+import com.mygdx.game.model.GameModel;
 
 public class GameController implements ContactListener{
 
@@ -16,10 +18,14 @@ public class GameController implements ContactListener{
     public static final int WORLD_HEIGHT = 720;
     public static final Vector2 GRAVITY = new Vector2(0,-9.8f);
     private final World world;
+    private final PlayerController playerController;
 
     private GameController()
     {
         world = new World(GRAVITY,true);
+
+        playerController = new PlayerController(world, GameModel.getInstance().getPlayers().get(0));
+
         world.setContactListener(this);
     }
 

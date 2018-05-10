@@ -14,5 +14,13 @@ public class PlayerController extends EntityController {
         float restitution = 0.5f;
         int width = 75;
         int height = 75;
+
+        createFixture(body, new float[]{
+                12,28, 15,28, 19,32, 19,42, 13,43
+        }, width, height, density, friction, restitution, PLAYER_BITS, (short) (PLATFORM_BITS));
+
+
     }
+
+
 }

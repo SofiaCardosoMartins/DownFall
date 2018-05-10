@@ -11,6 +11,11 @@ import com.badlogic.gdx.physics.box2d.World;
 import com.mygdx.game.DownFall;
 import com.badlogic.gdx.Gdx;
 import com.mygdx.game.model.GameModel;
+import com.mygdx.game.model.entities.ObstacleModel;
+import com.mygdx.game.model.entities.PlatformModel;
+import com.mygdx.game.model.entities.PlayerModel;
+
+import java.util.List;
 
 import static com.mygdx.game.controller.GameController.WORLD_WIDTH;
 import static com.mygdx.game.controller.GameController.WORLD_HEIGHT;
@@ -41,7 +46,8 @@ public class GameView extends AppView {
     @Override
     protected void loadAssets() {
         this.game.getAssetManager().load("landscape.png", Texture.class);
-
+        this.game.getAssetManager().load("platform.png", Texture.class);
+        this.game.getAssetManager().load("player.png", Texture.class);
 
         //end
         this.game.getAssetManager().finishLoading();
@@ -55,8 +61,8 @@ public class GameView extends AppView {
         Gdx.gl.glClear( GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT );
 
         game.getBatch().begin();
-        drawBackground();
-        //drawEntities();
+        //drawBackground();
+        drawEntities();
         game.getBatch().end();
     }
 
@@ -67,6 +73,31 @@ public class GameView extends AppView {
 
     @Override
     protected void drawEntities() {
+        //Platforms
+        List<PlatformModel> platforms = GameModel.getInstance().getPlatformsInUse();
+        for (PlatformModel platform : platforms) {
+            EntityView view = ViewFactory.makeView(game, platform);
+            view.update(platform);
+            view.draw(game.getBatch());
+        }
+
+        //Obstacles
+
+        List<ObstacleModel> obstacles = GameModel.getInstance().getObstaclesInUse();
+        for (ObstacleModel obstacle: obstacles) {
+            EntityView view = ViewFactory.makeView(game, obstacle);
+            view.update(obstacle);
+            view.draw(game.getBatch());
+        }
+
+        //Players
+
+        List<PlayerModel> players = GameModel.getInstance().getPlayers();
+        for (PlayerModel player : players) {
+            EntityView view = ViewFactory.makeView(game, player);
+            view.update(player);
+            view.draw(game.getBatch());
+        }
 
     }
     @Override
