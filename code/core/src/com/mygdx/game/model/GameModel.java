@@ -35,7 +35,7 @@ public class GameModel {
         //missing initialization of pools
 
         int height = 0, distance = 0;
-
+/*
         for(int i = 0; i< PLATFORM_COUNT; i++){
             do {
                 height += random.nextInt(3) + 5;
@@ -47,9 +47,9 @@ public class GameModel {
             platformsInUse.add(new PlatformModel( distance, height));
             if (i==0)
                 players.add(new PlayerModel(distance, height + 3));
-        }
-
-
+        }*/
+platformsInUse.add(new PlatformModel(0,0));
+//players.add(new PlayerModel(10,20));
 
     }
 
@@ -67,6 +67,11 @@ public class GameModel {
             obstaclesInUse.remove(model);
             freeObstacles.free((ObstacleModel) model);
         }
+    }
+
+    public void update(float delta)
+    {
+
     }
 
     public List<PlayerModel> getPlayers() {

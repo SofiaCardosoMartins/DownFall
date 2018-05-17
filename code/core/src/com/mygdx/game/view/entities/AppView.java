@@ -3,7 +3,6 @@ package com.mygdx.game.view.entities;
 import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.mygdx.game.DownFall;
-import javafx.stage.Screen;
 
 public abstract class AppView extends ScreenAdapter {
 

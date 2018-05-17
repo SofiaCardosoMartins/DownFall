@@ -15,7 +15,7 @@ public class PlayerView extends EntityView {
     public Sprite createSprite(DownFall game) {
         Texture texture = game.getAssetManager().get("player.png");
         Sprite sprite = new Sprite(texture, texture.getWidth(), texture.getHeight());
-        sprite.setSize(100, 100);
+        //sprite.setSize(50, 50);
         return sprite;
     }
 }
