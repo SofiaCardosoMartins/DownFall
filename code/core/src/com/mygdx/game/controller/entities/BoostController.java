@@ -8,7 +8,7 @@ public class BoostController extends EntityController {
 
     BoostController(World world, BoostModel boostModel)
     {
-        super(world,boostModel,BodyDef.BodyType.DynamicBody);
+        super(world,boostModel,BodyDef.BodyType.DynamicBody,true);
         float density = 0.5f;
         float friction = 0.4f;
         float restitution = 0.5f;

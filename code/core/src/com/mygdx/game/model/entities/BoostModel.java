@@ -2,9 +2,9 @@ package com.mygdx.game.model.entities;
 
 public class BoostModel extends EntityModel implements BoostStrategy {
 
-    BoostModel(float x, float y)
+    BoostModel(float x, float y, float rotation)
     {
-        super(x,y);
+        super(x,y,rotation);
     }
 
     @Override

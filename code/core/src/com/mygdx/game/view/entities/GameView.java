@@ -56,6 +56,7 @@ public class GameView extends AppView {
         this.game.getAssetManager().load("platform.png", Texture.class);
         this.game.getAssetManager().load("player.png", Texture.class);
         this.game.getAssetManager().load("background.png",Texture.class);
+        this.game.getAssetManager().load("obstacle.png",Texture.class);
 
         //end
         this.game.getAssetManager().finishLoading();
@@ -94,7 +95,19 @@ public class GameView extends AppView {
 
         if(Gdx.input.isKeyPressed(Input.Keys.LEFT))
         {
-            GameController.getInstance().moveLeft();
+            GameController.getInstance().moveLeft(1);
+        }
+        else if(Gdx.input.isKeyPressed(Input.Keys.RIGHT))
+        {
+            GameController.getInstance().moveRight(1);
+        }
+        else if(Gdx.input.isKeyPressed(Input.Keys.A))
+        {
+            GameController.getInstance().moveLeft(2);
+        }
+        else if(Gdx.input.isKeyPressed(Input.Keys.D))
+        {
+            GameController.getInstance().moveRight(2);
         }
 
     }

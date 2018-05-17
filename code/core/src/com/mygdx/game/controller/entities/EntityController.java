@@ -15,11 +15,12 @@ public abstract class EntityController {
     public static final short OBSTACLE_BITS = 4;    //k
     public static final short BOOST_BITS = 8;  //s
 
-    EntityController(World world, EntityModel model, BodyDef.BodyType bodyType)
+    EntityController(World world, EntityModel model, BodyDef.BodyType bodyType, boolean rotate)
     {
         BodyDef bodyDef= new BodyDef();
         bodyDef.type = bodyType;
-        bodyDef.position.set(model.getX(),model.getY() - 2);
+        bodyDef.position.set(model.getX(),model.getY());
+        bodyDef.fixedRotation = !rotate;
 
         body = world.createBody(bodyDef);
         body.setUserData(model);
@@ -28,12 +29,12 @@ public abstract class EntityController {
     final void createFixture(Body body, float[] vertexes, int width, int height, float density, float friction, float restitution, short category, short mask)
     {
         // Transform pixels into meters, center and invert the y-coordinate
-        for (int i = 0; i < vertexes.length; i++) {
-           /* if (i % 2 == 0) vertexes[i] -= width / 2;   // center the vertex x-coordinate
+      for (int i = 0; i < vertexes.length; i++) {
+         if (i % 2 == 0) vertexes[i] -= width / 2;   // center the vertex x-coordinate
             if (i % 2 != 0) vertexes[i] -= height / 2;  // center the vertex y-coordinate
 
             if (i % 2 != 0) vertexes[i] *= -1;          // invert the y-coordinate
-*/
+
             vertexes[i] *= PIXEL_TO_METER;              // scale from pixel to meter
         }
 
@@ -51,6 +52,7 @@ public abstract class EntityController {
 
         body.createFixture(fixtureDef);
 
+
         polygon.dispose();
     }
 
@@ -62,6 +64,11 @@ public abstract class EntityController {
     public float getY()
     {
         return body.getPosition().y;
+    }
+
+    public Body getBody()
+    {
+        return body;
     }
 
     public void setTransform(float x, float y, float angle) {

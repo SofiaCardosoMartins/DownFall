@@ -4,10 +4,10 @@ public class NaturalBoost extends BoostModel {
 
     public NaturalBoost()
     {
-        super(0,0);
+        super(0,0,0);
     }
 
-    public NaturalBoost(float x, float y) {
-        super(x, y);
+    public NaturalBoost(float x, float y, float rotation) {
+        super(x, y,rotation);
     }
 }

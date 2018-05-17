@@ -23,7 +23,7 @@ public class GameController implements ContactListener{
 
     private static GameController instance;
     public static final String TITLE = "DownFall";
-    public static final int WORLD_WIDTH = 1080;
+    public static final int WORLD_WIDTH = 500;
     public static final int WORLD_HEIGHT = 720;
     public static final Vector2 GRAVITY = new Vector2(0,-9.8f);
     private final World world;
@@ -73,6 +73,7 @@ public class GameController implements ContactListener{
         for(Body body: bodies)
         {
             ((EntityModel)body.getUserData()).setPosition(body.getPosition().x,body.getPosition().y);
+            ((EntityModel) body.getUserData()).setRotation(body.getAngle());
         }
     }
 
@@ -96,13 +97,19 @@ public class GameController implements ContactListener{
 
     }
 
-    public void moveLeft()
+    public void moveLeft(int playerNum)
     {
-        PlayerController player = playerControllers.get(0);
-        float playerX = player.getX() - 0.1f;
-        float playerY = player.getY();
-        player.setTransform(playerX,playerY,0);
+        PlayerController player = playerControllers.get(playerNum-1);
+        player.getBody().applyForceToCenter(-100,0,true);
     }
+
+    public void moveRight(int playerNum)
+    {
+        PlayerController player = playerControllers.get(playerNum-1);
+        player.getBody().applyForceToCenter(100,0,true);
+    }
+
+
 
     public World getWorld() {
         return world;

@@ -4,9 +4,9 @@ public class ObstacleModel extends EntityModel {
 
     private float vx;
 
-    ObstacleModel(float x, float y)
+    public ObstacleModel(float x, float y, float rotation)
     {
-        super(x,y);
+        super(x,y,rotation);
         this.vx = 0;
     }
 

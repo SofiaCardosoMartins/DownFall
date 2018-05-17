@@ -35,7 +35,7 @@ public class GameModel {
         //missing initialization of pools
 
         int height = 0, distance = 0;
-/*
+
         for(int i = 0; i< PLATFORM_COUNT; i++){
             do {
                 height += random.nextInt(3) + 5;
@@ -44,12 +44,13 @@ public class GameModel {
                     distance += random.nextInt(10) + 10;
                 else distance -= random.nextInt(10) + 10;
             } while (height > WORLD_HEIGHT || height < 0 || distance > WORLD_WIDTH || distance <0);
-            platformsInUse.add(new PlatformModel( distance, height));
+            platformsInUse.add(new PlatformModel(distance, height,0));
             if (i==0)
-                players.add(new PlayerModel(distance, height + 3));
-        }*/
-platformsInUse.add(new PlatformModel(0,0));
+                players.add(new PlayerModel(distance, height + 3,0));
+        }
+//platformsInUse.add(new PlatformModel(10,10));
 //players.add(new PlayerModel(10,20));
+//obstaclesInUse.add(new ObstacleModel(10,10));
 
     }
 

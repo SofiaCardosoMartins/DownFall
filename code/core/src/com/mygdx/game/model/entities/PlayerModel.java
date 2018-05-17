@@ -5,9 +5,9 @@ public class PlayerModel extends EntityModel {
     private BoostStrategy boostStrategy;
     private Context context;
 
-    public PlayerModel(float x, float y)
+    public PlayerModel(float x, float y, float rotation)
     {
-        super(x,y);
+        super(x,y,rotation);
         boostStrategy = new NaturalBoost();
         context = new Context();
     }

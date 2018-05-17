@@ -5,11 +5,13 @@ public abstract class EntityModel {
     public enum ModelType {PLAYER, OBSTACLE, BOOST, PLATFORM};
     private float x;
     private float y;
+    private float rotation;
     private boolean flaggedForRemoval;
 
-    EntityModel(float x, float y) {
+    EntityModel(float x, float y, float rotation) {
         this.x = x;
         this.y = y;
+        this.rotation = rotation;
         this.flaggedForRemoval = false;
     }
 
@@ -44,9 +46,17 @@ public abstract class EntityModel {
         setY(y);
     }
 
+    public void setRotation(float rotation) {
+        this.rotation = rotation;
+    }
+
     public void setFlaggedForRemoval(boolean flaggedForRemoval)
     {
         this.flaggedForRemoval = flaggedForRemoval;
+    }
+
+    public float getRotation() {
+        return rotation;
     }
 
     public abstract ModelType getType();
