@@ -101,6 +101,10 @@ public class GameView extends AppView {
         {
             GameController.getInstance().moveRight(1);
         }
+        else if (Gdx.input.isKeyPressed(Input.Keys.UP))
+        {
+            GameController.getInstance().jump(1);
+        }
         else if(Gdx.input.isKeyPressed(Input.Keys.A))
         {
             GameController.getInstance().moveLeft(2);
@@ -108,6 +112,9 @@ public class GameView extends AppView {
         else if(Gdx.input.isKeyPressed(Input.Keys.D))
         {
             GameController.getInstance().moveRight(2);
+        }
+        else if (Gdx.input.isKeyPressed(Input.Keys.W)){
+            GameController.getInstance().jump(2);
         }
 
     }

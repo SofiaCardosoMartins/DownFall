@@ -9,15 +9,21 @@ import com.badlogic.gdx.physics.box2d.ContactListener;
 import com.badlogic.gdx.physics.box2d.Manifold;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
+import com.mygdx.game.DownFall;
 import com.mygdx.game.controller.entities.PlatformController;
 import com.mygdx.game.controller.entities.PlayerController;
 import com.mygdx.game.model.GameModel;
 import com.mygdx.game.model.entities.EntityModel;
 import com.mygdx.game.model.entities.PlatformModel;
 import com.mygdx.game.model.entities.PlayerModel;
+import com.mygdx.game.view.entities.AppView;
+import com.mygdx.game.view.entities.EntityView;
+import com.mygdx.game.view.entities.ViewFactory;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import static com.mygdx.game.view.entities.AppView.PIXEL_TO_METER;
 
 public class GameController implements ContactListener{
 
@@ -72,6 +78,7 @@ public class GameController implements ContactListener{
 
         for(Body body: bodies)
         {
+            verifyBounds(body);
             ((EntityModel)body.getUserData()).setPosition(body.getPosition().x,body.getPosition().y);
             ((EntityModel) body.getUserData()).setRotation(body.getAngle());
         }
@@ -109,7 +116,36 @@ public class GameController implements ContactListener{
         player.getBody().applyForceToCenter(100,0,true);
     }
 
+    public void jump(int playerNum){
+        PlayerController player = playerControllers.get(playerNum-1);
+        player.getBody().applyForceToCenter(0,500,true);
+    }
 
+    private void verifyBounds(Body body) {
+
+        /* TO BE IMPROVED */
+
+        EntityView ev = ViewFactory.makeView(AppView.game,(EntityModel) body.getUserData());
+        float height = ev.getSprite().getHeight() * PIXEL_TO_METER;
+        float width = ev.getSprite().getWidth() * PIXEL_TO_METER;
+        //System.out.println(ev.getClass());
+        System.out.println(height);
+        System.out.println(width);
+
+        if (body.getPosition().x < (width/2))
+            body.setTransform((width/2), body.getPosition().y, body.getAngle());
+
+        // if (body.getPosition().y < 0) -> FALLING
+            //body.setTransform(body.getPosition().x, 0, body.getAngle());
+
+        if (body.getPosition().x > (WORLD_WIDTH - (width/2)))
+            body.setTransform(WORLD_WIDTH - (width/2), body.getPosition().y, body.getAngle());
+
+        if (body.getPosition().y > (WORLD_HEIGHT - (height/2))) {
+            System.out.println("max y");
+            body.setTransform(body.getPosition().x, WORLD_HEIGHT - (height / 2), body.getAngle());
+        }
+    }
 
     public World getWorld() {
         return world;

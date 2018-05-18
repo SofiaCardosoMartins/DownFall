@@ -28,4 +28,8 @@ public abstract class EntityView {
         sprite.setCenter(model.getX()/PIXEL_TO_METER,model.getY()/PIXEL_TO_METER);  //pixel to meter: na appview
         sprite.setRotation((float) Math.toDegrees(model.getRotation()));
     }
+
+    public Sprite getSprite(){
+        return sprite;
+    }
 }

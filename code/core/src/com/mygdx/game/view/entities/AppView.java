@@ -4,11 +4,13 @@ import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.mygdx.game.DownFall;
 
+import static com.mygdx.game.controller.GameController.WORLD_WIDTH;
+
 public abstract class AppView extends ScreenAdapter {
 
     public final static float PIXEL_TO_METER = 0.04f;   //debatable
-    public static final float VIEWPORT_WIDTH = 30;
-    DownFall game;
+    public static final float VIEWPORT_WIDTH = 50;
+    public static DownFall game;
     OrthographicCamera camera;
 
     AppView(DownFall game)
