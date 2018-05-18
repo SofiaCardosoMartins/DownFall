@@ -13,6 +13,7 @@ import java.util.List;
 import static com.badlogic.gdx.math.MathUtils.random;
 import static com.mygdx.game.controller.GameController.WORLD_HEIGHT;
 import static com.mygdx.game.controller.GameController.WORLD_WIDTH;
+import static com.mygdx.game.view.entities.AppView.PIXEL_TO_METER;
 
 public class GameModel {
     private static final int PLATFORM_COUNT = 4;    //debatable
@@ -43,8 +44,8 @@ public class GameModel {
                 if (plus)
                     distance += random.nextInt(10) + 10;
                 else distance -= random.nextInt(10) + 10;
-            } while (height > WORLD_HEIGHT || height < 0 || distance > WORLD_WIDTH || distance <0);
-            platformsInUse.add(new PlatformModel(distance, height,0));
+            } while (height > (WORLD_HEIGHT/PIXEL_TO_METER) || height < 0 || distance > (WORLD_WIDTH/PIXEL_TO_METER) || distance <0);
+            //platformsInUse.add(new PlatformModel(distance, height,0));
             if (i==0)
                 players.add(new PlayerModel(distance, height + 3,0));
         }

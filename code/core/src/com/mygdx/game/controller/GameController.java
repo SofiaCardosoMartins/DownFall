@@ -29,8 +29,8 @@ public class GameController implements ContactListener{
 
     private static GameController instance;
     public static final String TITLE = "DownFall";
-    public static final int WORLD_WIDTH = 500;
-    public static final int WORLD_HEIGHT = 720;
+    public static final int WORLD_WIDTH = 10;
+    public static final int WORLD_HEIGHT = 14;
     public static final Vector2 GRAVITY = new Vector2(0,-9.8f);
     private final World world;
     private List<PlayerController> playerControllers;
@@ -107,18 +107,18 @@ public class GameController implements ContactListener{
     public void moveLeft(int playerNum)
     {
         PlayerController player = playerControllers.get(playerNum-1);
-        player.getBody().applyForceToCenter(-100,0,true);
+        player.getBody().applyForceToCenter(-50,0,true);
     }
 
     public void moveRight(int playerNum)
     {
         PlayerController player = playerControllers.get(playerNum-1);
-        player.getBody().applyForceToCenter(100,0,true);
+        player.getBody().applyForceToCenter(50,0,true);
     }
 
     public void jump(int playerNum){
         PlayerController player = playerControllers.get(playerNum-1);
-        player.getBody().applyForceToCenter(0,500,true);
+        player.getBody().applyForceToCenter(0,200,true);
     }
 
     private void verifyBounds(Body body) {

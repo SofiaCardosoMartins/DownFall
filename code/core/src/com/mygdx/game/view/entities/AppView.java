@@ -8,8 +8,8 @@ import static com.mygdx.game.controller.GameController.WORLD_WIDTH;
 
 public abstract class AppView extends ScreenAdapter {
 
-    public final static float PIXEL_TO_METER = 0.04f;   //debatable
-    public static final float VIEWPORT_WIDTH = 50;
+    public final static float PIXEL_TO_METER = 0.015f;   //debatable
+    public static final float VIEWPORT_WIDTH = WORLD_WIDTH ;
     public static DownFall game;
     OrthographicCamera camera;
 

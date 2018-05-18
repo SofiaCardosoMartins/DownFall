@@ -39,6 +39,8 @@ public class GameView extends AppView {
     protected void createCamera() {
         OrthographicCamera camera = new OrthographicCamera(VIEWPORT_WIDTH / PIXEL_TO_METER, VIEWPORT_WIDTH / PIXEL_TO_METER * ((float) Gdx.graphics.getHeight() / (float)Gdx.graphics.getWidth()));
         camera.position.set(camera.viewportWidth / 2f, camera.viewportHeight / 2f, 0);
+        camera.setToOrtho(false, camera.viewportWidth, camera.viewportHeight);
+
         camera.update();
 
         if(DEBUG_PHYSICS)
@@ -149,12 +151,9 @@ public class GameView extends AppView {
 
     }
     @Override
-    protected void drawBackground(){
+    protected void drawBackground() { System.out.println("draw background");
         Texture background = game.getAssetManager().get("background.png", Texture.class);
-        background.setWrap(Texture.TextureWrap.Repeat,Texture.TextureWrap.Repeat);
-        backSprite = new Sprite(background);
-        game.getBatch().draw(background, 0, 0, 0, 0, (int)(WORLD_WIDTH / PIXEL_TO_METER), (int) (WORLD_HEIGHT / PIXEL_TO_METER));
-        backSprite.setSize(WORLD_WIDTH, WORLD_HEIGHT );
-        game.getBatch().draw(backSprite, 0, 0);
+        background.setWrap(Texture.TextureWrap.Repeat, Texture.TextureWrap.Repeat);
+        game.getBatch().draw(background, 0, 0, 0, 0, (int) (WORLD_WIDTH / PIXEL_TO_METER), (int) (WORLD_HEIGHT / PIXEL_TO_METER));
     }
 }
