@@ -10,6 +10,7 @@ import com.badlogic.gdx.physics.box2d.Manifold;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
 import com.mygdx.game.DownFall;
+import com.mygdx.game.controller.entities.EntityController;
 import com.mygdx.game.controller.entities.PlatformController;
 import com.mygdx.game.controller.entities.PlayerController;
 import com.mygdx.game.model.GameModel;
@@ -31,7 +32,7 @@ public class GameController implements ContactListener{
     public static final String TITLE = "DownFall";
     public static final int WORLD_WIDTH = 10;
     public static final int WORLD_HEIGHT = 14;
-    public static final Vector2 GRAVITY = new Vector2(0,-9.8f);
+    public static final Vector2 GRAVITY = new Vector2(0,-0.02f);
     private final World world;
     private List<PlayerController> playerControllers;
     private List<PlatformController> platformControllers;
@@ -56,6 +57,12 @@ public class GameController implements ContactListener{
         world.setContactListener(this);
     }
 
+    public List<EntityController> getAllControllers(){
+        List<EntityController> controllers = new ArrayList<EntityController>();
+        controllers.addAll(platformControllers);
+        controllers.addAll(playerControllers);
+        return controllers;
+    }
     public static GameController getInstance()
     {
         if(instance == null)
@@ -73,12 +80,25 @@ public class GameController implements ContactListener{
             world.step(1/60f, 6, 2);
             accumulator -= 1/60f;
         }
+
         Array<Body> bodies = new Array<Body>();
         world.getBodies(bodies);
 
-        for(Body body: bodies)
-        {
+        /*
+        for (PlayerController player : playerControllers){
+            Body body =  player.getBody();
             verifyBounds(body);
+            ((EntityModel)body.getUserData()).setPosition(body.getPosition().x,body.getPosition().y);
+            ((EntityModel) body.getUserData()).setRotation(body.getAngle());
+        }
+
+        */
+
+        List<EntityController> controllers = getAllControllers();
+        for(EntityController controller: controllers)
+        {
+            Body body = controller.getBody();
+            verifyBounds(controller);
             ((EntityModel)body.getUserData()).setPosition(body.getPosition().x,body.getPosition().y);
             ((EntityModel) body.getUserData()).setRotation(body.getAngle());
         }
@@ -121,25 +141,28 @@ public class GameController implements ContactListener{
         player.getBody().applyForceToCenter(0,200,true);
     }
 
-    private void verifyBounds(Body body) {
+    private void verifyBounds(EntityController ec) {
 
+        Body body = ec.getBody();
         /* TO BE IMPROVED */
 
         EntityView ev = ViewFactory.makeView(AppView.game,(EntityModel) body.getUserData());
         float height = ev.getSprite().getHeight() * PIXEL_TO_METER;
         float width = ev.getSprite().getWidth() * PIXEL_TO_METER;
-        //System.out.println(ev.getClass());
-        System.out.println(height);
-        System.out.println(width);
 
-        if (body.getPosition().x < (width/2))
-            body.setTransform((width/2), body.getPosition().y, body.getAngle());
+
+        if (body.getPosition().x < (width/2)) {
+            body.setTransform((width / 2), body.getPosition().y, body.getAngle());
+            ec.leftWallCollision();
+        }
 
         // if (body.getPosition().y < 0) -> FALLING
             //body.setTransform(body.getPosition().x, 0, body.getAngle());
 
-        if (body.getPosition().x > (WORLD_WIDTH - (width/2)))
-            body.setTransform(WORLD_WIDTH - (width/2), body.getPosition().y, body.getAngle());
+        if (body.getPosition().x > (WORLD_WIDTH - (width/2))) {
+            body.setTransform(WORLD_WIDTH - (width / 2), body.getPosition().y, body.getAngle());
+            ec.rightWallCollision();
+        }
 
         if (body.getPosition().y > (WORLD_HEIGHT - (height/2))) {
             System.out.println("max y");

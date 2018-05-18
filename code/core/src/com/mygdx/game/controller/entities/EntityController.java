@@ -79,4 +79,7 @@ public abstract class EntityController {
     {
         return body.getUserData();
     }
+
+    public void leftWallCollision(){}
+    public void rightWallCollision(){}
 }

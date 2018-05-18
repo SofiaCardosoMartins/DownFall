@@ -1,5 +1,6 @@
 package com.mygdx.game.controller.entities;
 
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.World;
 import com.mygdx.game.model.entities.PlayerModel;
@@ -19,8 +20,18 @@ public class PlayerController extends EntityController {
                 98.56f,10.24f,30.72f,10.24f,30.72f,116.48f,98.56f,116.48f
         }, width, height, density, friction, restitution, PLAYER_BITS, PLATFORM_BITS);
 
-
     }
 
 
+
+    @Override
+    public void leftWallCollision() {
+        System.out.println("velocity: " + body.getLinearVelocity());
+        body.applyForceToCenter((float) (10* Math.pow((float)body.getLinearVelocity().x, 2)), 0,true);
+    }
+
+    @Override
+    public void rightWallCollision() {
+        body.applyForceToCenter((float) (-10* Math.pow((float)body.getLinearVelocity().x, 2)), 0,true);
+    }
 }
