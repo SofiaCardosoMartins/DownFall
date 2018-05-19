@@ -74,10 +74,10 @@ public class GameView extends AppView {
     @Override
     public void render(float delta) {
         handleInputs(delta);
-        GameController.getInstance().update(delta);
+        GameController.getInstance().update(delta, camera);
 
         //move camera upwards
-        //camera.position.y = camera.position.y + CAMERA_SPEED;
+        camera.position.y += CAMERA_SPEED;
         camera.update();
 
         game.getBatch().setProjectionMatrix(camera.combined);

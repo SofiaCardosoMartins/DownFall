@@ -16,7 +16,7 @@ public abstract class AppView extends ScreenAdapter {
     public final static float PIXEL_TO_METER = 0.015f;   //debatable
     public static final float VIEWPORT_WIDTH = WORLD_WIDTH ;
     public static DownFall game;
-    OrthographicCamera camera;
+    public OrthographicCamera camera;
     protected Viewport viewport;
 
     AppView(DownFall game)
