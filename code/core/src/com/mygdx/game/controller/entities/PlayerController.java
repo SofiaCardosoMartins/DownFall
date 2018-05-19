@@ -27,11 +27,11 @@ public class PlayerController extends EntityController {
     @Override
     public void leftWallCollision() {
         System.out.println("velocity: " + body.getLinearVelocity());
-        body.applyForceToCenter((float) (10* Math.pow((float)body.getLinearVelocity().x, 2)), 0,true);
+        body.applyForceToCenter((float) (100 + 5* Math.pow((float)body.getLinearVelocity().x, 2)), 0,true);
     }
 
     @Override
     public void rightWallCollision() {
-        body.applyForceToCenter((float) (-10* Math.pow((float)body.getLinearVelocity().x, 2)), 0,true);
+        body.applyForceToCenter((float) (-100 - (5* Math.pow((float)body.getLinearVelocity().x, 2))), 0,true);
     }
 }
