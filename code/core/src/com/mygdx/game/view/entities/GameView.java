@@ -1,5 +1,6 @@
 package com.mygdx.game.view.entities;
 
+import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -16,11 +17,14 @@ import com.mygdx.game.DownFall;
 import com.badlogic.gdx.Gdx;
 import com.mygdx.game.controller.GameController;
 import com.mygdx.game.model.GameModel;
+import com.mygdx.game.model.entities.LavaModel;
 import com.mygdx.game.model.entities.ObstacleModel;
 import com.mygdx.game.model.entities.PlatformModel;
 import com.mygdx.game.model.entities.PlayerModel;
 
 import java.util.List;
+
+import javax.swing.text.html.parser.Entity;
 
 import static com.mygdx.game.controller.GameController.WORLD_WIDTH;
 import static com.mygdx.game.controller.GameController.WORLD_HEIGHT;
@@ -65,6 +69,7 @@ public class GameView extends AppView {
         this.game.getAssetManager().load("player.png", Texture.class);
         this.game.getAssetManager().load("background.png",Texture.class);
         this.game.getAssetManager().load("obstacle.png",Texture.class);
+        this.game.getAssetManager().load("fire.png",Texture.class);
 
         //end
         this.game.getAssetManager().finishLoading();
@@ -88,6 +93,7 @@ public class GameView extends AppView {
         game.getBatch().begin();
         drawBackground();
         drawEntities();
+        drawLava(delta);
         game.getBatch().end();
 
         if(DEBUG_PHYSICS)
@@ -129,6 +135,7 @@ public class GameView extends AppView {
 
     @Override
     protected void drawEntities() {
+
         //Platforms
         List<PlatformModel> platforms = GameModel.getInstance().getPlatformsInUse();
         for (PlatformModel platform : platforms) {
@@ -161,5 +168,12 @@ public class GameView extends AppView {
         Texture background = game.getAssetManager().get("background.png", Texture.class);
         background.setWrap(Texture.TextureWrap.Repeat, Texture.TextureWrap.Repeat);
         game.getBatch().draw(background, 0, 0, 0, 0, (int) (WORLD_WIDTH / PIXEL_TO_METER), (int) (WORLD_HEIGHT / PIXEL_TO_METER));
+    }
+
+    private void drawLava(float delta)
+    {
+        EntityView view = ViewFactory.makeView(game, GameModel.getInstance().getLava());
+        ((LavaView)view).update(delta, GameModel.getInstance().getLava());
+        view.draw(game.getBatch());
     }
 }

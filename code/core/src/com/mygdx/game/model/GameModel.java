@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.g3d.ModelBatch;
 import com.badlogic.gdx.utils.FlushablePool;
 import com.badlogic.gdx.utils.Pool;
 import com.mygdx.game.model.entities.EntityModel;
+import com.mygdx.game.model.entities.LavaModel;
 import com.mygdx.game.model.entities.ObstacleModel;
 import com.mygdx.game.model.entities.PlatformModel;
 import com.mygdx.game.model.entities.PlayerModel;
@@ -38,11 +39,14 @@ public class GameModel {
     private Pool<ObstacleModel> freeObstacles;
     private List<ObstacleModel> obstaclesInUse;
 
+    private LavaModel lava;
+
     private float maxPlatformY;
     private float minPlatformY;
     private float platformX;
 
     private GameModel() {
+        this.lava = new LavaModel();
         players = new ArrayList<PlayerModel>();
         platformsInUse = new ArrayList<PlatformModel>();
         obstaclesInUse = new ArrayList<ObstacleModel>();
@@ -63,7 +67,7 @@ public class GameModel {
         this.platformX = WORLD_WIDTH / 2;
         this.initializePlatforms();
 
-        players.add(new PlayerModel(10, 20, 0));
+       // players.add(new PlayerModel(10, 20, 0));
 
     }
 
@@ -103,11 +107,11 @@ public class GameModel {
         for (int i = 0; i < numberFree; i++) {
             PlatformModel pm = freePlatforms.obtain();
             pm.setFlaggedForRemoval(false);
-            platformsInUse.add(pm);
             maxPlatformY += VERTICAL_DISTANCE_PLATFORM;
             pm.setRandomX(platformX, HORIZONTAL_DISTANCE_PLATFORM);
             this.platformX = pm.getX();
             pm.setY(maxPlatformY);
+            platformsInUse.add(pm);
         }
     }
 
@@ -126,4 +130,6 @@ public class GameModel {
     public List<ObstacleModel> getObstaclesInUse() {
         return obstaclesInUse;
     }
+
+    public LavaModel getLava(){return lava;}
 }

@@ -2,13 +2,13 @@ package com.mygdx.game.model.entities;
 
 public abstract class EntityModel {
 
-    public enum ModelType {PLAYER, OBSTACLE, BOOST, PLATFORM};
+    public enum ModelType {PLAYER, OBSTACLE, BOOST, PLATFORM, LAVA};
     protected float x;
     protected float y;
     protected float rotation;
     protected boolean flaggedForRemoval;
 
-    EntityModel()
+    public EntityModel()
     {
         this.x = 0;
         this.y = 0;
@@ -16,7 +16,7 @@ public abstract class EntityModel {
         this.flaggedForRemoval = false;
     }
 
-    EntityModel(float x, float y, float rotation) {
+    public EntityModel(float x, float y, float rotation) {
         this.x = x;
         this.y = y;
         this.rotation = rotation;

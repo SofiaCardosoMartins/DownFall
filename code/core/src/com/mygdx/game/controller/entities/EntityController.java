@@ -9,11 +9,15 @@ import com.mygdx.game.model.entities.EntityModel;
 import static com.mygdx.game.view.entities.AppView.PIXEL_TO_METER;
 
 public abstract class EntityController {
-    Body body;
-    public static final short PLAYER_BITS = 1;  //d
-    public static final short PLATFORM_BITS = 2;    //k
-    public static final short OBSTACLE_BITS = 4;    //k
-    public static final short BOOST_BITS = 8;  //s
+    protected Body body;
+    protected int width;
+    protected int height;
+
+    public static final short PLAYER_BITS = 1;
+    public static final short PLATFORM_BITS = 2;
+    public static final short OBSTACLE_BITS = 4;
+    public static final short LAVA_BITS = 8;
+    public static final short BOOST_BITS = 8;
 
     EntityController(World world, EntityModel model, BodyDef.BodyType bodyType, boolean rotate)
     {
@@ -28,6 +32,9 @@ public abstract class EntityController {
 
     final void createFixture(Body body, float[] vertexes, int width, int height, float density, float friction, float restitution, short category, short mask)
     {
+        this.width = width;
+        this.height = height;
+
         // Transform pixels into meters, center and invert the y-coordinate
       for (int i = 0; i < vertexes.length; i++) {
          if (i % 2 == 0) vertexes[i] -= width / 2;   // center the vertex x-coordinate
@@ -82,4 +89,35 @@ public abstract class EntityController {
 
     public void leftWallCollision(){}
     public void rightWallCollision(){}
+
+    public void setX(float x)
+    {
+        this.body.setTransform(x,body.getPosition().y,body.getAngle());
+    }
+
+    public void setY(float y)
+    {
+        this.body.setTransform(body.getPosition().x,y,body.getAngle());
+    }
+
+    public void setAngle(float angle)
+    {
+        this.body.setTransform(body.getPosition().x,body.getPosition().y,angle);
+    }
+
+    public int getWidth() {
+        return width;
+    }
+
+    public void setWidth(int width) {
+        this.width = width;
+    }
+
+    public int getHeight() {
+        return height;
+    }
+
+    public void setHeight(int height) {
+        this.height = height;
+    }
 }

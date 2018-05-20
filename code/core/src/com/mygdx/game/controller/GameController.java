@@ -4,28 +4,30 @@ import com.badlogic.gdx.Game;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
+import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.Contact;
 import com.badlogic.gdx.physics.box2d.ContactImpulse;
 import com.badlogic.gdx.physics.box2d.ContactListener;
 import com.badlogic.gdx.physics.box2d.Manifold;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
-import com.mygdx.game.DownFall;
 import com.mygdx.game.controller.entities.EntityController;
+import com.mygdx.game.controller.entities.LavaController;
 import com.mygdx.game.controller.entities.PlatformController;
 import com.mygdx.game.controller.entities.PlayerController;
 import com.mygdx.game.model.GameModel;
 import com.mygdx.game.model.entities.EntityModel;
+import com.mygdx.game.model.entities.LavaModel;
 import com.mygdx.game.model.entities.PlatformModel;
 import com.mygdx.game.model.entities.PlayerModel;
 import com.mygdx.game.view.entities.AppView;
 import com.mygdx.game.view.entities.EntityView;
-import com.mygdx.game.view.entities.GameView;
 import com.mygdx.game.view.entities.ViewFactory;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.swing.text.View;
 import javax.swing.text.html.parser.Entity;
 
 import static com.mygdx.game.view.entities.AppView.PIXEL_TO_METER;
@@ -40,6 +42,7 @@ public class GameController implements ContactListener {
     private final World world;
     private List<PlayerController> playerControllers;
     private List<PlatformController> platformControllers;
+    private final LavaController lavaController;
     private float accumulator;
 
     private GameController() {
@@ -57,6 +60,7 @@ public class GameController implements ContactListener {
         for (PlatformModel platform : platforms)
             platformControllers.add(new PlatformController(world, platform));
 
+        this.lavaController = new LavaController(world, GameModel.getInstance().getLava(), BodyDef.BodyType.StaticBody, false);
         world.setContactListener(this);
     }
 
@@ -73,8 +77,7 @@ public class GameController implements ContactListener {
         return instance;
     }
 
-    public void updatePlatforms()
-    {
+    public void updatePlatforms() {
         this.platformControllers.clear();
         List<PlatformModel> platforms = GameModel.getInstance().getPlatformsInUse();
         for (PlatformModel platform : platforms)
@@ -82,7 +85,9 @@ public class GameController implements ContactListener {
     }
 
     public void update(float delta, OrthographicCamera camera) {
-        GameModel.getInstance().update(delta,camera);
+        GameModel.getInstance().update(delta, camera);
+
+        this.updateLava(camera);
 
         float frameTime = Math.min(delta, 0.25f);
         accumulator += frameTime;
@@ -105,9 +110,16 @@ public class GameController implements ContactListener {
         }
     }
 
+    private void updateLava(OrthographicCamera camera)
+    {
+        EntityModel em = (EntityModel)lavaController.getBody().getUserData();
+        em.setY(getMinCameraY(camera)+ (PIXEL_TO_METER * (lavaController.getHeight()/2)));
+        this.lavaController.setY(getMinCameraY(camera) + (PIXEL_TO_METER * (lavaController.getHeight()/2)));
+    }
+
     @Override
     public void beginContact(Contact contact) {
-        System.out.println("contact!");
+
     }
 
     @Override
@@ -173,9 +185,17 @@ public class GameController implements ContactListener {
         }
     }
 
+    private float getMaxCameraY(OrthographicCamera camera) {
+        return PIXEL_TO_METER * (camera.position.y + (camera.viewportHeight / 2));
+    }
+
+    private float getMinCameraY(OrthographicCamera camera) {
+        return PIXEL_TO_METER * (camera.position.y - (camera.viewportHeight / 2));
+    }
+
     private void verifyBounds(EntityController ec, OrthographicCamera camera) {
-        float maxCameraY = PIXEL_TO_METER * (camera.position.y + (camera.viewportHeight / 2));
-        float minCameraY = PIXEL_TO_METER * (camera.position.y - (camera.viewportHeight / 2));
+        float maxCameraY = getMaxCameraY(camera);
+        float minCameraY = getMinCameraY(camera);
 
         EntityView ev = ViewFactory.makeView(AppView.game, (EntityModel) ec.getBody().getUserData());
         float height = ev.getSprite().getHeight() * PIXEL_TO_METER;
