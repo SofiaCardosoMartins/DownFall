@@ -23,7 +23,9 @@ import static com.mygdx.game.controller.GameController.WORLD_WIDTH;
 import static com.mygdx.game.view.entities.AppView.PIXEL_TO_METER;
 
 public class GameModel {
-    private static final int PLATFORM_COUNT = 4;    //debatable
+    private static final int PLATFORM_COUNT = 8;    //debatable
+    private static final float VERTICAL_DISTANCE_PLATFORM = 1.5f;
+    private static final int HORIZONTAL_DISTANCE_PLATFORM = 2;
     private static int PLAYERS_COUNT;  //not final. Number of players might change across games
 
     private static GameModel instance;
@@ -35,6 +37,10 @@ public class GameModel {
 
     private Pool<ObstacleModel> freeObstacles;
     private List<ObstacleModel> obstaclesInUse;
+
+    private float maxPlatformY;
+    private float minPlatformY;
+    private float platformX;
 
     private GameModel() {
         players = new ArrayList<PlayerModel>();
@@ -52,27 +58,13 @@ public class GameModel {
                 return new PlatformModel(0, 0, 0);
             }
         };
+        this.maxPlatformY = 0;
+        this.minPlatformY = 0;
+        this.platformX = WORLD_WIDTH / 2;
         this.initializePlatforms();
 
+        players.add(new PlayerModel(10, 20, 0));
 
-        int height = 0, distance = 0;
-/*
-        for(int i = 0; i< PLATFORM_COUNT; i++){
-            do {
-                height += random.nextInt(3) + 5;
-                boolean plus = random.nextBoolean();
-                if (plus)
-                    distance += random.nextInt(10) + 10;
-                else distance -= random.nextInt(10) + 10;
-            } while (height > (WORLD_HEIGHT/PIXEL_TO_METER) || height < 0 || distance > (WORLD_WIDTH/PIXEL_TO_METER) || distance <0);
-            //platformsInUse.add(new PlatformModel(distance, height,0));
-            if (i==0)
-                players.add(new PlayerModel(distance, height + 3,0));
-        }
-//platformsInUse.add(new PlatformModel(10,10));
-//players.add(new PlayerModel(10,20));
-//obstaclesInUse.add(new ObstacleModel(10,10));
-*/
     }
 
     private void initializePlatforms() {
@@ -112,12 +104,11 @@ public class GameModel {
             PlatformModel pm = freePlatforms.obtain();
             pm.setFlaggedForRemoval(false);
             platformsInUse.add(pm);
-            pm.setPosition(i * 2.5f, maxCameraY);
+            maxPlatformY += VERTICAL_DISTANCE_PLATFORM;
+            pm.setRandomX(platformX, HORIZONTAL_DISTANCE_PLATFORM);
+            this.platformX = pm.getX();
+            pm.setY(maxPlatformY);
         }
-
-        System.out.println("Min y: " + minCameraY);
-        System.out.println("Max y: " + maxCameraY);
-        System.out.println("");
     }
 
     public void update(float delta, OrthographicCamera camera) {

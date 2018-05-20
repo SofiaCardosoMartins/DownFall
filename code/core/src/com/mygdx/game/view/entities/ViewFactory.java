@@ -24,4 +24,14 @@ public class ViewFactory {
         }
         return cache.get(model.getType());
     }
+
+    public static float getWidth(DownFall game, EntityModel model)
+    {
+        return ViewFactory.makeView(game, model).getSprite().getWidth();
+    }
+
+    public static float getHeigth(DownFall game, EntityModel model)
+    {
+        return ViewFactory.makeView(game, model).getSprite().getHeight();
+    }
 }

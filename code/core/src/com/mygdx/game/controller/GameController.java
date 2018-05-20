@@ -36,7 +36,7 @@ public class GameController implements ContactListener {
     public static final String TITLE = "DownFall";
     public static final int WORLD_WIDTH = 10;
     public static final int WORLD_HEIGHT = 14;
-    public static final Vector2 GRAVITY = new Vector2(0, -9.8f);
+    public static final Vector2 GRAVITY = new Vector2(0, -2f);
     private final World world;
     private List<PlayerController> playerControllers;
     private List<PlatformController> platformControllers;
@@ -73,6 +73,14 @@ public class GameController implements ContactListener {
         return instance;
     }
 
+    public void updatePlatforms()
+    {
+        this.platformControllers.clear();
+        List<PlatformModel> platforms = GameModel.getInstance().getPlatformsInUse();
+        for (PlatformModel platform : platforms)
+            platformControllers.add(new PlatformController(world, platform));
+    }
+
     public void update(float delta, OrthographicCamera camera) {
         GameModel.getInstance().update(delta,camera);
 
@@ -82,6 +90,8 @@ public class GameController implements ContactListener {
             world.step(1 / 60f, 6, 2);
             accumulator -= 1 / 60f;
         }
+
+        this.updatePlatforms();
 
         Array<Body> bodies = new Array<Body>();
         world.getBodies(bodies);
