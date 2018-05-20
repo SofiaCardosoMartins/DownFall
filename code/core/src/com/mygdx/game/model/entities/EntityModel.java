@@ -3,10 +3,18 @@ package com.mygdx.game.model.entities;
 public abstract class EntityModel {
 
     public enum ModelType {PLAYER, OBSTACLE, BOOST, PLATFORM};
-    private float x;
-    private float y;
-    private float rotation;
-    private boolean flaggedForRemoval;
+    protected float x;
+    protected float y;
+    protected float rotation;
+    protected boolean flaggedForRemoval;
+
+    EntityModel()
+    {
+        this.x = 0;
+        this.y = 0;
+        this.rotation = 0;
+        this.flaggedForRemoval = false;
+    }
 
     EntityModel(float x, float y, float rotation) {
         this.x = x;

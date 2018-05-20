@@ -30,7 +30,7 @@ public class GameView extends AppView {
     Box2DDebugRenderer debugRenderer;
     Matrix4 debugCamera;
     Sprite backSprite;
-    private static float CAMERA_SPEED = 0.5f;
+    private static float CAMERA_SPEED = 1f;
     private static final boolean DEBUG_PHYSICS = true;
 
     public GameView(DownFall game)

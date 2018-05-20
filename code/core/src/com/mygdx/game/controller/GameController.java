@@ -74,7 +74,7 @@ public class GameController implements ContactListener {
     }
 
     public void update(float delta, OrthographicCamera camera) {
-        GameModel.getInstance().update(delta);
+        GameModel.getInstance().update(delta,camera);
 
         float frameTime = Math.min(delta, 0.25f);
         accumulator += frameTime;
@@ -175,7 +175,6 @@ public class GameController implements ContactListener {
         this.checkRightWallCollision(ec, width);
         this.checkUpWallCollision(ec, maxCameraY, height);
         this.checkDownWallCollision(ec, minCameraY, height);
-
     }
 
     public World getWorld() {
