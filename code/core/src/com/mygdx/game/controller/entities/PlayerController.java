@@ -18,7 +18,7 @@ public class PlayerController extends EntityController {
 
         createFixture(body, new float[]{
                 98.56f,10.24f,30.72f,10.24f,30.72f,116.48f,98.56f,116.48f
-        }, width, height, density, friction, restitution, PLAYER_BITS, PLATFORM_BITS);
+        }, width, height, density, friction, restitution, PLAYER_BITS, (short)(PLATFORM_BITS | LAVA_BITS));
 
     }
 

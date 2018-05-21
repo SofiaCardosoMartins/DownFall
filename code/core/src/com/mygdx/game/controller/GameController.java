@@ -8,6 +8,8 @@ import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.Contact;
 import com.badlogic.gdx.physics.box2d.ContactImpulse;
 import com.badlogic.gdx.physics.box2d.ContactListener;
+import com.badlogic.gdx.physics.box2d.Fixture;
+import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.Manifold;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
@@ -107,6 +109,12 @@ public class GameController implements ContactListener {
         }
     }
 
+    private void endGame()
+    {
+        System.out.println("O jogo terminou");
+        System.exit(121);
+    }
+
     private void updateLava(OrthographicCamera camera)
     {
         EntityModel em = (EntityModel)lavaController.getBody().getUserData();
@@ -116,7 +124,12 @@ public class GameController implements ContactListener {
 
     @Override
     public void beginContact(Contact contact) {
+        EntityModel.ModelType mt1 = ((EntityModel)contact.getFixtureA().getBody().getUserData()).getType();
+        EntityModel.ModelType mt2 = ((EntityModel)contact.getFixtureB().getBody().getUserData()).getType();
 
+        if((mt1 == EntityModel.ModelType.LAVA && mt2 == EntityModel.ModelType.PLAYER) ||
+                (mt2 == EntityModel.ModelType.LAVA && mt1 == EntityModel.ModelType.PLAYER))
+            this.endGame();
     }
 
     @Override

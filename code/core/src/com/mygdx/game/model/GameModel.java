@@ -67,7 +67,7 @@ public class GameModel {
         this.platformX = WORLD_WIDTH / 2;
         this.initializePlatforms();
 
-       // players.add(new PlayerModel(10, 20, 0));
+       //players.add(new PlayerModel(10, 20, 0));
 
     }
 

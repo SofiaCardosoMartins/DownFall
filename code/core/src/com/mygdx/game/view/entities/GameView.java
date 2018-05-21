@@ -1,63 +1,55 @@
 package com.mygdx.game.view.entities;
 
-import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
-import com.badlogic.gdx.utils.viewport.ExtendViewport;
-import com.badlogic.gdx.utils.viewport.FillViewport;
-import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
-import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.mygdx.game.DownFall;
 import com.badlogic.gdx.Gdx;
 import com.mygdx.game.controller.GameController;
 import com.mygdx.game.model.GameModel;
-import com.mygdx.game.model.entities.LavaModel;
 import com.mygdx.game.model.entities.ObstacleModel;
 import com.mygdx.game.model.entities.PlatformModel;
 import com.mygdx.game.model.entities.PlayerModel;
 
 import java.util.List;
 
-import javax.swing.text.html.parser.Entity;
-
 import static com.mygdx.game.controller.GameController.WORLD_WIDTH;
 import static com.mygdx.game.controller.GameController.WORLD_HEIGHT;
 
 public class GameView extends AppView {
 
+    long lastCameraSpeedIncreaseTime; //in nanoseconds
     Box2DDebugRenderer debugRenderer;
     Matrix4 debugCamera;
-    Sprite backSprite;
     private static float CAMERA_SPEED = 1f;
     private static final boolean DEBUG_PHYSICS = true;
+    private static final float CAMERA_SPEED_INC = 1f; //camera speed increment
+    private static final float TIME_TO_NEXT_INC = 10f;   //time between camera's speed increment (in seconds)
 
-    public GameView(DownFall game)
-    {
+    public GameView(DownFall game) {
         super(game);
+        this.lastCameraSpeedIncreaseTime = System.nanoTime();
         loadAssets();
         createCamera();
     }
 
     @Override
     protected void createCamera() {
-        OrthographicCamera camera = new OrthographicCamera(VIEWPORT_WIDTH / PIXEL_TO_METER, VIEWPORT_WIDTH / PIXEL_TO_METER * ((float) Gdx.graphics.getHeight() / (float)Gdx.graphics.getWidth()));
+        OrthographicCamera camera = new OrthographicCamera(VIEWPORT_WIDTH / PIXEL_TO_METER, VIEWPORT_WIDTH / PIXEL_TO_METER * ((float) Gdx.graphics.getHeight() / (float) Gdx.graphics.getWidth()));
         this.viewport = new ScreenViewport(camera);
         camera.position.set(camera.viewportWidth / 2f, camera.viewportHeight / 2f, 0);
         camera.setToOrtho(false, camera.viewportWidth, camera.viewportHeight);
 
         camera.update();
 
-        if(DEBUG_PHYSICS)
-        {
+        if (DEBUG_PHYSICS) {
             debugRenderer = new Box2DDebugRenderer();
             debugCamera = camera.combined.cpy();
-            debugCamera.scl(1/PIXEL_TO_METER);
+            debugCamera.scl(1 / PIXEL_TO_METER);
         }
         this.camera = camera;
     }
@@ -67,10 +59,10 @@ public class GameView extends AppView {
         this.game.getAssetManager().load("landscape.png", Texture.class);
         this.game.getAssetManager().load("platform.png", Texture.class);
         this.game.getAssetManager().load("player.png", Texture.class);
-        this.game.getAssetManager().load("background.png",Texture.class);
-        this.game.getAssetManager().load("obstacle.png",Texture.class);
+        this.game.getAssetManager().load("background.png", Texture.class);
+        this.game.getAssetManager().load("obstacle.png", Texture.class);
         this.game.getAssetManager().load("endosphere.png", Texture.class);
-        this.game.getAssetManager().load("fire.png",Texture.class);
+        this.game.getAssetManager().load("fire.png", Texture.class);
 
         //end
         this.game.getAssetManager().finishLoading();
@@ -79,6 +71,15 @@ public class GameView extends AppView {
 
     @Override
     public void render(float delta) {
+        System.out.println("Camera pos: " + camera.position.y);
+
+        //update camera speed
+        long elapsedTime = System.nanoTime() - this.lastCameraSpeedIncreaseTime;
+        if (elapsedTime >= (TIME_TO_NEXT_INC * Math.pow(10, 9))) {
+            CAMERA_SPEED += CAMERA_SPEED_INC;
+            this.lastCameraSpeedIncreaseTime = System.nanoTime();
+        }
+
         handleInputs(delta);
         GameController.getInstance().update(delta, camera);
 
@@ -88,8 +89,8 @@ public class GameView extends AppView {
 
         game.getBatch().setProjectionMatrix(camera.combined);
 
-        Gdx.gl.glClearColor( 103/255f, 69/255f, 117/255f, 1 );
-        Gdx.gl.glClear( GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT );
+        Gdx.gl.glClearColor(103 / 255f, 69 / 255f, 117 / 255f, 1);
+        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT);
 
         game.getBatch().begin();
         drawBackground();
@@ -97,39 +98,40 @@ public class GameView extends AppView {
         drawLava(delta);
         game.getBatch().end();
 
-        if(DEBUG_PHYSICS)
-        {
+        if (DEBUG_PHYSICS) {
             debugCamera = camera.combined.cpy();
-            debugCamera.scl(1/PIXEL_TO_METER);
-            debugRenderer.render(GameController.getInstance().getWorld(),debugCamera);
+            debugCamera.scl(1 / PIXEL_TO_METER);
+            debugRenderer.render(GameController.getInstance().getWorld(), debugCamera);
         }
     }
 
     @Override
     protected void handleInputs(float delta) {
 
-        if(Gdx.input.isKeyPressed(Input.Keys.LEFT))
-        {
+        if (Gdx.input.isKeyPressed(Input.Keys.LEFT)) {
             GameController.getInstance().moveLeft(1);
-        }
-        else if(Gdx.input.isKeyPressed(Input.Keys.RIGHT))
-        {
+        } else if (Gdx.input.isKeyPressed(Input.Keys.RIGHT)) {
             GameController.getInstance().moveRight(1);
-        }
-        else if (Gdx.input.isKeyPressed(Input.Keys.UP))
-        {
+        } else if (Gdx.input.isKeyPressed(Input.Keys.UP)) {
             GameController.getInstance().jump(1);
-        }
-        else if(Gdx.input.isKeyPressed(Input.Keys.A))
-        {
+        } else if (Gdx.input.isKeyPressed(Input.Keys.A)) {
             GameController.getInstance().moveLeft(2);
-        }
-        else if(Gdx.input.isKeyPressed(Input.Keys.D))
-        {
+        } else if (Gdx.input.isKeyPressed(Input.Keys.D)) {
             GameController.getInstance().moveRight(2);
-        }
-        else if (Gdx.input.isKeyPressed(Input.Keys.W)){
+        } else if (Gdx.input.isKeyPressed(Input.Keys.W)) {
             GameController.getInstance().jump(2);
+        }
+
+        boolean gyroscopeAvail = Gdx.input.isPeripheralAvailable(Input.Peripheral.Gyroscope);
+        if (gyroscopeAvail) {
+            float gyroX = Gdx.input.getGyroscopeX();
+            float gyroY = Gdx.input.getGyroscopeY();
+            float gyroZ = Gdx.input.getGyroscopeZ();
+            if (gyroX > 0)
+                GameController.getInstance().moveRight(1);
+            else if (gyroX < 0)
+                GameController.getInstance().moveLeft(1);
+
         }
 
     }
@@ -148,7 +150,7 @@ public class GameView extends AppView {
         //Obstacles
 
         List<ObstacleModel> obstacles = GameModel.getInstance().getObstaclesInUse();
-        for (ObstacleModel obstacle: obstacles) {
+        for (ObstacleModel obstacle : obstacles) {
             EntityView view = ViewFactory.makeView(game, obstacle);
             view.update(obstacle);
             view.draw(game.getBatch());
@@ -164,6 +166,7 @@ public class GameView extends AppView {
         }
 
     }
+
     @Override
     protected void drawBackground() {
         Texture background = game.getAssetManager().get("endosphere.png", Texture.class);
@@ -171,10 +174,9 @@ public class GameView extends AppView {
         game.getBatch().draw(background, 0, 0, 0, 0, (int) (WORLD_WIDTH / PIXEL_TO_METER), (int) (WORLD_HEIGHT / PIXEL_TO_METER));
     }
 
-    private void drawLava(float delta)
-    {
+    private void drawLava(float delta) {
         EntityView view = ViewFactory.makeView(game, GameModel.getInstance().getLava());
-        ((LavaView)view).update(delta, GameModel.getInstance().getLava());
+        ((LavaView) view).update(delta, GameModel.getInstance().getLava());
         view.draw(game.getBatch());
     }
 }
