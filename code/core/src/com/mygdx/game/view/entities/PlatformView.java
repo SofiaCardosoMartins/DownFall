@@ -15,7 +15,6 @@ public class PlatformView extends EntityView {
     public Sprite createSprite(DownFall game) {
         Texture texture = game.getAssetManager().get("platform.png");
         Sprite sprite = new Sprite(texture, texture.getWidth(), texture.getHeight());
-        //sprite.setSize(200, 20);
         return sprite;
     }
 }

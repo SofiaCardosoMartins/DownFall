@@ -21,7 +21,19 @@ public class ViewFactory {
                 cache.put(model.getType(), new BoostView(game));
             if (model.getType() == EntityModel.ModelType.PLATFORM)
                 cache.put(model.getType(), new PlatformView(game));
+            if(model.getType() == EntityModel.ModelType.LAVA)
+                cache.put(model.getType(), new LavaView(game));
         }
         return cache.get(model.getType());
+    }
+
+    public static float getWidth(DownFall game, EntityModel model)
+    {
+        return ViewFactory.makeView(game, model).getSprite().getWidth();
+    }
+
+    public static float getHeigth(DownFall game, EntityModel model)
+    {
+        return ViewFactory.makeView(game, model).getSprite().getHeight();
     }
 }
