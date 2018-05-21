@@ -59,6 +59,7 @@ public class GameView extends AppView {
         this.game.getAssetManager().load("player.png", Texture.class);
         this.game.getAssetManager().load("background.png",Texture.class);
         this.game.getAssetManager().load("obstacle.png",Texture.class);
+        this.game.getAssetManager().load("endosphere.png", Texture.class);
 
         //end
         this.game.getAssetManager().finishLoading();
@@ -152,7 +153,7 @@ public class GameView extends AppView {
     }
     @Override
     protected void drawBackground() {
-        Texture background = game.getAssetManager().get("background.png", Texture.class);
+        Texture background = game.getAssetManager().get("endosphere.png", Texture.class);
         background.setWrap(Texture.TextureWrap.Repeat, Texture.TextureWrap.Repeat);
         game.getBatch().draw(background, 0, 0, 0, 0, (int) (WORLD_WIDTH / PIXEL_TO_METER), (int) (WORLD_HEIGHT / PIXEL_TO_METER));
     }
