@@ -17,18 +17,14 @@ import com.mygdx.game.controller.entities.PlatformController;
 import com.mygdx.game.controller.entities.PlayerController;
 import com.mygdx.game.model.GameModel;
 import com.mygdx.game.model.entities.EntityModel;
-import com.mygdx.game.model.entities.LavaModel;
 import com.mygdx.game.model.entities.PlatformModel;
 import com.mygdx.game.model.entities.PlayerModel;
 import com.mygdx.game.view.entities.AppView;
 import com.mygdx.game.view.entities.EntityView;
 import com.mygdx.game.view.entities.ViewFactory;
-
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.swing.text.View;
-import javax.swing.text.html.parser.Entity;
 
 import static com.mygdx.game.view.entities.AppView.PIXEL_TO_METER;
 
@@ -60,6 +56,7 @@ public class GameController implements ContactListener {
         for (PlatformModel platform : platforms)
             platformControllers.add(new PlatformController(world, platform));
 
+        //Create lava body
         this.lavaController = new LavaController(world, GameModel.getInstance().getLava(), BodyDef.BodyType.StaticBody, false);
         world.setContactListener(this);
     }
@@ -194,6 +191,7 @@ public class GameController implements ContactListener {
     }
 
     private void verifyBounds(EntityController ec, OrthographicCamera camera) {
+        if(ec instanceof PlatformController) return;
         float maxCameraY = getMaxCameraY(camera);
         float minCameraY = getMinCameraY(camera);
 

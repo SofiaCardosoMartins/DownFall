@@ -25,7 +25,6 @@ public abstract class EntityController {
         bodyDef.type = bodyType;
         bodyDef.position.set(model.getX(),model.getY());
         bodyDef.fixedRotation = !rotate;
-
         body = world.createBody(bodyDef);
         body.setUserData(model);
     }
