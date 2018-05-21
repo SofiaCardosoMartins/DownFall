@@ -64,14 +64,13 @@ public class GameView extends AppView {
         this.game.getAssetManager().load("endosphere.png", Texture.class);
         this.game.getAssetManager().load("fire.png", Texture.class);
 
-        //end
+        //enddddwwa
         this.game.getAssetManager().finishLoading();
 
     }
 
     @Override
     public void render(float delta) {
-        System.out.println("Camera pos: " + camera.position.y);
 
         //update camera speed
         long elapsedTime = System.nanoTime() - this.lastCameraSpeedIncreaseTime;
@@ -122,16 +121,18 @@ public class GameView extends AppView {
             GameController.getInstance().jump(2);
         }
 
-        boolean gyroscopeAvail = Gdx.input.isPeripheralAvailable(Input.Peripheral.Gyroscope);
+        boolean gyroscopeAvail = Gdx.input.isPeripheralAvailable(Input.Peripheral.Accelerometer);
         if (gyroscopeAvail) {
-            float gyroX = Gdx.input.getGyroscopeX();
-            float gyroY = Gdx.input.getGyroscopeY();
-            float gyroZ = Gdx.input.getGyroscopeZ();
-            if (gyroX > 0)
+            float gyroX = Gdx.input.getAccelerometerX();
+            float gyroY = Gdx.input.getAccelerometerY();
+            float gyroZ = Gdx.input.getAccelerometerZ();
+            System.out.println("x:" + gyroX + " y :" + gyroY +"  z: " + gyroZ);
+            if (gyroX < 0)
                 GameController.getInstance().moveRight(1);
-            else if (gyroX < 0)
+            else if (gyroX > 0)
                 GameController.getInstance().moveLeft(1);
-
+            if (Gdx.input.isTouched())
+                GameController.getInstance().jump(1);
         }
 
     }

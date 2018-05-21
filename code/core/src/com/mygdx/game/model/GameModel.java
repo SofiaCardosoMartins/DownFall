@@ -67,7 +67,7 @@ public class GameModel {
         this.platformX = WORLD_WIDTH / 2;
         this.initializePlatforms();
 
-       //players.add(new PlayerModel(10, 20, 0));
+       players.add(new PlayerModel(5, 50, 0));
 
     }
 
@@ -116,7 +116,7 @@ public class GameModel {
     }
 
     public void update(float delta, OrthographicCamera camera) {
-        this.updatePlatforms(camera);
+        //this.updatePlatforms(camera);
     }
 
     public List<PlayerModel> getPlayers() {

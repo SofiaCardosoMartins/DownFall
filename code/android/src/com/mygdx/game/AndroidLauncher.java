@@ -13,7 +13,7 @@ public class AndroidLauncher extends AndroidApplication {
 		AndroidApplicationConfiguration config = new AndroidApplicationConfiguration();
 		initialize(new DownFall(), config);
 		config.useGyroscope = true;
-		config.useAccelerometer = false;
+		config.useAccelerometer = true;
 		config.useCompass = false;
 	}
 }
