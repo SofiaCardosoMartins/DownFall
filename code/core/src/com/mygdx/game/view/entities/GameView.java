@@ -69,11 +69,8 @@ public class GameView extends AppView {
         this.game.getAssetManager().load("player.png", Texture.class);
         this.game.getAssetManager().load("background.png",Texture.class);
         this.game.getAssetManager().load("obstacle.png",Texture.class);
-<<<<<<< HEAD
         this.game.getAssetManager().load("endosphere.png", Texture.class);
-=======
         this.game.getAssetManager().load("fire.png",Texture.class);
->>>>>>> a25cda552e948dd5700e42d42fd5099144813237
 
         //end
         this.game.getAssetManager().finishLoading();
