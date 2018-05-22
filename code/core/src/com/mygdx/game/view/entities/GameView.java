@@ -122,14 +122,14 @@ public class GameView extends AppView {
         }
 
         boolean accelerometerAvail = Gdx.input.isPeripheralAvailable(Input.Peripheral.Accelerometer);
-        if (gyroscopeAvail) {
-            float gyroX = Gdx.input.getAccelerometerX();
-            float gyroY = Gdx.input.getAccelerometerY();
-            float gyroZ = Gdx.input.getAccelerometerZ();
-            System.out.println("x:" + gyroX + " y :" + gyroY +"  z: " + gyroZ);
-            if (gyroX < 0)
+        if (accelerometerAvail) {
+            float acceX = Gdx.input.getAccelerometerX();
+            float acceY = Gdx.input.getAccelerometerY();
+            float acceZ = Gdx.input.getAccelerometerZ();
+            System.out.println("x:" + acceX + " y :" + acceY +"  z: " + acceZ);
+            if (acceX < 0)
                 GameController.getInstance().moveRight(1);
-            else if (gyroX > 0)
+            else if (acceX > 0)
                 GameController.getInstance().moveLeft(1);
             if (Gdx.input.isTouched())
                 GameController.getInstance().jump(1);
