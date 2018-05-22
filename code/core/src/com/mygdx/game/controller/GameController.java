@@ -35,7 +35,7 @@ public class GameController implements ContactListener {
     private static GameController instance;
     public static final String TITLE = "DownFall";
     public static final int WORLD_WIDTH = 10;
-    public static final int WORLD_HEIGHT = 14;
+    public static final int WORLD_HEIGHT = 1050;
     public static final Vector2 GRAVITY = new Vector2(0, -0.4f);
     private final World world;
     private List<PlayerController> playerControllers;
@@ -195,11 +195,11 @@ public class GameController implements ContactListener {
         }
     }
 
-    private float getMaxCameraY(OrthographicCamera camera) {
+    public float getMaxCameraY(OrthographicCamera camera) {
         return PIXEL_TO_METER * (camera.position.y + (camera.viewportHeight / 2));
     }
 
-    private float getMinCameraY(OrthographicCamera camera) {
+    public float getMinCameraY(OrthographicCamera camera) {
         return PIXEL_TO_METER * (camera.position.y - (camera.viewportHeight / 2));
     }
 
@@ -218,7 +218,14 @@ public class GameController implements ContactListener {
         this.checkDownWallCollision(ec, minCameraY, height);
     }
 
+    public boolean isDoublePlayer(){
+        return (this.playerControllers.size() == 2);
+    }
     public World getWorld() {
         return world;
+    }
+
+    public List<PlayerController> getPlayerControllers() {
+        return playerControllers;
     }
 }

@@ -24,8 +24,8 @@ import static com.mygdx.game.controller.GameController.WORLD_WIDTH;
 import static com.mygdx.game.view.entities.AppView.PIXEL_TO_METER;
 
 public class GameModel {
-    private static final int PLATFORM_COUNT = 8;    //debatable
-    private static final float VERTICAL_DISTANCE_PLATFORM = 1.5f;
+    private static final int PLATFORM_COUNT = 15;    //debatable
+    private static final float VERTICAL_DISTANCE_PLATFORM = 3f;
     private static final int HORIZONTAL_DISTANCE_PLATFORM = 2;
     private static int PLAYERS_COUNT;  //not final. Number of players might change across games
 
@@ -68,6 +68,7 @@ public class GameModel {
         this.initializePlatforms();
 
        players.add(new PlayerModel(5, 50, 0));
+      // players.add(new PlayerModel(2, 50, 0));
 
     }
 
@@ -116,7 +117,7 @@ public class GameModel {
     }
 
     public void update(float delta, OrthographicCamera camera) {
-        //this.updatePlatforms(camera);
+        this.updatePlatforms(camera);
     }
 
     public List<PlayerModel> getPlayers() {

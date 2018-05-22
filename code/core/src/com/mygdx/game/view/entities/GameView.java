@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
+import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.mygdx.game.DownFall;
 import com.badlogic.gdx.Gdx;
 import com.mygdx.game.controller.GameController;
@@ -29,18 +30,20 @@ public class GameView extends AppView {
     private static final boolean DEBUG_PHYSICS = true;
     private static final float CAMERA_SPEED_INC = 1f; //camera speed increment
     private static final float TIME_TO_NEXT_INC = 10f;   //time between camera's speed increment (in seconds)
+    private BarView barView;
 
     public GameView(DownFall game) {
         super(game);
         this.lastCameraSpeedIncreaseTime = System.nanoTime();
         loadAssets();
         createCamera();
+        barView = new BarView(game, GameController.getInstance().isDoublePlayer());
     }
 
     @Override
     protected void createCamera() {
-        OrthographicCamera camera = new OrthographicCamera(VIEWPORT_WIDTH / PIXEL_TO_METER, VIEWPORT_WIDTH / PIXEL_TO_METER * ((float) Gdx.graphics.getHeight() / (float) Gdx.graphics.getWidth()));
-        this.viewport = new ScreenViewport(camera);
+        OrthographicCamera camera = new OrthographicCamera(VIEWPORT_WIDTH / PIXEL_TO_METER, VIEWPORT_WIDTH / PIXEL_TO_METER * ((float) 14 / (float) 10));
+        this.viewport = new StretchViewport(WORLD_WIDTH, VIEWPORT_WIDTH / PIXEL_TO_METER * ((float) 14 / (float) 10) );
         camera.position.set(camera.viewportWidth / 2f, camera.viewportHeight / 2f, 0);
         camera.setToOrtho(false, camera.viewportWidth, camera.viewportHeight);
 
@@ -63,6 +66,9 @@ public class GameView extends AppView {
         this.game.getAssetManager().load("obstacle.png", Texture.class);
         this.game.getAssetManager().load("endosphere.png", Texture.class);
         this.game.getAssetManager().load("fire.png", Texture.class);
+        this.game.getAssetManager().load("largeBarDouble.png", Texture.class);
+        this.game.getAssetManager().load("largeBarSingle.png", Texture.class);
+        this.game.getAssetManager().load("scorePointer.png", Texture.class);
 
         //enddddwwa
         this.game.getAssetManager().finishLoading();
@@ -86,6 +92,8 @@ public class GameView extends AppView {
         camera.position.y += CAMERA_SPEED;
         camera.update();
 
+
+
         game.getBatch().setProjectionMatrix(camera.combined);
 
         Gdx.gl.glClearColor(103 / 255f, 69 / 255f, 117 / 255f, 1);
@@ -95,6 +103,7 @@ public class GameView extends AppView {
         drawBackground();
         drawEntities();
         drawLava(delta);
+        drawBar();
         game.getBatch().end();
 
         if (DEBUG_PHYSICS) {
@@ -166,6 +175,9 @@ public class GameView extends AppView {
             view.draw(game.getBatch());
         }
 
+
+
+
     }
 
     @Override
@@ -179,5 +191,9 @@ public class GameView extends AppView {
         EntityView view = ViewFactory.makeView(game, GameModel.getInstance().getLava());
         ((LavaView) view).update(delta, GameModel.getInstance().getLava());
         view.draw(game.getBatch());
+    }
+    private void drawBar(){
+        barView.update(WORLD_WIDTH / 2, GameController.getInstance().getMaxCameraY(camera));
+        barView.draw(game.getBatch());
     }
 }
