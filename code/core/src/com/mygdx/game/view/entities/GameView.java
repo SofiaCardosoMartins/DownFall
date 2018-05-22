@@ -121,7 +121,7 @@ public class GameView extends AppView {
             GameController.getInstance().jump(2);
         }
 
-        boolean gyroscopeAvail = Gdx.input.isPeripheralAvailable(Input.Peripheral.Accelerometer);
+        boolean accelerometerAvail = Gdx.input.isPeripheralAvailable(Input.Peripheral.Accelerometer);
         if (gyroscopeAvail) {
             float gyroX = Gdx.input.getAccelerometerX();
             float gyroY = Gdx.input.getAccelerometerY();
