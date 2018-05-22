@@ -149,17 +149,17 @@ public class GameController implements ContactListener {
 
     public void moveLeft(int playerNum) {
         PlayerController player = playerControllers.get(playerNum - 1);
-        player.getBody().applyForceToCenter(-50, 0, true);
+        player.moveLeft();
     }
 
     public void moveRight(int playerNum) {
         PlayerController player = playerControllers.get(playerNum - 1);
-        player.getBody().applyForceToCenter(50, 0, true);
+        player.moveRight();
     }
 
     public void jump(int playerNum) {
         PlayerController player = playerControllers.get(playerNum - 1);
-        player.getBody().applyForceToCenter(0, 200, true);
+        player.jump();
     }
 
     private void checkLeftWallCollision(EntityController ec, float width) {

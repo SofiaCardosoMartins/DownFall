@@ -1,4 +1,6 @@
-package com.mygdx.game.model.entities;
+package com.mygdx.game.controller.entities;
+
+import com.mygdx.game.model.entities.PlayerModel;
 
 public class Context {
 

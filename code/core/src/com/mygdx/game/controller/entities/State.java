@@ -1,4 +1,4 @@
-package com.mygdx.game.model.entities;
+package com.mygdx.game.controller.entities;
 
 public class State {
 

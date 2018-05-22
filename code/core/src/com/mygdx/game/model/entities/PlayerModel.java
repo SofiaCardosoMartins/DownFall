@@ -1,5 +1,7 @@
 package com.mygdx.game.model.entities;
 
+import com.mygdx.game.controller.entities.Context;
+
 public class PlayerModel extends EntityModel {
 
     private BoostStrategy boostStrategy;
