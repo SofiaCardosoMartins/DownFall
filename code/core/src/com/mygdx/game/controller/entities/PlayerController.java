@@ -8,6 +8,7 @@ import com.mygdx.game.model.entities.PlayerModel;
 public class PlayerController extends EntityController {
 
     BoostStrategy strategy;
+
     public PlayerController(World world, PlayerModel playerModel)
     {
         super(world,playerModel, BodyDef.BodyType.DynamicBody,false);
@@ -19,7 +20,7 @@ public class PlayerController extends EntityController {
         strategy = new NaturalBoost();
         createFixture(body, new float[]{
                 98.56f,10.24f,30.72f,10.24f,30.72f,116.48f,98.56f,116.48f
-        }, width, height, density, friction, restitution, PLAYER_BITS, (short)(PLATFORM_BITS | LAVA_BITS | PLAYER_BITS));
+        }, width, height, density, friction, restitution, PLAYER_BITS, (short)(PLATFORM_BITS | LAVA_BITS | PLAYER_BITS | OBSTACLE_BITS));
 
     }
 

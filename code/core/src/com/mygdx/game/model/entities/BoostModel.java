@@ -1,5 +1,7 @@
 package com.mygdx.game.model.entities;
 
+import com.mygdx.game.controller.entities.BoostStrategy;
+/*
 public class BoostModel extends EntityModel implements BoostStrategy {
 
     BoostModel(float x, float y, float rotation)
@@ -27,3 +29,4 @@ public class BoostModel extends EntityModel implements BoostStrategy {
 
     }
 }
+*/

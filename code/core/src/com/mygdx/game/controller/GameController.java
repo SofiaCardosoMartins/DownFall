@@ -15,10 +15,12 @@ import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
 import com.mygdx.game.controller.entities.EntityController;
 import com.mygdx.game.controller.entities.LavaController;
+import com.mygdx.game.controller.entities.ObstacleController;
 import com.mygdx.game.controller.entities.PlatformController;
 import com.mygdx.game.controller.entities.PlayerController;
 import com.mygdx.game.model.GameModel;
 import com.mygdx.game.model.entities.EntityModel;
+import com.mygdx.game.model.entities.ObstacleModel;
 import com.mygdx.game.model.entities.PlatformModel;
 import com.mygdx.game.model.entities.PlayerModel;
 import com.mygdx.game.view.entities.AppView;
@@ -40,6 +42,7 @@ public class GameController implements ContactListener {
     private final World world;
     private List<PlayerController> playerControllers;
     private List<PlatformController> platformControllers;
+    private List<ObstacleController> obstacleControllers;
     private final LavaController lavaController;
     private float accumulator;
 
@@ -58,6 +61,12 @@ public class GameController implements ContactListener {
         for (PlatformModel platform : platforms)
             platformControllers.add(new PlatformController(world, platform));
 
+        //Create obstacle bodies
+        obstacleControllers = new ArrayList<ObstacleController>();
+        List<ObstacleModel> obstacles = GameModel.getInstance().getObstaclesInUse();
+        for (ObstacleModel obstacle : obstacles)
+            obstacleControllers.add(new ObstacleController(world, obstacle));
+
         //Create lava body
         this.lavaController = new LavaController(world, GameModel.getInstance().getLava(), BodyDef.BodyType.StaticBody, false);
         world.setContactListener(this);
@@ -67,6 +76,7 @@ public class GameController implements ContactListener {
         List<EntityController> controllers = new ArrayList<EntityController>();
         controllers.addAll(platformControllers);
         controllers.addAll(playerControllers);
+        controllers.addAll(obstacleControllers);
         return controllers;
     }
 
@@ -76,6 +86,13 @@ public class GameController implements ContactListener {
         return instance;
     }
 
+    private void updateLava(OrthographicCamera camera)
+    {
+        EntityModel em = (EntityModel)lavaController.getBody().getUserData();
+        em.setY(getMinCameraY(camera)+ (PIXEL_TO_METER * (lavaController.getHeight()/2)));
+        this.lavaController.setY(getMinCameraY(camera) + (PIXEL_TO_METER * (lavaController.getHeight()/2)));
+    }
+
     public void updatePlatforms() {
         this.platformControllers.clear();
         List<PlatformModel> platforms = GameModel.getInstance().getPlatformsInUse();
@@ -83,10 +100,24 @@ public class GameController implements ContactListener {
             platformControllers.add(new PlatformController(world, platform));
     }
 
+    public void updateObstacles(float minCameraY, float maxCameraY) {
+        for(ObstacleController obstacle: obstacleControllers)
+            world.destroyBody(obstacle.getBody());
+
+        this.obstacleControllers.clear();
+
+        List<ObstacleModel> obstacles = GameModel.getInstance().getObstaclesInUse();
+        for (ObstacleModel obstacle : obstacles) {
+            ObstacleController oc = new ObstacleController(world, obstacle);
+            obstacleControllers.add(oc);
+            float obstacleY = obstacle.getY();
+            if((obstacleY < maxCameraY) && (obstacleY > minCameraY))
+                oc.move();
+        }
+    }
+
     public void update(float delta, OrthographicCamera camera) {
         GameModel.getInstance().update(delta, camera);
-
-        this.updateLava(camera);
 
         float frameTime = Math.min(delta, 0.25f);
         accumulator += frameTime;
@@ -95,14 +126,19 @@ public class GameController implements ContactListener {
             accumulator -= 1 / 60f;
         }
 
+        this.updateLava(camera);
         this.updatePlatforms();
+        this.updateObstacles(getMinCameraY(camera),getMaxCameraY(camera));
 
         Array<Body> bodies = new Array<Body>();
         world.getBodies(bodies);
 
         List<EntityController> controllers = getAllControllers();
         for (EntityController controller : controllers) {
+
             Body body = controller.getBody();
+            if(body.getUserData() instanceof  ObstacleModel)
+                System.out.println("");
             verifyBounds(controller, camera);
             ((EntityModel) body.getUserData()).setPosition(body.getPosition().x, body.getPosition().y);
             ((EntityModel) body.getUserData()).setRotation(body.getAngle());
@@ -113,13 +149,6 @@ public class GameController implements ContactListener {
     {
         System.out.println("O jogo terminou");
         System.exit(121);
-    }
-
-    private void updateLava(OrthographicCamera camera)
-    {
-        EntityModel em = (EntityModel)lavaController.getBody().getUserData();
-        em.setY(getMinCameraY(camera)+ (PIXEL_TO_METER * (lavaController.getHeight()/2)));
-        this.lavaController.setY(getMinCameraY(camera) + (PIXEL_TO_METER * (lavaController.getHeight()/2)));
     }
 
     @Override
@@ -204,7 +233,7 @@ public class GameController implements ContactListener {
     }
 
     private void verifyBounds(EntityController ec, OrthographicCamera camera) {
-        if(ec instanceof PlatformController) return;
+        if((ec instanceof PlatformController) || (ec instanceof ObstacleController)) return;
         float maxCameraY = getMaxCameraY(camera);
         float minCameraY = getMinCameraY(camera);
 

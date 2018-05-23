@@ -2,8 +2,8 @@ package com.mygdx.game.controller.entities;
 
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.World;
-import com.mygdx.game.model.entities.BoostModel;
 
+/*
 public class BoostController extends EntityController {
 
     BoostController(World world, BoostModel boostModel)
@@ -16,3 +16,4 @@ public class BoostController extends EntityController {
         int height = 75;
     }
 }
+*/

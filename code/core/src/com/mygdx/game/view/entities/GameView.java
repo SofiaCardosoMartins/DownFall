@@ -27,7 +27,7 @@ public class GameView extends AppView {
     Box2DDebugRenderer debugRenderer;
     Matrix4 debugCamera;
     private static float CAMERA_SPEED = 1f;
-    private static final boolean DEBUG_PHYSICS = true;
+    private static final boolean DEBUG_PHYSICS = false;
     private static final float CAMERA_SPEED_INC = 1f; //camera speed increment
     private static final float TIME_TO_NEXT_INC = 10f;   //time between camera's speed increment (in seconds)
     private BarView barView;
@@ -160,7 +160,10 @@ public class GameView extends AppView {
         //Obstacles
 
         List<ObstacleModel> obstacles = GameModel.getInstance().getObstaclesInUse();
+        //System.out.println("Numero de obstacles: " + obstacles.size());
         for (ObstacleModel obstacle : obstacles) {
+            //System.out.println("obstacle criado na pos:" + obstacle.getX());
+            //System.out.println("pos camera: " + GameController.getInstance().getMinCameraY(camera));
             EntityView view = ViewFactory.makeView(game, obstacle);
             view.update(obstacle);
             view.draw(game.getBatch());
@@ -174,10 +177,6 @@ public class GameView extends AppView {
             view.update(player);
             view.draw(game.getBatch());
         }
-
-
-
-
     }
 
     @Override
