@@ -2,9 +2,10 @@ package com.mygdx.game.controller.entities;
 
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.World;
+import com.mygdx.game.model.entities.BoostModel;
 
-/*
-public class BoostController extends EntityController {
+
+public class BoostController extends EntityController implements BoostStrategy {
 
     BoostController(World world, BoostModel boostModel)
     {
@@ -15,5 +16,24 @@ public class BoostController extends EntityController {
         int width = 75;
         int height = 75;
     }
+
+    @Override
+    public void moveRight(PlayerController player) {
+
+    }
+
+    @Override
+    public void moveLeft(PlayerController player) {
+
+    }
+
+    @Override
+    public void jump(PlayerController player) {
+
+    }
+
+    @Override
+    public void collisionHandler(PlayerController player) {
+
+    }
 }
-*/

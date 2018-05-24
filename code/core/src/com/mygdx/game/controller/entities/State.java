@@ -1,9 +1,8 @@
 package com.mygdx.game.controller.entities;
 
-public class State {
+import com.mygdx.game.controller.GameController;
 
-    void handleInput()
-    {
-
-    }
+public abstract class State {
+    public abstract State handleInput(GameController.Direction dir);
+    public abstract State update(float vx, float vy);
 }

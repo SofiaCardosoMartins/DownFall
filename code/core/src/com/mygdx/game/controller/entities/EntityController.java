@@ -119,4 +119,6 @@ public abstract class EntityController {
     public void setHeight(int height) {
         this.height = height;
     }
+
+    public void update(){}
 }

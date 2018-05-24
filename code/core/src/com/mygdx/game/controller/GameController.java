@@ -1,6 +1,5 @@
 package com.mygdx.game.controller;
 
-import com.badlogic.gdx.Game;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
@@ -8,21 +7,12 @@ import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.Contact;
 import com.badlogic.gdx.physics.box2d.ContactImpulse;
 import com.badlogic.gdx.physics.box2d.ContactListener;
-import com.badlogic.gdx.physics.box2d.Fixture;
-import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.Manifold;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
-import com.mygdx.game.controller.entities.EntityController;
-import com.mygdx.game.controller.entities.LavaController;
-import com.mygdx.game.controller.entities.ObstacleController;
-import com.mygdx.game.controller.entities.PlatformController;
-import com.mygdx.game.controller.entities.PlayerController;
+import com.mygdx.game.controller.entities.*;
 import com.mygdx.game.model.GameModel;
-import com.mygdx.game.model.entities.EntityModel;
-import com.mygdx.game.model.entities.ObstacleModel;
-import com.mygdx.game.model.entities.PlatformModel;
-import com.mygdx.game.model.entities.PlayerModel;
+import com.mygdx.game.model.entities.*;
 import com.mygdx.game.view.entities.AppView;
 import com.mygdx.game.view.entities.EntityView;
 import com.mygdx.game.view.entities.ViewFactory;
@@ -38,13 +28,16 @@ public class GameController implements ContactListener {
     public static final String TITLE = "DownFall";
     public static final int WORLD_WIDTH = 10;
     public static final int WORLD_HEIGHT = 1050;
-    public static final Vector2 GRAVITY = new Vector2(0, -0.4f);
+    public static final Vector2 GRAVITY = new Vector2(0, -9f);
     private final World world;
     private List<PlayerController> playerControllers;
     private List<PlatformController> platformControllers;
     private List<ObstacleController> obstacleControllers;
+    private List<BoostController> boostControllers;
     private final LavaController lavaController;
     private float accumulator;
+
+    public enum Direction {LEFT, RIGHT, UP}
 
     private GameController() {
         world = new World(GRAVITY, true);
@@ -66,6 +59,12 @@ public class GameController implements ContactListener {
         List<ObstacleModel> obstacles = GameModel.getInstance().getObstaclesInUse();
         for (ObstacleModel obstacle : obstacles)
             obstacleControllers.add(new ObstacleController(world, obstacle));
+
+        //Create boost bodies
+        boostControllers = new ArrayList<BoostController>();
+        //List<BoostModel> boosts = GameModel.getInstance().getBoostsInUse();
+        //for (BoostModel boost : boosts)
+        //    boostControllers.add(new BoostController(world, boost));
 
         //Create lava body
         this.lavaController = new LavaController(world, GameModel.getInstance().getLava(), BodyDef.BodyType.StaticBody, false);
@@ -135,13 +134,11 @@ public class GameController implements ContactListener {
 
         List<EntityController> controllers = getAllControllers();
         for (EntityController controller : controllers) {
-
             Body body = controller.getBody();
-            if(body.getUserData() instanceof  ObstacleModel)
-                System.out.println("");
             verifyBounds(controller, camera);
             ((EntityModel) body.getUserData()).setPosition(body.getPosition().x, body.getPosition().y);
             ((EntityModel) body.getUserData()).setRotation(body.getAngle());
+            controller.update();
         }
     }
 
@@ -153,12 +150,34 @@ public class GameController implements ContactListener {
 
     @Override
     public void beginContact(Contact contact) {
-        EntityModel.ModelType mt1 = ((EntityModel)contact.getFixtureA().getBody().getUserData()).getType();
-        EntityModel.ModelType mt2 = ((EntityModel)contact.getFixtureB().getBody().getUserData()).getType();
 
-        if((mt1 == EntityModel.ModelType.LAVA && mt2 == EntityModel.ModelType.PLAYER) ||
-                (mt2 == EntityModel.ModelType.LAVA && mt1 == EntityModel.ModelType.PLAYER))
+        Body body1 = contact.getFixtureA().getBody();
+        Body body2 = contact.getFixtureB().getBody();
+
+        if(((body1.getUserData() instanceof LavaModel) && (body2.getUserData() instanceof PlayerModel)) ||
+                ((body1.getUserData() instanceof PlayerModel) && (body2.getUserData() instanceof LavaModel)))
             this.endGame();
+
+        if(body1.getUserData() instanceof PlayerModel && body2.getUserData() instanceof BoostModel)
+            playerBoostCollision(body1, body2);
+        else if (body2.getUserData() instanceof  PlayerModel && body1.getUserData() instanceof  BoostModel)
+            playerBoostCollision(body2, body1);
+
+    }
+
+    private void playerBoostCollision(Body player, Body boost){
+        PlayerController pc = null;
+
+        for (PlayerController playerController: playerControllers){
+            if (playerController.getBody() == player)
+                pc = playerController;
+        }
+        BoostController bc = null;
+        for (BoostController boostController: boostControllers){
+            if (boostController.getBody() == boost)
+                bc = boostController;
+        }
+        pc.setStrategy(bc);
     }
 
     @Override
@@ -176,19 +195,10 @@ public class GameController implements ContactListener {
 
     }
 
-    public void moveLeft(int playerNum) {
+    public void handleInput(Direction dir, int playerNum)
+    {
         PlayerController player = playerControllers.get(playerNum - 1);
-        player.moveLeft();
-    }
-
-    public void moveRight(int playerNum) {
-        PlayerController player = playerControllers.get(playerNum - 1);
-        player.moveRight();
-    }
-
-    public void jump(int playerNum) {
-        PlayerController player = playerControllers.get(playerNum - 1);
-        player.jump();
+        player.handleInput(dir);
     }
 
     private void checkLeftWallCollision(EntityController ec, float width) {

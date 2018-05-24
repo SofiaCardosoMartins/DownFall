@@ -117,17 +117,17 @@ public class GameView extends AppView {
     protected void handleInputs(float delta) {
 
         if (Gdx.input.isKeyPressed(Input.Keys.LEFT)) {
-            GameController.getInstance().moveLeft(1);
+            GameController.getInstance().handleInput(GameController.Direction.LEFT,1);
         } else if (Gdx.input.isKeyPressed(Input.Keys.RIGHT)) {
-            GameController.getInstance().moveRight(1);
+            GameController.getInstance().handleInput(GameController.Direction.RIGHT,1);
         } else if (Gdx.input.isKeyPressed(Input.Keys.UP)) {
-            GameController.getInstance().jump(1);
+            GameController.getInstance().handleInput(GameController.Direction.UP,1);
         } else if (Gdx.input.isKeyPressed(Input.Keys.A)) {
-            GameController.getInstance().moveLeft(2);
+            GameController.getInstance().handleInput(GameController.Direction.LEFT,2);
         } else if (Gdx.input.isKeyPressed(Input.Keys.D)) {
-            GameController.getInstance().moveRight(2);
+            GameController.getInstance().handleInput(GameController.Direction.RIGHT,2);
         } else if (Gdx.input.isKeyPressed(Input.Keys.W)) {
-            GameController.getInstance().jump(2);
+            GameController.getInstance().handleInput(GameController.Direction.UP,2);
         }
 
         boolean accelerometerAvail = Gdx.input.isPeripheralAvailable(Input.Peripheral.Accelerometer);
@@ -137,11 +137,11 @@ public class GameView extends AppView {
             float acceZ = Gdx.input.getAccelerometerZ();
             System.out.println("x:" + acceX + " y :" + acceY +"  z: " + acceZ);
             if (acceX < 0)
-                GameController.getInstance().moveRight(1);
+                GameController.getInstance().handleInput(GameController.Direction.RIGHT,1);
             else if (acceX > 0)
-                GameController.getInstance().moveLeft(1);
+                GameController.getInstance().handleInput(GameController.Direction.LEFT,1);
             if (Gdx.input.isTouched())
-                GameController.getInstance().jump(1);
+                GameController.getInstance().handleInput(GameController.Direction.UP,1);
         }
 
     }

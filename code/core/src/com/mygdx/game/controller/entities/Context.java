@@ -1,19 +1,37 @@
 package com.mygdx.game.controller.entities;
 
-import com.mygdx.game.model.entities.PlayerModel;
+import com.mygdx.game.controller.GameController;
 
 public class Context {
 
     State currentState;
-    PlayerModel player;
+    PlayerController player;
 
-    void handleInput()
-    {
+    public Context(PlayerController player){
+        currentState = new Idle();
+        this.player = player;
+    }
+    public void handleInput(GameController.Direction dir){
+        if (dir == GameController.Direction.RIGHT)
+            player.moveRight();
+        else if (dir == GameController.Direction.LEFT)
+            player.moveLeft();
+        System.out.println(currentState.getClass());
+        if (dir == GameController.Direction.UP && currentState instanceof Idle)
+            player.jump();
+        currentState = currentState.handleInput(dir);
 
     }
 
-    void setState(State state)
+    public void setState(State state)
     {
         this.currentState = state;
     }
+
+    public void update(float vx, float vy)
+    {
+        currentState = currentState.update(vx,vy);
+
+    }
+
 }
