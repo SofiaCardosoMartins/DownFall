@@ -1,36 +1,28 @@
 package com.mygdx.game.model;
 
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.g3d.ModelBatch;
-import com.badlogic.gdx.utils.FlushablePool;
 import com.badlogic.gdx.utils.Pool;
 import com.mygdx.game.controller.GameController;
-import com.mygdx.game.model.entities.EntityModel;
-import com.mygdx.game.model.entities.LavaModel;
-import com.mygdx.game.model.entities.ObstacleModel;
-import com.mygdx.game.model.entities.PlatformModel;
-import com.mygdx.game.model.entities.PlayerModel;
+import com.mygdx.game.model.entities.*;
 import com.mygdx.game.view.entities.AppView;
 import com.mygdx.game.view.entities.EntityView;
-import com.mygdx.game.view.entities.GameView;
 import com.mygdx.game.view.entities.ViewFactory;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 import static com.badlogic.gdx.math.MathUtils.random;
-import static com.mygdx.game.controller.GameController.WORLD_HEIGHT;
 import static com.mygdx.game.controller.GameController.WORLD_WIDTH;
 import static com.mygdx.game.view.entities.AppView.PIXEL_TO_METER;
 
 public class GameModel {
     private static final int OBSTACLE_COUNT = 2;
     private static final int PLATFORM_COUNT = 15;    //debatable
+    private static final int BOOST_COUNT = 1;
     private static final float VERTICAL_DISTANCE_PLATFORM = 3f;
     private static final int HORIZONTAL_DISTANCE_PLATFORM = 2;
-    private static final int MIN_PLATFORMS_BETWEEN_OBSTACLES = 10;
-    private static final int MAX_PLATFORMS_BETWEEN_OBSTACLES = 20;
+    private static final int MIN_PLATFORMS_BETWEEN_OBSTACLES = 1;
+    private static final int MAX_PLATFORMS_BETWEEN_OBSTACLES = 1;
     private static int PLAYERS_COUNT;  //not final. Number of players might change across games
 
     private static GameModel instance;
@@ -42,6 +34,9 @@ public class GameModel {
 
     private Pool<ObstacleModel> freeObstacles;
     private List<ObstacleModel> obstaclesInUse;
+
+    private Pool<BoostModel> freeBoosts;
+    private List<BoostModel> boostsInUse;
 
     private LavaModel lava;
 
@@ -55,10 +50,17 @@ public class GameModel {
         players = new ArrayList<PlayerModel>();
         platformsInUse = new ArrayList<PlatformModel>();
         obstaclesInUse = new ArrayList<ObstacleModel>();
+        boostsInUse = new ArrayList<BoostModel>();
         freeObstacles = new Pool<ObstacleModel>(OBSTACLE_COUNT) {
             @Override
             protected ObstacleModel newObject() {
                 return new ObstacleModel(0, 0, 0);
+            }
+        };
+        freeBoosts = new Pool<BoostModel>(BOOST_COUNT) {
+            @Override
+            protected BoostModel newObject() {
+                return new BoostModel(0, 0, 0);
             }
         };
         freePlatforms = new Pool<PlatformModel>() {
@@ -73,12 +75,21 @@ public class GameModel {
         this.obstacleY = 0;
         this.initializePlatforms();
         this.initializeObstacles();
+        this.initializeBoosts();
 
-       players.add(new PlayerModel(5, 50, 0));
+        BoostModel bm = freeBoosts.obtain();
+        bm.setPosition(5, 10);
+        boostsInUse.add(bm);
+      players.add(new PlayerModel(5, 50, 0));
       // players.add(new PlayerModel(2, 50, 0));
 
     }
 
+    private void initializeBoosts(){
+        for (int i = 0; i < BOOST_COUNT; i++)
+        this.freeBoosts.free(new BoostModel());
+
+    }
     private void initializePlatforms() {
         for (int i = 0; i < PLATFORM_COUNT; i++)
             this.freePlatforms.free(new PlatformModel());
@@ -105,7 +116,10 @@ public class GameModel {
         } else if (model instanceof ObstacleModel) {
             obstaclesInUse.remove(model);
             freeObstacles.free((ObstacleModel) model);
-        }
+        } else if (model instanceof BoostModel) {
+        boostsInUse.remove(model);
+        freeBoosts.free((BoostModel) model);
+    }
     }
 
     private void updatePlatforms(OrthographicCamera camera) {
@@ -128,7 +142,6 @@ public class GameModel {
             this.platformX = pm.getX();
             pm.setY(maxPlatformY);
             platformsInUse.add(pm);
-            //System.out.println("Platform rest: " + platformsToNextObstacles);
             if(platformsToNextObstacles == 0){
                 createNewObstacle();
             }
@@ -171,6 +184,10 @@ public class GameModel {
 
     public List<ObstacleModel> getObstaclesInUse() {
         return obstaclesInUse;
+    }
+
+    public List<BoostModel> getBoostsInUse() {
+        return boostsInUse;
     }
 
     public LavaModel getLava(){return lava;}

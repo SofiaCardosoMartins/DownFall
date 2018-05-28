@@ -19,7 +19,6 @@ import com.mygdx.game.view.entities.ViewFactory;
 import java.util.ArrayList;
 import java.util.List;
 
-
 import static com.mygdx.game.view.entities.AppView.PIXEL_TO_METER;
 
 public class GameController implements ContactListener {
@@ -62,9 +61,9 @@ public class GameController implements ContactListener {
 
         //Create boost bodies
         boostControllers = new ArrayList<BoostController>();
-        //List<BoostModel> boosts = GameModel.getInstance().getBoostsInUse();
-        //for (BoostModel boost : boosts)
-        //    boostControllers.add(new BoostController(world, boost));
+        List<BoostModel> boosts = GameModel.getInstance().getBoostsInUse();
+        for (BoostModel boost : boosts)
+            boostControllers.add(new BoostController(world, boost));
 
         //Create lava body
         this.lavaController = new LavaController(world, GameModel.getInstance().getLava(), BodyDef.BodyType.StaticBody, false);
@@ -115,6 +114,21 @@ public class GameController implements ContactListener {
         }
     }
 
+    public void updateBoosts(float minCameraY) {
+        for(BoostController boost: boostControllers){
+            if(boost.getY() < minCameraY)
+                GameModel.getInstance().remove((BoostModel)(boost.getBody().getUserData()));
+            world.destroyBody(boost.getBody());
+        }
+
+        this.boostControllers.clear();
+        List<BoostModel> boosts = GameModel.getInstance().getBoostsInUse();
+        for (BoostModel boost : boosts) {
+            BoostController oc = new FlyBoost(world, boost);
+            boostControllers.add(oc);
+        }
+    }
+
     public void update(float delta, OrthographicCamera camera) {
         GameModel.getInstance().update(delta, camera);
 
@@ -128,6 +142,7 @@ public class GameController implements ContactListener {
         this.updateLava(camera);
         this.updatePlatforms();
         this.updateObstacles(getMinCameraY(camera),getMaxCameraY(camera));
+        this.updateBoosts(getMinCameraY(camera));
 
         Array<Body> bodies = new Array<Body>();
         world.getBodies(bodies);
@@ -172,12 +187,17 @@ public class GameController implements ContactListener {
             if (playerController.getBody() == player)
                 pc = playerController;
         }
+
         BoostController bc = null;
         for (BoostController boostController: boostControllers){
             if (boostController.getBody() == boost)
                 bc = boostController;
         }
+
         pc.setStrategy(bc);
+        bc.setCAUGHT();
+        pc.collisionHandler();
+        GameModel.getInstance().remove((BoostModel)(bc.getBody().getUserData()));
     }
 
     @Override

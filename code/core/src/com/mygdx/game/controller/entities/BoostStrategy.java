@@ -5,4 +5,6 @@ public interface BoostStrategy {
     void moveLeft(PlayerController player);
     void jump(PlayerController player);
     void collisionHandler(PlayerController player);
+    void updateRemainingTime();
+    double getTime();
 }

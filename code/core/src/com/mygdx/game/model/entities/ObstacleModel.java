@@ -27,7 +27,6 @@ public class ObstacleModel extends EntityModel {
         float width = ViewFactory.getWidth(AppView.game, this) * PIXEL_TO_METER;
 
         if (((this.y + (height/2)) < minCameraY ) || ((this.x - (width/2)) > WORLD_WIDTH)) {
-            System.out.println("--------------------------------");
             this.setFlaggedForRemoval(true);
             GameModel.getInstance().remove(this);
         }

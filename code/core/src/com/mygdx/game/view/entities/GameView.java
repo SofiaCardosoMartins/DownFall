@@ -12,6 +12,7 @@ import com.mygdx.game.DownFall;
 import com.badlogic.gdx.Gdx;
 import com.mygdx.game.controller.GameController;
 import com.mygdx.game.model.GameModel;
+import com.mygdx.game.model.entities.BoostModel;
 import com.mygdx.game.model.entities.ObstacleModel;
 import com.mygdx.game.model.entities.PlatformModel;
 import com.mygdx.game.model.entities.PlayerModel;
@@ -27,7 +28,7 @@ public class GameView extends AppView {
     Box2DDebugRenderer debugRenderer;
     Matrix4 debugCamera;
     private static float CAMERA_SPEED = 1f;
-    private static final boolean DEBUG_PHYSICS = false;
+    private static final boolean DEBUG_PHYSICS = true;
     private static final float CAMERA_SPEED_INC = 1f; //camera speed increment
     private static final float TIME_TO_NEXT_INC = 10f;   //time between camera's speed increment (in seconds)
     private BarView barView;
@@ -69,8 +70,9 @@ public class GameView extends AppView {
         this.game.getAssetManager().load("largeBarDouble.png", Texture.class);
         this.game.getAssetManager().load("largeBarSingle.png", Texture.class);
         this.game.getAssetManager().load("scorePointer.png", Texture.class);
+        this.game.getAssetManager().load("flyBoost.png", Texture.class);
 
-        //enddddwwa
+        //end
         this.game.getAssetManager().finishLoading();
 
     }
@@ -135,14 +137,13 @@ public class GameView extends AppView {
             float acceX = Gdx.input.getAccelerometerX();
             float acceY = Gdx.input.getAccelerometerY();
             float acceZ = Gdx.input.getAccelerometerZ();
-            System.out.println("x:" + acceX + " y :" + acceY +"  z: " + acceZ);
             if (acceX < 0)
                 GameController.getInstance().handleInput(GameController.Direction.RIGHT,1);
             else if (acceX > 0)
                 GameController.getInstance().handleInput(GameController.Direction.LEFT,1);
-            if (Gdx.input.isTouched())
-                GameController.getInstance().handleInput(GameController.Direction.UP,1);
         }
+        if (Gdx.input.isTouched())
+            GameController.getInstance().handleInput(GameController.Direction.UP,1);
 
     }
 
@@ -160,10 +161,7 @@ public class GameView extends AppView {
         //Obstacles
 
         List<ObstacleModel> obstacles = GameModel.getInstance().getObstaclesInUse();
-        //System.out.println("Numero de obstacles: " + obstacles.size());
         for (ObstacleModel obstacle : obstacles) {
-            //System.out.println("obstacle criado na pos:" + obstacle.getX());
-            //System.out.println("pos camera: " + GameController.getInstance().getMinCameraY(camera));
             EntityView view = ViewFactory.makeView(game, obstacle);
             view.update(obstacle);
             view.draw(game.getBatch());
@@ -175,6 +173,15 @@ public class GameView extends AppView {
         for (PlayerModel player : players) {
             EntityView view = ViewFactory.makeView(game, player);
             view.update(player);
+            view.draw(game.getBatch());
+        }
+
+        //Boosts
+
+        List<BoostModel> boosts = GameModel.getInstance().getBoostsInUse();
+        for (BoostModel boost : boosts) {
+            EntityView view = ViewFactory.makeView(game, boost);
+            view.update(boost);
             view.draw(game.getBatch());
         }
     }

@@ -17,7 +17,11 @@ public abstract class EntityController {
     public static final short PLATFORM_BITS = 2;
     public static final short OBSTACLE_BITS = 4;
     public static final short LAVA_BITS = 8;
-    public static final short BOOST_BITS = 8;
+    public static final short BOOST_BITS = 16;
+
+    EntityController(){
+
+    }
 
     EntityController(World world, EntityModel model, BodyDef.BodyType bodyType, boolean rotate)
     {
