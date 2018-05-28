@@ -8,15 +8,9 @@ public class Idle extends State {
 
     @Override
     public State handleInput(GameController.Direction dir) {
-        switch (dir) {
-            case UP:
-                return new Jump();
-            case LEFT:
-                return new MoveLeft();
-            case RIGHT:
-                return new MoveRight();
-        }
-        return this;
+        if (dir == GameController.Direction.UP)
+            return new Jump();
+        else return this;
     }
 
     @Override

@@ -69,7 +69,7 @@ public class PlayerController extends EntityController {
         float vy = body.getLinearVelocity().y;
         context.update(vx,vy);
         this.strategy.updateRemainingTime();
-        System.out.println("REMAINING TIME: " + strategy.getTime());
+        //System.out.println("REMAINING TIME: " + strategy.getTime());
         if(((BoostController)strategy).isTIMEOUT())
             this.strategy = new NaturalBoost();
     }
