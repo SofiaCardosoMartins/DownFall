@@ -126,15 +126,11 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/DownFall-code.iml" filepath="$PROJECT_DIR$/DownFall-code.iml" />
       <module fileurl="file://$PROJECT_DIR$/android/android.iml" filepath="$PROJECT_DIR$/android/android.iml" />
-      <module fileurl="file://$PROJECT_DIR$/android/android.iml" filepath="$PROJECT_DIR$/android/android.iml" />
-      <module fileurl="file://$PROJECT_DIR$/code.iml" filepath="$PROJECT_DIR$/code.iml" />
       <module fileurl="file://$PROJECT_DIR$/code.iml" filepath="$PROJECT_DIR$/code.iml" />
       <module fileurl="file://$PROJECT_DIR$/android/code-android.iml" filepath="$PROJECT_DIR$/android/code-android.iml" />
       <module fileurl="file://$PROJECT_DIR$/core/code-core.iml" filepath="$PROJECT_DIR$/core/code-core.iml" />
       <module fileurl="file://$PROJECT_DIR$/desktop/code-desktop.iml" filepath="$PROJECT_DIR$/desktop/code-desktop.iml" />
       <module fileurl="file://$PROJECT_DIR$/core/core.iml" filepath="$PROJECT_DIR$/core/core.iml" />
-      <module fileurl="file://$PROJECT_DIR$/core/core.iml" filepath="$PROJECT_DIR$/core/core.iml" />
-      <module fileurl="file://$PROJECT_DIR$/desktop/desktop.iml" filepath="$PROJECT_DIR$/desktop/desktop.iml" />
       <module fileurl="file://$PROJECT_DIR$/desktop/desktop.iml" filepath="$PROJECT_DIR$/desktop/desktop.iml" />
     </modules>
   </component>

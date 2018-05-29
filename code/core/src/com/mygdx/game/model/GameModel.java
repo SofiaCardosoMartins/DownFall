@@ -3,13 +3,19 @@ package com.mygdx.game.model;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.utils.Pool;
 import com.mygdx.game.controller.GameController;
+import com.mygdx.game.controller.entities.BoostStrategy;
 import com.mygdx.game.model.entities.*;
 import com.mygdx.game.view.entities.AppView;
 import com.mygdx.game.view.entities.EntityView;
 import com.mygdx.game.view.entities.ViewFactory;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.Random;
+
+import javax.swing.text.View;
 
 import static com.badlogic.gdx.math.MathUtils.random;
 import static com.mygdx.game.controller.GameController.WORLD_WIDTH;
@@ -18,11 +24,13 @@ import static com.mygdx.game.view.entities.AppView.PIXEL_TO_METER;
 public class GameModel {
     private static final int OBSTACLE_COUNT = 2;
     private static final int PLATFORM_COUNT = 15;    //debatable
-    private static final int BOOST_COUNT = 1;
+    private static final int BOOST_COUNT = 10;
     private static final float VERTICAL_DISTANCE_PLATFORM = 3f;
     private static final int HORIZONTAL_DISTANCE_PLATFORM = 2;
     private static final int MIN_PLATFORMS_BETWEEN_OBSTACLES = 1;
     private static final int MAX_PLATFORMS_BETWEEN_OBSTACLES = 1;
+    private static final int MIN_PLATFORMS_BETWEEN_BOOSTS = 1;
+    private static final int MAX_PLATFORMS_BETWEEN_BOOSTS = 1;
     private static int PLAYERS_COUNT;  //not final. Number of players might change across games
 
     private static GameModel instance;
@@ -42,8 +50,10 @@ public class GameModel {
 
     private float maxPlatformY;
     private float platformX;
-    private int platformsToNextObstacles;   //remaing platforms until the next obstacle appears
+    private int platformsToNextObstacles;   //remaining platforms until the next obstacle appears
+    private int platformsToNextBoosts;      //remaining platforms until the next boost appears
     private float obstacleY;
+    private float boostX;
 
     private GameModel() {
         this.lava = new LavaModel();
@@ -72,22 +82,24 @@ public class GameModel {
         this.maxPlatformY = 0;
         this.platformX = WORLD_WIDTH / 2;
         this.platformsToNextObstacles = random(MIN_PLATFORMS_BETWEEN_OBSTACLES,MAX_PLATFORMS_BETWEEN_OBSTACLES);
+        this.platformsToNextBoosts = random(MIN_PLATFORMS_BETWEEN_BOOSTS,MAX_PLATFORMS_BETWEEN_BOOSTS);
         this.obstacleY = 0;
+        this.boostX = 0;
         this.initializePlatforms();
         this.initializeObstacles();
         this.initializeBoosts();
 
-        BoostModel bm = freeBoosts.obtain();
+       /* BoostModel bm = freeBoosts.obtain();
         bm.setPosition(5, 10);
-        boostsInUse.add(bm);
-      players.add(new PlayerModel(5, 50, 0));
+        boostsInUse.add(bm);*/
+      //players.add(new PlayerModel(5, 50, 0));
       // players.add(new PlayerModel(2, 50, 0));
 
     }
 
     private void initializeBoosts(){
         for (int i = 0; i < BOOST_COUNT; i++)
-        this.freeBoosts.free(new BoostModel());
+            this.freeBoosts.free(new BoostModel());
 
     }
     private void initializePlatforms() {
@@ -112,14 +124,16 @@ public class GameModel {
             platformsInUse.remove(model);
             freePlatforms.free((PlatformModel) model);
             this.platformsToNextObstacles--;
-            this.obstacleY = model.getY() + 10;
+            this.platformsToNextBoosts--;
+            this.obstacleY = model.getY();
+            this.boostX = model.getX();
         } else if (model instanceof ObstacleModel) {
             obstaclesInUse.remove(model);
             freeObstacles.free((ObstacleModel) model);
         } else if (model instanceof BoostModel) {
-        boostsInUse.remove(model);
-        freeBoosts.free((BoostModel) model);
-    }
+            boostsInUse.remove(model);
+            freeBoosts.free((BoostModel) model);
+        }
     }
 
     private void updatePlatforms(OrthographicCamera camera) {
@@ -141,9 +155,10 @@ public class GameModel {
             this.platformX = pm.getX();
             pm.setY(maxPlatformY);
             platformsInUse.add(pm);
-            if(platformsToNextObstacles == 0){
+            if(platformsToNextObstacles == 0)
                 createNewObstacle();
-            }
+            if(platformsToNextBoosts == 0)
+                createNewBoost(pm.getX(),pm.getY());
         }
     }
 
@@ -155,9 +170,27 @@ public class GameModel {
         this.platformsToNextObstacles = random(MIN_PLATFORMS_BETWEEN_OBSTACLES,MAX_PLATFORMS_BETWEEN_OBSTACLES);
         ObstacleModel om = freeObstacles.obtain();
         om.setFlaggedForRemoval(false);
-        om.setY(obstacleY + ((ev.getSprite().getHeight()/2)*PIXEL_TO_METER));
+        om.setY(10+obstacleY + ((ev.getSprite().getHeight()/2)*PIXEL_TO_METER));
         om.setX(-(ev.getSprite().getWidth()/2) * PIXEL_TO_METER);
         this.obstaclesInUse.add(om);
+    }
+
+    private void createNewBoost(float x, float y)
+    {
+        ArrayList<BoostModel> boostModels = new ArrayList<BoostModel>(Arrays.asList(new FlyBoostModel(), new NoCollisionsBoost()));
+        BoostModel boostModel = boostModels.get(random.nextInt(boostModels.size()));
+        EntityView ev = ViewFactory.makeView(AppView.game, boostModel);
+        float platformHeight = ViewFactory.getHeigth(AppView.game,new PlatformModel());
+
+        this.platformsToNextBoosts = random(MIN_PLATFORMS_BETWEEN_BOOSTS,MAX_PLATFORMS_BETWEEN_BOOSTS);
+        BoostModel bm = freeBoosts.obtain();
+        bm = boostModel;
+        bm.setFlaggedForRemoval(false);
+        bm.setY(y + ((ev.getSprite().getHeight()/2)*PIXEL_TO_METER) + ((platformHeight/2)*PIXEL_TO_METER));
+        bm.setX(x);
+        this.boostsInUse.add(bm);
+        System.out.println("boost y: " + bm.getY());
+        System.out.println("boost type: " + bm.getType() + '\n');
     }
 
     private void updateObstacles(OrthographicCamera camera)
@@ -167,10 +200,18 @@ public class GameModel {
             om.checkBounds(GameController.getInstance().getMinCameraY(camera));
     }
 
+    private void updateBoosts(OrthographicCamera camera)
+    {
+        //check obstacles in use
+        for (BoostModel om : new ArrayList<BoostModel>(boostsInUse))
+            om.checkBounds(GameController.getInstance().getMinCameraY(camera));
+    }
+
     public void update(float delta, OrthographicCamera camera) {
 
         this.updatePlatforms(camera);
         this.updateObstacles(camera);
+        this.updateBoosts(camera);
     }
 
     public List<PlayerModel> getPlayers() {

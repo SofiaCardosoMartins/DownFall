@@ -13,6 +13,7 @@ import com.badlogic.gdx.Gdx;
 import com.mygdx.game.controller.GameController;
 import com.mygdx.game.model.GameModel;
 import com.mygdx.game.model.entities.BoostModel;
+import com.mygdx.game.model.entities.EntityModel;
 import com.mygdx.game.model.entities.ObstacleModel;
 import com.mygdx.game.model.entities.PlatformModel;
 import com.mygdx.game.model.entities.PlayerModel;
@@ -28,7 +29,7 @@ public class GameView extends AppView {
     Box2DDebugRenderer debugRenderer;
     Matrix4 debugCamera;
     private static float CAMERA_SPEED = 1f;
-    private static final boolean DEBUG_PHYSICS = true;
+    private static final boolean DEBUG_PHYSICS = false;
     private static final float CAMERA_SPEED_INC = 1f; //camera speed increment
     private static final float TIME_TO_NEXT_INC = 10f;   //time between camera's speed increment (in seconds)
     private BarView barView;
@@ -71,6 +72,7 @@ public class GameView extends AppView {
         this.game.getAssetManager().load("largeBarSingle.png", Texture.class);
         this.game.getAssetManager().load("scorePointer.png", Texture.class);
         this.game.getAssetManager().load("flyBoost.png", Texture.class);
+        this.game.getAssetManager().load("noCollisionsBoost.png", Texture.class);
 
         //end
         this.game.getAssetManager().finishLoading();
@@ -180,6 +182,7 @@ public class GameView extends AppView {
 
         List<BoostModel> boosts = GameModel.getInstance().getBoostsInUse();
         for (BoostModel boost : boosts) {
+            if(boost.getType() == EntityModel.ModelType.NATURAL_BOOST) continue;
             EntityView view = ViewFactory.makeView(game, boost);
             view.update(boost);
             view.draw(game.getBatch());

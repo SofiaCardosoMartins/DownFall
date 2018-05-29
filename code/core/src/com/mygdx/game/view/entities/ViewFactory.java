@@ -17,8 +17,10 @@ public class ViewFactory {
                 cache.put(model.getType(), new PlayerView(game));
             if (model.getType() == EntityModel.ModelType.OBSTACLE)
                 cache.put(model.getType(), new ObstacleView(game));
-            if (model.getType() == EntityModel.ModelType.BOOST)
-                cache.put(model.getType(), new BoostView(game));
+            if (model.getType() == EntityModel.ModelType.FLY_BOOST)
+                cache.put(model.getType(), new FlyBoostView(game));
+            if (model.getType() == EntityModel.ModelType.NO_COLLISIONS_BOOST)
+                cache.put(model.getType(), new NoCollisionsBoostView(game));
             if (model.getType() == EntityModel.ModelType.PLATFORM)
                 cache.put(model.getType(), new PlatformView(game));
             if(model.getType() == EntityModel.ModelType.LAVA)

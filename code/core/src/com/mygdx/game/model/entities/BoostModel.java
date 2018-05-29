@@ -1,6 +1,9 @@
 package com.mygdx.game.model.entities;
 
-import com.mygdx.game.controller.entities.BoostStrategy;
+import com.mygdx.game.model.GameModel;
+import com.mygdx.game.view.entities.AppView;
+import com.mygdx.game.view.entities.ViewFactory;
+import static com.mygdx.game.view.entities.AppView.PIXEL_TO_METER;
 
 public class BoostModel extends EntityModel {
 
@@ -16,6 +19,17 @@ public class BoostModel extends EntityModel {
 
     @Override
     public ModelType getType() {
-        return ModelType.BOOST;
+        return ModelType.NATURAL_BOOST;
+    }
+
+    public void checkBounds(float minCameraY) {
+        if(this.getType() == ModelType.NATURAL_BOOST) return;
+
+        float height = ViewFactory.getHeigth(AppView.game, this) * PIXEL_TO_METER;
+
+        if ((this.y + (height/2)) < minCameraY ) {
+            this.setFlaggedForRemoval(true);
+            GameModel.getInstance().remove(this);
+        }
     }
 }

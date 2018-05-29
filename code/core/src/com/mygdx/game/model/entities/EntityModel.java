@@ -2,7 +2,7 @@ package com.mygdx.game.model.entities;
 
 public abstract class EntityModel {
 
-    public enum ModelType {PLAYER, OBSTACLE, BOOST, PLATFORM, LAVA};
+    public enum ModelType {PLAYER, OBSTACLE, NATURAL_BOOST, FLY_BOOST, NO_COLLISIONS_BOOST, PLATFORM, LAVA};
     protected float x;
     protected float y;
     protected float rotation;

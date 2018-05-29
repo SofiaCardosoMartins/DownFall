@@ -32,15 +32,11 @@ public class BoostController extends EntityController implements BoostStrategy {
     {
         super(world,boostModel,BodyDef.BodyType.StaticBody,true);
         float density = 1f, friction = 0.4f, restitution = 0f;
-        int width = 75, height = 75;
+        int width = 55, height = 55;
 
         // Fixture needs to be convex so we need two of them.
         createFixture(body, new float[]{
-                0,33, 14,14, 46,7, 27,52, 7,52
-        }, width, height, density, friction, restitution, BOOST_BITS, PLAYER_BITS);
-
-        createFixture(body, new float[]{
-                46,7, 27,52, 45,67, 74,55, 71,29
+                0,0,55,0,55,55,0,55
         }, width, height, density, friction, restitution, BOOST_BITS, PLAYER_BITS);
 
         this.beginTimeMeasurement = System.nanoTime();
