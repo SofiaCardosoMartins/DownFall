@@ -126,15 +126,19 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/DownFall-code.iml" filepath="$PROJECT_DIR$/DownFall-code.iml" />
       <module fileurl="file://$PROJECT_DIR$/android/android.iml" filepath="$PROJECT_DIR$/android/android.iml" />
+      <module fileurl="file://$PROJECT_DIR$/android/android.iml" filepath="$PROJECT_DIR$/android/android.iml" />
+      <module fileurl="file://$PROJECT_DIR$/code.iml" filepath="$PROJECT_DIR$/code.iml" />
       <module fileurl="file://$PROJECT_DIR$/code.iml" filepath="$PROJECT_DIR$/code.iml" />
       <module fileurl="file://$PROJECT_DIR$/android/code-android.iml" filepath="$PROJECT_DIR$/android/code-android.iml" />
       <module fileurl="file://$PROJECT_DIR$/core/code-core.iml" filepath="$PROJECT_DIR$/core/code-core.iml" />
       <module fileurl="file://$PROJECT_DIR$/desktop/code-desktop.iml" filepath="$PROJECT_DIR$/desktop/code-desktop.iml" />
       <module fileurl="file://$PROJECT_DIR$/core/core.iml" filepath="$PROJECT_DIR$/core/core.iml" />
+      <module fileurl="file://$PROJECT_DIR$/core/core.iml" filepath="$PROJECT_DIR$/core/core.iml" />
+      <module fileurl="file://$PROJECT_DIR$/desktop/desktop.iml" filepath="$PROJECT_DIR$/desktop/desktop.iml" />
       <module fileurl="file://$PROJECT_DIR$/desktop/desktop.iml" filepath="$PROJECT_DIR$/desktop/desktop.iml" />
     </modules>
   </component>
-  <component name="ProjectRootManager" version="2" languageLevel="JDK_1_8" project-jdk-name="1.8" project-jdk-type="JavaSDK">
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_1_7" project-jdk-name="1.8" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/out" />
   </component>
   <component name="RunConfigurationProducerService">
@@ -204,6 +208,13 @@
     <library name="gdx-platform-1.9.8-natives-desktop">
       <CLASSES>
         <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.badlogicgames.gdx/gdx-platform/1.9.8/604a2ef2c7c92a5900114757cbd3fb4dcbb8270c/gdx-platform-1.9.8-natives-desktop.jar!/" />
+      </CLASSES>
+      <JAVADOC />
+      <SOURCES />
+    </library>
+    <library name="Gradle: android-android-25">
+      <CLASSES>
+        <root url="jar://$USER_HOME$/Android/Sdk/platforms/android-25/android.jar!/" />
       </CLASSES>
       <JAVADOC />
       <SOURCES />

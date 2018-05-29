@@ -126,7 +126,6 @@ public class GameModel {
         //check platforms out of display
         EntityView ev = ViewFactory.makeView(AppView.game, new PlatformModel());
         float minCameraY = PIXEL_TO_METER * (camera.position.y - (camera.viewportHeight / 2));
-        float maxCameraY = PIXEL_TO_METER * (camera.position.y + (camera.viewportHeight / 2));
 
         //check platforms in use
         for (PlatformModel pm : new ArrayList<PlatformModel>(platformsInUse))
