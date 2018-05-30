@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.mygdx.game.view.entities.AppView;
 import com.mygdx.game.view.entities.GameView;
 import com.badlogic.gdx.Game;
+import com.mygdx.game.view.entities.MenuView;
 
 import java.util.Stack;
 
@@ -22,7 +23,7 @@ public class DownFall extends Game {
 	}
 
 	private void startGame(){
-	    views.push(new GameView(this));
+	    views.push(new MenuView(this));
 		setScreen(views.peek());
 	}
 
