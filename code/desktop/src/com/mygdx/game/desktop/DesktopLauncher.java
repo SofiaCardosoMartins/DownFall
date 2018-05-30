@@ -11,6 +11,7 @@ import static com.mygdx.game.controller.GameController.WORLD_HEIGHT;
 
 public class DesktopLauncher {
 	public static void main (String[] arg) {
+		//System.setProperty("user.name", "seconduser");
 		LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
 
 		config.title = GameController.TITLE;
