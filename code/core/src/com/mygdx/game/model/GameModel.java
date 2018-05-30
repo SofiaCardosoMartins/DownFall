@@ -31,7 +31,7 @@ public class GameModel {
     private static final int MAX_PLATFORMS_BETWEEN_OBSTACLES = 1;
     private static final int MIN_PLATFORMS_BETWEEN_BOOSTS = 1;
     private static final int MAX_PLATFORMS_BETWEEN_BOOSTS = 1;
-    private static int PLAYERS_COUNT;  //not final. Number of players might change across games
+    public static int PLAYERS_COUNT;  //not final. Number of players might change across games
 
     private static GameModel instance;
 
@@ -53,7 +53,6 @@ public class GameModel {
     private int platformsToNextObstacles;   //remaining platforms until the next obstacle appears
     private int platformsToNextBoosts;      //remaining platforms until the next boost appears
     private float obstacleY;
-    private float boostX;
 
     private GameModel() {
         this.lava = new LavaModel();
@@ -84,10 +83,15 @@ public class GameModel {
         this.platformsToNextObstacles = random(MIN_PLATFORMS_BETWEEN_OBSTACLES,MAX_PLATFORMS_BETWEEN_OBSTACLES);
         this.platformsToNextBoosts = random(MIN_PLATFORMS_BETWEEN_BOOSTS,MAX_PLATFORMS_BETWEEN_BOOSTS);
         this.obstacleY = 0;
-        this.boostX = 0;
         this.initializePlatforms();
         this.initializeObstacles();
         this.initializeBoosts();
+
+        int x = 2;
+        for(int i = 0;i<PLAYERS_COUNT;i++){
+            players.add(new PlayerModel(x,50,0));
+             x+=2;
+        }
 
        /* BoostModel bm = freeBoosts.obtain();
         bm.setPosition(5, 10);
@@ -95,6 +99,11 @@ public class GameModel {
       //players.add(new PlayerModel(5, 50, 0));
       // players.add(new PlayerModel(2, 50, 0));
 
+    }
+
+    public void setPlayersCount(int numPlayers)
+    {
+        PLAYERS_COUNT = numPlayers;
     }
 
     private void initializeBoosts(){
@@ -126,7 +135,6 @@ public class GameModel {
             this.platformsToNextObstacles--;
             this.platformsToNextBoosts--;
             this.obstacleY = model.getY();
-            this.boostX = model.getX();
         } else if (model instanceof ObstacleModel) {
             obstaclesInUse.remove(model);
             freeObstacles.free((ObstacleModel) model);
@@ -189,8 +197,6 @@ public class GameModel {
         bm.setY(y + ((ev.getSprite().getHeight()/2)*PIXEL_TO_METER) + ((platformHeight/2)*PIXEL_TO_METER));
         bm.setX(x);
         this.boostsInUse.add(bm);
-        System.out.println("boost y: " + bm.getY());
-        System.out.println("boost type: " + bm.getType() + '\n');
     }
 
     private void updateObstacles(OrthographicCamera camera)

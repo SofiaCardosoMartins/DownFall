@@ -6,7 +6,6 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
-import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.mygdx.game.DownFall;
 import com.badlogic.gdx.Gdx;
@@ -34,18 +33,19 @@ public class GameView extends AppView {
     private static final float TIME_TO_NEXT_INC = 10f;   //time between camera's speed increment (in seconds)
     private BarView barView;
 
-    public GameView(DownFall game) {
+    public GameView(DownFall game, int numPlayers) {
         super(game);
         this.lastCameraSpeedIncreaseTime = System.nanoTime();
         loadAssets();
         createCamera();
+        GameModel.PLAYERS_COUNT = numPlayers;
         barView = new BarView(game, GameController.getInstance().isDoublePlayer());
     }
 
     @Override
     protected void createCamera() {
         OrthographicCamera camera = new OrthographicCamera(VIEWPORT_WIDTH / PIXEL_TO_METER, VIEWPORT_WIDTH / PIXEL_TO_METER * ((float) 14 / (float) 10));
-        this.viewport = new StretchViewport(WORLD_WIDTH, VIEWPORT_WIDTH / PIXEL_TO_METER * ((float) 14 / (float) 10) );
+        this.viewport = new StretchViewport(WORLD_WIDTH / PIXEL_TO_METER, VIEWPORT_WIDTH / PIXEL_TO_METER * ((float) 14 / (float) 10) );
         camera.position.set(camera.viewportWidth / 2f, camera.viewportHeight / 2f, 0);
         camera.setToOrtho(false, camera.viewportWidth, camera.viewportHeight);
 

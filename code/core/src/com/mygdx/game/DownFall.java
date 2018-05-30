@@ -27,6 +27,13 @@ public class DownFall extends Game {
 		setScreen(views.peek());
 	}
 
+	public void switchToGameView(int numPlayers)
+	{
+		views.pop();
+		views.push(new GameView(this,numPlayers));
+		setScreen(views.peek());
+	}
+
 	@Override
 	public void dispose () {
 		batch.dispose();
