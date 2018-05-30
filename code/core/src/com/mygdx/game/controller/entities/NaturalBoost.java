@@ -28,7 +28,7 @@ public class NaturalBoost extends BoostController {
 
     @Override
     public void jump(PlayerController player) {
-        player.getBody().applyForceToCenter(0, 800, true);
+        player.getBody().applyForceToCenter(0, 600, true);
     }
 
     @Override

@@ -23,15 +23,15 @@ import static com.mygdx.game.view.entities.AppView.PIXEL_TO_METER;
 
 public class GameModel {
     private static final int OBSTACLE_COUNT = 2;
-    private static final int PLATFORM_COUNT = 15;    //debatable
-    private static final int BOOST_COUNT = 10;
-    private static final float VERTICAL_DISTANCE_PLATFORM = 3f;
+    private static final int PLATFORM_COUNT = 15;
+    private static final int BOOST_COUNT = 5;
+    private static final float VERTICAL_DISTANCE_PLATFORM = 3;
     private static final int HORIZONTAL_DISTANCE_PLATFORM = 2;
-    private static final int MIN_PLATFORMS_BETWEEN_OBSTACLES = 1;
-    private static final int MAX_PLATFORMS_BETWEEN_OBSTACLES = 1;
-    private static final int MIN_PLATFORMS_BETWEEN_BOOSTS = 1;
-    private static final int MAX_PLATFORMS_BETWEEN_BOOSTS = 1;
-    public static int PLAYERS_COUNT;  //not final. Number of players might change across games
+    private static final int MIN_PLATFORMS_BETWEEN_OBSTACLES = 15;
+    private static final int MAX_PLATFORMS_BETWEEN_OBSTACLES = 25;
+    private static final int MIN_PLATFORMS_BETWEEN_BOOSTS = 20;
+    private static final int MAX_PLATFORMS_BETWEEN_BOOSTS = 25;
+    public static int PLAYERS_COUNT;
 
     private static GameModel instance;
 
@@ -69,7 +69,7 @@ public class GameModel {
         freeBoosts = new Pool<BoostModel>(BOOST_COUNT) {
             @Override
             protected BoostModel newObject() {
-                return new BoostModel(0, 0, 0);
+                return new BoostModel();
             }
         };
         freePlatforms = new Pool<PlatformModel>() {
@@ -89,21 +89,13 @@ public class GameModel {
 
         int x = 2;
         for(int i = 0;i<PLAYERS_COUNT;i++){
-            players.add(new PlayerModel(x,50,0));
+            players.add(new PlayerModel(x,50,0,i+1));
              x+=2;
         }
 
-       /* BoostModel bm = freeBoosts.obtain();
+        FlyBoostModel bm = new FlyBoostModel();
         bm.setPosition(5, 10);
-        boostsInUse.add(bm);*/
-      //players.add(new PlayerModel(5, 50, 0));
-      // players.add(new PlayerModel(2, 50, 0));
-
-    }
-
-    public void setPlayersCount(int numPlayers)
-    {
-        PLAYERS_COUNT = numPlayers;
+        boostsInUse.add(bm);
     }
 
     private void initializeBoosts(){

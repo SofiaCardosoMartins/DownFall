@@ -6,12 +6,8 @@ import com.mygdx.game.model.entities.BoostModel;
 
 
 public class BoostController extends EntityController implements BoostStrategy {
-    @Override
-    public double getTime() {
-        return elapsedTime;
-    }
 
-    private static final double ACTIVE_TIME = 10;  //in seconds
+    public static final double ACTIVE_TIME = 10;  //in seconds
 
     long beginTimeMeasurement; //in nanoseconds
     long elapsedTime;
@@ -72,6 +68,14 @@ public class BoostController extends EntityController implements BoostStrategy {
             this.TIMEOUT = true;
         }
     }
+
+    @Override
+    public double getTime() {
+        return elapsedTime;
+    }
+
+    @Override
+    public double getRemainingTime() {return ACTIVE_TIME - elapsedTime;}
 
 
     public void setCAUGHT() {

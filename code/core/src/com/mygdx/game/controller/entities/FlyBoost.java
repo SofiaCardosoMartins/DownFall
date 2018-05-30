@@ -11,7 +11,6 @@ public class FlyBoost extends BoostController {
 
     public FlyBoost(World world, BoostModel boostModel) {
         super(world, boostModel);
-        //createFixture
     }
 
     @Override

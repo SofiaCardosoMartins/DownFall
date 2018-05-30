@@ -27,7 +27,7 @@ public class GameController implements ContactListener {
     public static final String TITLE = "DownFall";
     public static final int WORLD_WIDTH = 10;
     public static final int WORLD_HEIGHT = 1050;
-    public static final Vector2 GRAVITY = new Vector2(0, -9f);
+    public static final Vector2 GRAVITY = new Vector2(0, -5f);
     private final World world;
     private List<PlayerController> playerControllers;
     private List<PlatformController> platformControllers;
@@ -197,6 +197,8 @@ public class GameController implements ContactListener {
         pc.setStrategy(bc);
         bc.setCAUGHT();
         pc.collisionHandler();
+        ((PlayerModel) pc.getUserData()).setRemainingTime(bc.getRemainingTime());
+        ((PlayerModel) pc.getUserData()).setBoostPresent(true);
         GameModel.getInstance().remove((BoostModel)(bc.getBody().getUserData()));
     }
 
