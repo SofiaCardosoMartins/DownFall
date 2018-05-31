@@ -12,7 +12,6 @@ public class Context {
         this.player = player;
     }
     public void handleInput(GameController.Direction dir){
-        System.out.println(dir);
         if (dir == GameController.Direction.RIGHT)
             player.moveRight();
         else if (dir == GameController.Direction.LEFT)

@@ -1,9 +1,11 @@
 package com.mygdx.game.view.entities;
 
 import com.badlogic.gdx.Input;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
@@ -21,16 +23,18 @@ import java.util.List;
 
 import static com.mygdx.game.controller.GameController.WORLD_WIDTH;
 import static com.mygdx.game.controller.GameController.WORLD_HEIGHT;
+import static com.mygdx.game.controller.entities.BoostController.ACTIVE_TIME;
 
 public class GameView extends AppView {
 
     long lastCameraSpeedIncreaseTime; //in nanoseconds
     Box2DDebugRenderer debugRenderer;
     Matrix4 debugCamera;
-    private static float CAMERA_SPEED = 1f;
+    private static float CAMERA_SPEED = 1;
     private static final boolean DEBUG_PHYSICS = false;
-    private static final float CAMERA_SPEED_INC = 1f; //camera speed increment
-    private static final float TIME_TO_NEXT_INC = 10f;   //time between camera's speed increment (in seconds)
+    private static final float CAMERA_SPEED_INC = 1; //camera speed increment
+    private static final float TIME_TO_NEXT_INC = 10;   //time between camera's speed increment (in seconds)
+    private static final float FONT_SCALE  = 1.2f;
     private BarView barView;
 
     public GameView(DownFall game, int numPlayers) {
@@ -149,6 +153,19 @@ public class GameView extends AppView {
 
     }
 
+    private void drawBitMapFont(PlayerModel playerModel)
+    {
+        if(playerModel.isBoostPresent())
+        {
+            float width = ViewFactory.getWidth(game,playerModel);
+            float height = ViewFactory.getHeigth(game,playerModel);
+            BitmapFont bm = new BitmapFont();
+            bm.setColor(Color.BLUE);
+            bm.getData().setScale(FONT_SCALE);
+            bm.draw(game.getBatch(),String.valueOf(playerModel.getRemainingTime()),playerModel.getX()/PIXEL_TO_METER + width/2,playerModel.getY()/PIXEL_TO_METER + height/2);
+        }
+    }
+
     @Override
     protected void drawEntities() {
 
@@ -176,11 +193,13 @@ public class GameView extends AppView {
             EntityView view = ViewFactory.makeView(game, player);
             view.update(player);
             view.draw(game.getBatch());
+            drawBitMapFont(player);
         }
 
         //Boosts
 
         List<BoostModel> boosts = GameModel.getInstance().getBoostsInUse();
+        System.out.println("numero de boosts: " + boosts.size());
         for (BoostModel boost : boosts) {
             if(boost.getType() == EntityModel.ModelType.NATURAL_BOOST) continue;
             EntityView view = ViewFactory.makeView(game, boost);

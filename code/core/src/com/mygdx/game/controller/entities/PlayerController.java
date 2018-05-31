@@ -15,7 +15,7 @@ public class PlayerController extends EntityController {
     public PlayerController(World world, PlayerModel playerModel) {
         super(world, playerModel, BodyDef.BodyType.DynamicBody, false);
         float density = 1.0f; //heavy
-        float friction = 0.0f;
+        float friction = 0.8f;
         float restitution = 0.0f; //no restitution
         int width = 128;
         int height = 128;
@@ -69,8 +69,10 @@ public class PlayerController extends EntityController {
         float vy = body.getLinearVelocity().y;
         context.update(vx,vy);
         this.strategy.updateRemainingTime();
-        //System.out.println("REMAINING TIME: " + strategy.getTime());
-        if(((BoostController)strategy).isTIMEOUT())
+        ((PlayerModel)this.getUserData()).setRemainingTime(this.strategy.getRemainingTime());
+        if(((BoostController)strategy).isTIMEOUT()) {
             this.strategy = new NaturalBoost();
+            ((PlayerModel) this.getUserData()).setBoostPresent(false);
+        }
     }
 }
