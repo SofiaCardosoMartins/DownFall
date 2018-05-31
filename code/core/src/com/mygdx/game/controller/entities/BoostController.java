@@ -42,12 +42,12 @@ public class BoostController extends EntityController implements BoostStrategy {
 
     @Override
     public void moveRight(PlayerController player) {
-
+        player.getBody().applyForceToCenter(40, 0, true);
     }
 
     @Override
     public void moveLeft(PlayerController player) {
-
+        player.getBody().applyForceToCenter(-40, 0, true);
     }
 
     @Override

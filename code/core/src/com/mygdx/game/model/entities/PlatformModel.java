@@ -55,10 +55,10 @@ public class PlatformModel extends EntityModel {
            boolean increaseX = random.nextBoolean(); //determine if the x coordinate will decrease or increase
            if (increaseX) {
                tempX += random.nextInt((int) maxDistance);
-               tempX += width / 2;
+               tempX += (width / 2);
            } else {
                tempX -= random.nextInt((int) maxDistance);
-               tempX -= width / 2;
+               tempX -= (width / 2);
            }
        }while(((tempX + (width/2))>WORLD_WIDTH) || ((tempX - (width/2))<0) || (tempX == previousX));
        this.x = tempX;

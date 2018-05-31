@@ -11,13 +11,16 @@ public class Client {
     private static PrintWriter out;
     static String serverAddress = "";
 
-    public static void main(String[] args) throws IOException {
-        String host = new String();
+    public static void Client(String serverAddress) throws IOException {
         // Make connection and initialize streams
-        Socket socket = new Socket(serverAddress, 9898);
-        in = new BufferedReader(
-                new InputStreamReader(socket.getInputStream()));
-        out = new PrintWriter(socket.getOutputStream(), true);
+        Socket socket = new Socket(serverAddress, 8050);
+        try {
+            ClientThread ct = new ClientThread();
+            ct.start();
+        } finally {
+            socket.close();
+        }
+
     }
 
 }

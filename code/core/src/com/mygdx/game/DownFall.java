@@ -6,6 +6,7 @@ import com.mygdx.game.view.entities.AppView;
 import com.mygdx.game.view.entities.GameView;
 import com.badlogic.gdx.Game;
 import com.mygdx.game.view.entities.MenuView;
+import com.mygdx.game.view.entities.NetworkMenuView;
 
 import java.util.Stack;
 
@@ -31,6 +32,13 @@ public class DownFall extends Game {
 	{
 		views.pop();
 		views.push(new GameView(this,numPlayers));
+		setScreen(views.peek());
+	}
+
+	public void switchToNetworkView()
+	{
+		views.pop();
+		views.push(new NetworkMenuView(this));
 		setScreen(views.peek());
 	}
 
