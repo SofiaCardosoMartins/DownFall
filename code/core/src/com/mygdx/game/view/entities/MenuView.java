@@ -10,6 +10,7 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.mygdx.game.DownFall;
 
@@ -27,7 +28,6 @@ public class MenuView extends AppView {
 
     private Stage stage;
     private Skin btnSkin;
-    private Label outputLabel;
 
     public MenuView(DownFall game) {
         super(game);
@@ -52,8 +52,7 @@ public class MenuView extends AppView {
 
     @Override
     protected void loadAssets() {
-        this.game.getAssetManager().load("transition1.png", Texture.class);
-        this.game.getAssetManager().load("player.png", Texture.class);
+        this.game.getAssetManager().load("menu_background.png", Texture.class);
         this.game.getAssetManager().finishLoading();
     }
 
@@ -86,7 +85,7 @@ public class MenuView extends AppView {
 
     @Override
     protected void drawBackground(){
-        Texture background = game.getAssetManager().get("transition1.png", Texture.class);
+        Texture background = game.getAssetManager().get("menu_background.png", Texture.class);
         background.setWrap(Texture.TextureWrap.Repeat, Texture.TextureWrap.Repeat);
         game.getBatch().draw(background, 0, 0, 0, 0, (int) (WORLD_WIDTH / PIXEL_TO_METER), (int) (WORLD_HEIGHT / PIXEL_TO_METER));
     }

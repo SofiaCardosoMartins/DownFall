@@ -215,9 +215,9 @@ public class GameView extends AppView {
         game.getBatch().draw(background, 0, 0, 0, 0, (int) (WORLD_WIDTH / PIXEL_TO_METER), (int) (WORLD_HEIGHT / PIXEL_TO_METER));
 */
 
-        Texture background2 = game.getAssetManager().get("allMesosphere.png", Texture.class);
-        background2.setWrap(Texture.TextureWrap.Repeat, Texture.TextureWrap.Repeat);
-        game.getBatch().draw(background2, 0, 1000, 0, 0, (int) (WORLD_WIDTH / PIXEL_TO_METER), (int) (WORLD_HEIGHT / PIXEL_TO_METER));
+        Texture background = game.getAssetManager().get("menu.png", Texture.class);
+        background.setWrap(Texture.TextureWrap.Repeat, Texture.TextureWrap.Repeat);
+        game.getBatch().draw(background, 0, 1000, 0, 0, (int) (WORLD_WIDTH / PIXEL_TO_METER), (int) (WORLD_HEIGHT / PIXEL_TO_METER));
 
 
 
