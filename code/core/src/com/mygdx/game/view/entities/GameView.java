@@ -23,7 +23,6 @@ import java.util.List;
 
 import static com.mygdx.game.controller.GameController.WORLD_WIDTH;
 import static com.mygdx.game.controller.GameController.WORLD_HEIGHT;
-import static com.mygdx.game.controller.entities.BoostController.ACTIVE_TIME;
 
 public class GameView extends AppView {
 
@@ -160,7 +159,7 @@ public class GameView extends AppView {
             float width = ViewFactory.getWidth(game,playerModel);
             float height = ViewFactory.getHeigth(game,playerModel);
             BitmapFont bm = new BitmapFont();
-            bm.setColor(Color.BLUE);
+            bm.setColor(Color.FOREST);
             bm.getData().setScale(FONT_SCALE);
             bm.draw(game.getBatch(),String.valueOf(playerModel.getRemainingTime()),playerModel.getX()/PIXEL_TO_METER + width/2,playerModel.getY()/PIXEL_TO_METER + height/2);
         }
