@@ -64,9 +64,9 @@ public class GameView extends AppView {
         this.game.getAssetManager().load("landscape.png", Texture.class);
         this.game.getAssetManager().load("platform.png", Texture.class);
         this.game.getAssetManager().load("player.png", Texture.class);
-        this.game.getAssetManager().load("background.png", Texture.class);
-        this.game.getAssetManager().load("obstacle.png", Texture.class);
         this.game.getAssetManager().load("endosphere.png", Texture.class);
+        this.game.getAssetManager().load("allMesosphere.png", Texture.class);
+        this.game.getAssetManager().load("obstacle.png", Texture.class);
         this.game.getAssetManager().load("fire.png", Texture.class);
         this.game.getAssetManager().load("largeBarDouble.png", Texture.class);
         this.game.getAssetManager().load("largeBarSingle.png", Texture.class);
@@ -191,9 +191,18 @@ public class GameView extends AppView {
 
     @Override
     protected void drawBackground() {
+/*
         Texture background = game.getAssetManager().get("endosphere.png", Texture.class);
         background.setWrap(Texture.TextureWrap.Repeat, Texture.TextureWrap.Repeat);
         game.getBatch().draw(background, 0, 0, 0, 0, (int) (WORLD_WIDTH / PIXEL_TO_METER), (int) (WORLD_HEIGHT / PIXEL_TO_METER));
+*/
+
+        Texture background2 = game.getAssetManager().get("allMesosphere.png", Texture.class);
+        background2.setWrap(Texture.TextureWrap.Repeat, Texture.TextureWrap.Repeat);
+        game.getBatch().draw(background2, 0, 1000, 0, 0, (int) (WORLD_WIDTH / PIXEL_TO_METER), (int) (WORLD_HEIGHT / PIXEL_TO_METER));
+
+
+
     }
 
     private void drawLava(float delta) {
