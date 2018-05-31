@@ -11,11 +11,11 @@ public class PlatformController extends EntityController {
         float density = 0.5f;
         float friction = 0.8f; //low friction
         float restitution = 0.0f; //no restitution
-        int width = 171;
-        int height = 30;
+        int width = 170;
+        int height = 170;
 
         createFixture(body, new float[]{
-               0,0,0,30,171,30,171,0
+            3,151,13,165,158,166,165,155,166,143,5,142
         }, width, height, density, friction, restitution, PLATFORM_BITS, PLAYER_BITS);
     }
 }

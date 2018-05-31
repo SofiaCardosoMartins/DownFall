@@ -15,7 +15,19 @@ public class LavaController extends EntityController {
         int height = 200;
 
         createFixture(body, new float[]{
-                0,0,0,200,680,0,680,200
+                247,161,153,51,78,42,6,61,10,200,259,198
+        }, width, height, density, friction, restitution, LAVA_BITS, PLAYER_BITS);
+
+        createFixture(body, new float[]{
+                259,198,330,161,284,122,247,161
+        }, width, height, density, friction, restitution, LAVA_BITS, PLAYER_BITS);
+
+        createFixture(body, new float[]{
+                680,193,529,121,330,161,259,198
+        }, width, height, density, friction, restitution, LAVA_BITS, PLAYER_BITS);
+
+        createFixture(body, new float[]{
+                680,193,673,25,592,44,529,121
         }, width, height, density, friction, restitution, LAVA_BITS, PLAYER_BITS);
 
 /*
