@@ -34,6 +34,6 @@ public abstract class AppView extends ScreenAdapter {
     protected abstract void loadAssets();
     public abstract void render(float delta);
     protected abstract void handleInputs(float delta);
-    protected abstract void drawEntities();
+    protected abstract void drawEntities(float delta);
     protected abstract void drawBackground();
 }

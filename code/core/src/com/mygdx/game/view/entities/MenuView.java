@@ -13,6 +13,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.mygdx.game.DownFall;
+import com.mygdx.game.model.GameModel;
 
 import javax.xml.soap.Text;
 
@@ -28,11 +29,13 @@ public class MenuView extends AppView {
 
     private Stage stage;
     private Skin btnSkin;
+    private TitleView titleView;
 
     public MenuView(DownFall game) {
         super(game);
         this.loadAssets();
         this.createCamera();
+        this.titleView = new TitleView(game);
         stage = new Stage(this.viewport);
         Gdx.input.setInputProcessor(stage);
         btnSkin = new Skin(Gdx.files.internal("skin/comic-ui.json"));
@@ -53,6 +56,7 @@ public class MenuView extends AppView {
     @Override
     protected void loadAssets() {
         this.game.getAssetManager().load("menu_background.png", Texture.class);
+        this.game.getAssetManager().load("title.png", Texture.class);
         this.game.getAssetManager().finishLoading();
     }
 
@@ -66,7 +70,7 @@ public class MenuView extends AppView {
 
         game.getBatch().begin();
         drawBackground();
-        drawEntities();
+        drawEntities(delta);
         game.getBatch().end();
 
         stage.act();
@@ -79,8 +83,8 @@ public class MenuView extends AppView {
     }
 
     @Override
-    protected void drawEntities() {
-
+    protected void drawEntities(float delta) {
+        drawTitle(delta);
     }
 
     @Override
@@ -135,5 +139,11 @@ public class MenuView extends AppView {
         textButton.setPosition((camera.viewportWidth/2)-(BUTTON_WIDTH/2),y - (BUTTON_HEIGHT/2));
         stage.addActor(textButton);
         return textButton;
+    }
+
+    private void drawTitle(float delta) {
+        titleView.update(delta);
+        titleView.sprite.setPosition(camera.viewportWidth/2 - (titleView.sprite.getWidth()/2),camera.viewportHeight-4*(titleView.sprite.getHeight()));
+        titleView.draw(game.getBatch());
     }
 }

@@ -108,7 +108,7 @@ public class GameView extends AppView {
 
         game.getBatch().begin();
         drawBackground();
-        drawEntities();
+        drawEntities(delta);
         drawLava(delta);
         drawBar();
         game.getBatch().end();
@@ -166,7 +166,7 @@ public class GameView extends AppView {
     }
 
     @Override
-    protected void drawEntities() {
+    protected void drawEntities(float delta) {
 
         //Platforms
         List<PlatformModel> platforms = GameModel.getInstance().getPlatformsInUse();
