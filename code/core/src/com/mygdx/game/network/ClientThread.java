@@ -10,24 +10,18 @@ import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
 
-public class ServerThread extends Thread {
-    private Socket socket;
-    private int clientNumber;
+public class ClientThread extends Thread {
 
+    Socket socket;
 
-    ServerThread(Socket socket, int clientNumber){
-        this.socket = socket;
-        this.clientNumber = clientNumber;
-        System.out.println("New connection with client# " + clientNumber + " at " + socket);
+    public ClientThread(){
+
     }
-
     public void run(){
-        try{
+        try {
+            /* in and out opening might throw IOException */
             BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
             PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
-
-            out.println("Hello, you are client #" + clientNumber + ".");
-            out.println("Enter a line with only a period to quit\n");
 
             while(true){
                 boolean accelerometerAvail = Gdx.input.isPeripheralAvailable(Input.Peripheral.Accelerometer);
@@ -36,17 +30,17 @@ public class ServerThread extends Thread {
                     float acceY = Gdx.input.getAccelerometerY();
                     float acceZ = Gdx.input.getAccelerometerZ();
                     if (acceX < 0) {
-                        GameController.getInstance().handleInput(GameController.Direction.RIGHT, 1);
                         out.write("RIGHT");
+                        GameController.getInstance().handleInput(GameController.Direction.RIGHT, 2);
                     }
                     else if (acceX > 0) {
-                        GameController.getInstance().handleInput(GameController.Direction.LEFT, 1);
                         out.write("LEFT");
+                        GameController.getInstance().handleInput(GameController.Direction.LEFT, 2);
                     }
                 }
                 if (Gdx.input.isTouched()) {
                     out.write("UP");
-                    GameController.getInstance().handleInput(GameController.Direction.UP, 1);
+                    GameController.getInstance().handleInput(GameController.Direction.UP, 2);
                 }
 
                 String input = in.readLine();
@@ -56,22 +50,22 @@ public class ServerThread extends Thread {
                 out.println(input.toUpperCase());
 
                 if (input.equals("LEFT"))
-                    GameController.getInstance().handleInput(GameController.Direction.LEFT, 2);
+                    GameController.getInstance().handleInput(GameController.Direction.LEFT, 1);
                 else if (input.equals("RIGHT"))
-                    GameController.getInstance().handleInput(GameController.Direction.RIGHT, 2);
+                    GameController.getInstance().handleInput(GameController.Direction.RIGHT, 1);
                 else if (input.equals("UP"))
-                    GameController.getInstance().handleInput(GameController.Direction.UP, 2);
+                    GameController.getInstance().handleInput(GameController.Direction.UP, 1);
+
             }
-        }catch (IOException e){
-            System.out.println("Error handling client# " + clientNumber + ": " + e);
+        } catch (IOException e){
+        System.out.println("Error handling input/output streams");
         } finally{
             try {
                 socket.close();
             } catch (IOException e){
-                System.out.println("Couldn't close a socket, what's going on?");
-            }
-            System.out.println("Connection with client# " + clientNumber + " closed");
-        }
+            System.out.println("Couldn't close a socket, what's going on?");
+                }
+        //System.out.println("Connection with client# " + clientNumber + " closed");
     }
-
+}
 }

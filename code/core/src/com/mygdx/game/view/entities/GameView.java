@@ -32,7 +32,7 @@ public class GameView extends AppView {
     Matrix4 debugCamera;
     private static float CAMERA_SPEED = 1;
     private static final boolean DEBUG_PHYSICS = false;
-    private static final float CAMERA_SPEED_INC = 1; //camera speed increment
+    private static final float CAMERA_SPEED_INC = 0; //camera speed increment
     private static final float TIME_TO_NEXT_INC = 10;   //time between camera's speed increment (in seconds)
     private static final float FONT_SCALE  = 1.2f;
     private BarView barView;
@@ -69,7 +69,12 @@ public class GameView extends AppView {
         this.game.getAssetManager().load("platform.png", Texture.class);
         this.game.getAssetManager().load("player.png", Texture.class);
         this.game.getAssetManager().load("endosphere.png", Texture.class);
-        this.game.getAssetManager().load("allMesosphere.png", Texture.class);
+        this.game.getAssetManager().load("astenosphere.png", Texture.class);
+        this.game.getAssetManager().load("mesosphere.png", Texture.class);
+        this.game.getAssetManager().load("litosphere.png", Texture.class);
+        this.game.getAssetManager().load("transition1.png", Texture.class);
+        this.game.getAssetManager().load("transition2.png", Texture.class);
+        this.game.getAssetManager().load("transition3.png", Texture.class);
         this.game.getAssetManager().load("obstacle.png", Texture.class);
         this.game.getAssetManager().load("fire.png", Texture.class);
         this.game.getAssetManager().load("largeBarDouble.png", Texture.class);
@@ -137,7 +142,7 @@ public class GameView extends AppView {
         } else if (Gdx.input.isKeyPressed(Input.Keys.W)) {
             GameController.getInstance().handleInput(GameController.Direction.UP,2);
         }
-
+/*
         boolean accelerometerAvail = Gdx.input.isPeripheralAvailable(Input.Peripheral.Accelerometer);
         if (accelerometerAvail) {
             float acceX = Gdx.input.getAccelerometerX();
@@ -150,7 +155,7 @@ public class GameView extends AppView {
         }
         if (Gdx.input.isTouched())
             GameController.getInstance().handleInput(GameController.Direction.UP,1);
-
+*/
     }
 
     private void drawBitMapFont(PlayerModel playerModel)
@@ -210,16 +215,21 @@ public class GameView extends AppView {
 
     @Override
     protected void drawBackground() {
-/*
+
         Texture background = game.getAssetManager().get("endosphere.png", Texture.class);
         background.setWrap(Texture.TextureWrap.Repeat, Texture.TextureWrap.Repeat);
         game.getBatch().draw(background, 0, 0, 0, 0, (int) (WORLD_WIDTH / PIXEL_TO_METER), (int) (WORLD_HEIGHT / PIXEL_TO_METER));
-*/
+        /*
+        if(camera.position.y >= 0 && camera.position.y <= 9000) {
 
-        Texture background2 = game.getAssetManager().get("allMesosphere.png", Texture.class);
-        background2.setWrap(Texture.TextureWrap.Repeat, Texture.TextureWrap.Repeat);
-        game.getBatch().draw(background2, 0, 1000, 0, 0, (int) (WORLD_WIDTH / PIXEL_TO_METER), (int) (WORLD_HEIGHT / PIXEL_TO_METER));
+        }
 
+        else {
+            Texture background = game.getAssetManager().get("transition1.png", Texture.class);
+            background.setWrap(Texture.TextureWrap.Repeat, Texture.TextureWrap.Repeat);
+            game.getBatch().draw(background, 0, 0, 0, 0, (int) (WORLD_WIDTH / PIXEL_TO_METER), (int) (WORLD_HEIGHT / PIXEL_TO_METER));
+        }
+        */
 
 
     }

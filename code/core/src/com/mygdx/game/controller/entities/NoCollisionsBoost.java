@@ -20,16 +20,6 @@ public class NoCollisionsBoost extends BoostController {
     }
 
     @Override
-    public void moveRight(PlayerController player) {
-        player.getBody().applyForceToCenter(50, 0, true);
-    }
-
-    @Override
-    public void moveLeft(PlayerController player) {
-        player.getBody().applyForceToCenter(-50, 0, true);
-    }
-
-    @Override
     public void jump(PlayerController player) {
         player.getBody().applyForceToCenter(0, 800, true);
     }

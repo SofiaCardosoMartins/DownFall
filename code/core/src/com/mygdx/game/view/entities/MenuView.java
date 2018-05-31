@@ -1,6 +1,7 @@
 package com.mygdx.game.view.entities;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
@@ -38,6 +39,19 @@ public class MenuView extends AppView {
         btnSkin = new Skin(Gdx.files.internal("skin/comic-ui.json"));
         createBtns();
     }
+
+    public void setStage(Stage stage) {
+        this.stage = stage;
+    }
+
+    public Stage getStage() {
+        return stage;
+    }
+    public void setBtnSkin(Skin btnSkin) {
+        this.btnSkin = btnSkin;
+    }
+
+
 
     @Override
     protected void createCamera() {
@@ -93,10 +107,11 @@ public class MenuView extends AppView {
 
     private void createBtns()
     {
-        TextButton singlePlayerBtn = createBtn("Single Player",camera.viewportHeight / 2);
+        TextButton singlePlayerBtn = createBtn("Single Player",camera.viewportHeight / 2, BUTTON_WIDTH);
         singlePlayerBtn.addListener(new InputListener(){
             @Override
             public void touchUp (InputEvent event, float x, float y, int pointer, int button) {
+
                 game.switchToGameView(1);
             }
             @Override
@@ -104,18 +119,25 @@ public class MenuView extends AppView {
                 return true;
             }
         });
-        TextButton multiplayerBtn = createBtn("Muliplayer",camera.viewportHeight / 2 - BTN_DISTANCE);
+        TextButton multiplayerBtn = createBtn("Muliplayer",camera.viewportHeight / 2 - BTN_DISTANCE, BUTTON_WIDTH);
         multiplayerBtn.addListener(new InputListener(){
             @Override
             public void touchUp (InputEvent event, float x, float y, int pointer, int button) {
-                game.switchToGameView(2);
+                boolean accelerometerAvail = Gdx.input.isPeripheralAvailable(Input.Peripheral.Accelerometer);
+                game.switchToNetworkView();
+                /*if (accelerometerAvail)
+                    game.switchToNetworkView();
+                else
+                    game.switchToGameView(2);
+
+                    */
             }
             @Override
             public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
                 return true;
             }
         });
-        TextButton exitBtn = createBtn("Exit",camera.viewportHeight / 2 - 2*BTN_DISTANCE);
+        TextButton exitBtn = createBtn("Exit",camera.viewportHeight / 2 - 2*BTN_DISTANCE, BUTTON_WIDTH);
         exitBtn.addListener(new InputListener(){
             @Override
             public void touchUp (InputEvent event, float x, float y, int pointer, int button) {
@@ -128,12 +150,12 @@ public class MenuView extends AppView {
         });
     }
 
-    private TextButton createBtn(String text, float y)
+    public TextButton createBtn(String text, float y, float width)
     {
         TextButton textButton = new TextButton(text,btnSkin);
         textButton.getLabel().setFontScale(FONT_SCALE,FONT_SCALE);
-        textButton.setSize(BUTTON_WIDTH,BUTTON_HEIGHT);
-        textButton.setPosition((camera.viewportWidth/2)-(BUTTON_WIDTH/2),y - (BUTTON_HEIGHT/2));
+        textButton.setSize(width,BUTTON_HEIGHT);
+        textButton.setPosition((camera.viewportWidth/2)-(width/2),y - (BUTTON_HEIGHT/2));
         stage.addActor(textButton);
         return textButton;
     }
