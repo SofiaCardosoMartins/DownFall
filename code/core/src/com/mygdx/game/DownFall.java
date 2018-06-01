@@ -2,11 +2,8 @@ package com.mygdx.game;
 
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.mygdx.game.view.entities.AppView;
-import com.mygdx.game.view.entities.GameView;
+import com.mygdx.game.view.entities.*;
 import com.badlogic.gdx.Game;
-import com.mygdx.game.view.entities.MenuView;
-import com.mygdx.game.view.entities.NetworkMenuView;
 
 import java.util.Stack;
 
@@ -39,6 +36,13 @@ public class DownFall extends Game {
 	{
 		views.pop();
 		views.push(new NetworkMenuView(this));
+		setScreen(views.peek());
+	}
+
+	public void switchToServerView()
+	{
+		views.pop();
+		views.push(new ServerMenuView(this));
 		setScreen(views.peek());
 	}
 

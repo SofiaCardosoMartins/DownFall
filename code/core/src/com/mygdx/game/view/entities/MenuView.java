@@ -28,8 +28,8 @@ public class MenuView extends AppView {
     private static final float FONT_SCALE = 0.8f;
     private static final float BTN_DISTANCE = 100;  //distance between buttons
 
-    private Stage stage;
-    private Skin btnSkin;
+    protected Stage stage;
+    protected Skin btnSkin;
     private TitleView titleView;
 
     public MenuView(DownFall game) {

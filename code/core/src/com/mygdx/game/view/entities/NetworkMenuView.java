@@ -46,11 +46,7 @@ public class NetworkMenuView extends MenuView {
         startNewGamePlayBtn.addListener(new InputListener(){
             @Override
             public void touchUp (InputEvent event, float x, float y, int pointer, int button) {
-                try {
-                    new Server();
-                } catch (Exception e){
-                    System.out.println("exception");
-                }
+                game.switchToServerView();
 
             }
             @Override
