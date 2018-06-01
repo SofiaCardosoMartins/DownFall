@@ -1,5 +1,7 @@
 package com.mygdx.game.network;
 
+import com.mygdx.game.DownFall;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -11,11 +13,14 @@ public class Client {
     private static PrintWriter out;
     static String serverAddress = "";
 
-    public static void Client(String serverAddress) throws IOException {
+    public Client(DownFall game, String serverAddress) throws IOException {
         // Make connection and initialize streams
-        Socket socket = new Socket(serverAddress, 8050);
+        this.serverAddress = serverAddress;
+
+            Socket socket = new Socket(serverAddress, 8050);
+
         try {
-            ClientThread ct = new ClientThread();
+            ClientThread ct = new ClientThread(game);
             ct.start();
         } finally {
             socket.close();

@@ -3,6 +3,7 @@ package com.mygdx.game.view.entities;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.mygdx.game.DownFall;
@@ -22,22 +23,19 @@ public class ServerMenuView extends MenuView {
         Gdx.input.setInputProcessor(getStage());
 
         try {
-            server = new Server();
+            server = new Server(game);
         } catch (Exception e){
-            System.out.println("exception");
+            System.out.println("Couldn't create Server");
+        } finally {
+            server.run();
+            IP = server.getServerIP();
         }
-
-        IP = server.getServerIP();
-
     }
 
     @Override
     public void render(float delta) {
 
         game.getBatch().setProjectionMatrix(camera.combined);
-
-
-        //Gdx.input.getTextInput(listener, "Dialog Title", "Initial Textfield Value", "Hint Value");
 
         game.getBatch().begin();
         drawBackground();
@@ -50,11 +48,18 @@ public class ServerMenuView extends MenuView {
 
 
     void drawIP(){
-        BitmapFont bm = new BitmapFont();
-        bm.setColor(Color.FOREST);
-        bm.getData().setScale(FONT_SCALE);
-        bm.draw(game.getBatch(), IP , 200, 500);
-        System.out.println(IP);
+        FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("Rubik-Regular.ttf"));
+        FreeTypeFontGenerator.FreeTypeFontParameter parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
+        parameter.size = 12;
+        BitmapFont font = generator.generateFont(parameter); // font size 12 pixels
+
+        generator.dispose();
+        font.setColor(Color.FOREST);
+        font.getData().setScale(FONT_SCALE);
+        IP = server.getServerIP();
+
+        font.draw(game.getBatch(), IP , 200, 500);
+
     }
 
 }

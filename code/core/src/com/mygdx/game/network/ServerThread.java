@@ -2,6 +2,7 @@ package com.mygdx.game.network;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
+import com.mygdx.game.DownFall;
 import com.mygdx.game.controller.GameController;
 
 import java.io.BufferedReader;
@@ -13,12 +14,15 @@ import java.net.Socket;
 public class ServerThread extends Thread {
     private Socket socket;
     private int clientNumber;
+    private DownFall game;
 
 
-    ServerThread(Socket socket, int clientNumber){
+    ServerThread(DownFall game, Socket socket, int clientNumber){
         this.socket = socket;
         this.clientNumber = clientNumber;
         System.out.println("New connection with client# " + clientNumber + " at " + socket);
+        this.game =game;
+        game.switchToGameView(2);
     }
 
     public void run(){

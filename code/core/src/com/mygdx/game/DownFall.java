@@ -54,6 +54,13 @@ public class DownFall extends Game {
 		setScreen(views.peek());
 	}
 
+	public void switchToClientView()
+	{
+		views.pop();
+		views.push(new ClientMenuView(this));
+		setScreen(views.peek());
+	}
+
 	public void switchToMenuView()
 	{
 		views.pop();

@@ -30,11 +30,7 @@ public class NetworkMenuView extends MenuView {
         joinAnotherPlayerBtn.addListener(new InputListener(){
             @Override
             public void touchUp (InputEvent event, float x, float y, int pointer, int button) {
-                try {
-                    new Client();
-                } catch (Exception e){
-                    System.out.println("exception");
-                }
+                game.switchToClientView();
             }
             @Override
             public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {

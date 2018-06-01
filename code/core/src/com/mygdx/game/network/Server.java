@@ -1,4 +1,6 @@
 package com.mygdx.game.network;
+import com.mygdx.game.DownFall;
+
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
@@ -11,23 +13,24 @@ public class Server {
     private static String serverIP;
     int clientNumber = 0;
     ServerSocket listener;
+    DownFall game;
 
-    public Server() throws  Exception{
+    public Server(DownFall game) throws  Exception{
         getIPAddress();
-        listener = new ServerSocket(8500);
+        listener = new ServerSocket(8050);
+        this.game = game;
     }
 
     public void run(){
         try {
-            ServerThread st = new ServerThread(listener.accept(), clientNumber++);
-            //st.start();
+            ServerThread st = new ServerThread(this.game, listener.accept(), clientNumber++);
+            st.start();
         } catch (Exception e) {
         } finally {
             try {
                 listener.close();
             }
             catch (Exception e){
-
             }
         }
     }
@@ -37,6 +40,7 @@ public class Server {
     }
 
     public void getIPAddress(){
+
         try {
             Socket s = new Socket(getIPAddressURL, getIPAddressPort);
             serverIP = s.getLocalAddress().getHostAddress();
@@ -47,4 +51,5 @@ public class Server {
             System.exit(1);
         }
     }
+
 }

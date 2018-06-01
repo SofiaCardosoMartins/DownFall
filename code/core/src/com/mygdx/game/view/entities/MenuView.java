@@ -63,7 +63,7 @@ public class MenuView extends AppView {
         camera.position.set(camera.viewportWidth / 2f, camera.viewportHeight / 2f, 0);
         camera.setToOrtho(false, camera.viewportWidth, camera.viewportHeight);
         camera.update();
-        
+
         this.camera = camera;
 
     }
