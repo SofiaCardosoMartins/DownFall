@@ -32,4 +32,10 @@ public class GameModelTest {
         assertNotEquals(null,gameModel.getBoostsInUse());
         assertNotEquals(0,gameModel.getFreeBoosts().getFree());
     }
+
+    @Test
+    public void testUpdateMethod() {
+        init(1);
+
+    }
 }
