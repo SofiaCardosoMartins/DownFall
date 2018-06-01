@@ -7,25 +7,33 @@ public class Server {
 
     private static final String getIPAddressURL = "google.pt";
     private static final int getIPAddressPort = 80;
-    /** Port to be used when checking what IP is being used by the machine. **/
 
     private static String serverIP;
+    int clientNumber = 0;
+    ServerSocket listener;
 
-    public Server() throws Exception {
-        System.out.println("The capitalization server is running.");
-        int clientNumber = 0;
-        ServerSocket listener = new ServerSocket(8500);
+    public Server() throws  Exception{
+        getIPAddress();
+        listener = new ServerSocket(8500);
+    }
 
+    public void run(){
         try {
             ServerThread st = new ServerThread(listener.accept(), clientNumber++);
             //st.start();
+        } catch (Exception e) {
         } finally {
-            listener.close();
+            try {
+                listener.close();
+            }
+            catch (Exception e){
+
+            }
         }
     }
 
-    public void print(){
-        System.out.println("Current IP address : " + serverIP);
+    public static String getServerIP() {
+        return serverIP;
     }
 
     public void getIPAddress(){

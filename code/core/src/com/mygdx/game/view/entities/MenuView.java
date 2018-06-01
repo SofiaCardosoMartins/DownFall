@@ -23,8 +23,13 @@ import static com.mygdx.game.controller.GameController.WORLD_WIDTH;
 
 public class MenuView extends AppView {
 
+    private static final int BUTTON_WIDTH = 220;
+    private static final int BUTTON_HEIGHT = 80;
+    private static final float FONT_SCALE = 0.8f;
+    private static final float BTN_DISTANCE = 100;  //distance between buttons
+
     protected Stage stage;
-    private Skin btnSkin;
+    protected Skin btnSkin;
     private TitleView titleView;
 
     public MenuView(DownFall game) {
@@ -58,6 +63,7 @@ public class MenuView extends AppView {
         camera.position.set(camera.viewportWidth / 2f, camera.viewportHeight / 2f, 0);
         camera.setToOrtho(false, camera.viewportWidth, camera.viewportHeight);
         camera.update();
+        
         this.camera = camera;
 
     }
