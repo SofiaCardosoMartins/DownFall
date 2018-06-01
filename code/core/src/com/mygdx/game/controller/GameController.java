@@ -27,6 +27,7 @@ public class GameController implements ContactListener {
     public static final String TITLE = "DownFall";
     public static final int WORLD_WIDTH = 10;
     public static final int WORLD_HEIGHT = 1050;
+    private static boolean PAUSED = false;
     public static final Vector2 GRAVITY = new Vector2(0, -3f);
     private final World world;
     private List<PlayerController> playerControllers;
@@ -39,6 +40,7 @@ public class GameController implements ContactListener {
     public enum Direction {LEFT, RIGHT, UP}
 
     private GameController() {
+        PAUSED=false;
         world = new World(GRAVITY, true);
 
         //Create players bodies
@@ -277,6 +279,22 @@ public class GameController implements ContactListener {
         this.checkRightWallCollision(ec, width);
         this.checkUpWallCollision(ec, maxCameraY, height);
         this.checkDownWallCollision(ec, minCameraY, height);
+    }
+
+    public static void setPAUSED(boolean paused)
+    {
+        PAUSED = paused;
+    }
+
+    public static boolean getPAUSED()
+    {
+        return PAUSED;
+    }
+
+    public static void delete()
+    {
+        instance = null;
+        GameModel.delete();
     }
 
     public boolean isDoublePlayer(){

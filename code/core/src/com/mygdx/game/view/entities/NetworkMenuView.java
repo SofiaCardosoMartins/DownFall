@@ -26,7 +26,7 @@ public class NetworkMenuView extends MenuView {
 
     private void createBtns()
     {
-        TextButton joinAnotherPlayerBtn = createBtn("Join Another Player",camera.viewportHeight / 2, BUTTON_WIDTH_LONG);
+        TextButton joinAnotherPlayerBtn = createBtn("Join Another Player",camera.viewportHeight / 2, BUTTON_WIDTH_LONG,stage);
         joinAnotherPlayerBtn.addListener(new InputListener(){
             @Override
             public void touchUp (InputEvent event, float x, float y, int pointer, int button) {
@@ -42,7 +42,7 @@ public class NetworkMenuView extends MenuView {
             }
         });
 
-        TextButton startNewGamePlayBtn = createBtn("Start new Gameplay",camera.viewportHeight / 2 + BTN_DISTANCE_LONG, BUTTON_WIDTH_LONG);
+        TextButton startNewGamePlayBtn = createBtn("Start new Gameplay",camera.viewportHeight / 2 + BTN_DISTANCE_LONG, BUTTON_WIDTH_LONG,stage);
         startNewGamePlayBtn.addListener(new InputListener(){
             @Override
             public void touchUp (InputEvent event, float x, float y, int pointer, int button) {

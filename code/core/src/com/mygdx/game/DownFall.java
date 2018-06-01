@@ -2,11 +2,13 @@ package com.mygdx.game;
 
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.mygdx.game.controller.GameController;
 import com.mygdx.game.view.entities.AppView;
 import com.mygdx.game.view.entities.GameView;
 import com.badlogic.gdx.Game;
 import com.mygdx.game.view.entities.MenuView;
 import com.mygdx.game.view.entities.NetworkMenuView;
+import com.mygdx.game.view.entities.PausedView;
 
 import java.util.Stack;
 
@@ -30,6 +32,7 @@ public class DownFall extends Game {
 
 	public void switchToGameView(int numPlayers)
 	{
+		deleteGame();
 		views.pop();
 		views.push(new GameView(this,numPlayers));
 		setScreen(views.peek());
@@ -42,12 +45,35 @@ public class DownFall extends Game {
 		setScreen(views.peek());
 	}
 
+	public void switchToMenuView()
+	{
+		views.pop();
+		startGame();
+	}
+
+	public void switchToPausedView()
+	{
+		views.push(new PausedView(this));
+		setScreen(views.peek());
+	}
+
+	public void resumeGame()
+	{
+		GameController.setPAUSED(false);
+		views.pop();
+		setScreen(views.peek());
+	}
+
+	public void deleteGame()
+	{
+		GameController.delete();
+	}
+
 	@Override
 	public void dispose () {
 		batch.dispose();
 		assetManager.dispose();
 	}
-
 
     public SpriteBatch getBatch() {
         return batch;

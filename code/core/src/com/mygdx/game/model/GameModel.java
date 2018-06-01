@@ -212,6 +212,11 @@ public class GameModel {
         this.updateBoosts(camera);
     }
 
+    public static void delete()
+    {
+        instance = null;
+    }
+
     public List<PlayerModel> getPlayers() {
         return players;
     }
