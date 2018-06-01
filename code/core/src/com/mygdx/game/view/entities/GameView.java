@@ -1,5 +1,6 @@
 package com.mygdx.game.view.entities;
 
+import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
@@ -97,8 +98,11 @@ public class GameView extends AppView {
             this.lastCameraSpeedIncreaseTime = System.nanoTime();
         }
 
-        handleInputs(delta);
-        GameController.getInstance().update(delta, camera);
+        checkPausedGame();
+
+        if(!GameController.getPAUSED()){
+            handleInputs(delta);
+            GameController.getInstance().update(delta, camera);}
 
         //move camera upwards
         camera.position.y += CAMERA_SPEED;
@@ -123,6 +127,13 @@ public class GameView extends AppView {
             debugCamera.scl(1 / PIXEL_TO_METER);
             debugRenderer.render(GameController.getInstance().getWorld(), debugCamera);
         }
+    }
+
+    private void checkPausedGame()
+    {
+        if (Gdx.input.isKeyPressed(Input.Keys.ESCAPE)) {
+                game.switchToPausedView();
+                GameController.setPAUSED(true); }
     }
 
     @Override
@@ -238,6 +249,7 @@ public class GameView extends AppView {
         ((LavaView) view).update(delta, GameModel.getInstance().getLava());
         view.draw(game.getBatch());
     }
+
     private void drawBar(){
         barView.update(WORLD_WIDTH / 2, GameController.getInstance().getMaxCameraY(camera));
         barView.draw(game.getBatch());
