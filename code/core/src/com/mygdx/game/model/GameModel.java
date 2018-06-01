@@ -233,5 +233,17 @@ public class GameModel {
         return boostsInUse;
     }
 
+    public Pool<PlatformModel> getFreePlatforms() {
+        return freePlatforms;
+    }
+
+    public Pool<ObstacleModel> getFreeObstacles() {
+        return freeObstacles;
+    }
+
+    public Pool<BoostModel> getFreeBoosts() {
+        return freeBoosts;
+    }
+
     public LavaModel getLava(){return lava;}
 }

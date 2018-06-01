@@ -63,7 +63,7 @@ public class BoostController extends EntityController implements BoostStrategy {
     @Override
     public void updateRemainingTime() {
         if(CAUGHT)
-        this.elapsedTime = (long)((System.nanoTime() - this.beginTimeMeasurement)/Math.pow(10,9));
+            this.elapsedTime = (long)((System.nanoTime() - this.beginTimeMeasurement)/Math.pow(10,9));
         if(elapsedTime >= ACTIVE_TIME) {
             this.TIMEOUT = true;
         }
@@ -81,4 +81,5 @@ public class BoostController extends EntityController implements BoostStrategy {
     public void setCAUGHT() {
         this.CAUGHT = true;
     }
+
 }
