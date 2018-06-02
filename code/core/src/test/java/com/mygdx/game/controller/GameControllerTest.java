@@ -10,6 +10,11 @@ import static org.junit.Assert.*;
 public class GameControllerTest {
 
     @Test
+    public void testControllerCreation() {
+        GameController gc = GameController.getInstance();
+    }
+
+    @Test
     public void testPlayerStateMachine() {
         State idle = new Idle();
         State jump = new Jump();
@@ -26,6 +31,8 @@ public class GameControllerTest {
         assertEquals(dead.getClass(), result.getClass());
 
     }
+
+
 
 
 }
