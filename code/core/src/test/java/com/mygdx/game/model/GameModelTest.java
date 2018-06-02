@@ -1,6 +1,7 @@
 package com.mygdx.game.model;
 
 import com.mygdx.game.DownFall;
+import com.mygdx.game.controller.GameController;
 import com.mygdx.game.view.entities.GameView;
 
 import org.junit.Test;
@@ -9,22 +10,21 @@ import static org.junit.Assert.*;
 
 public class GameModelTest  {
 
-    //private static DownFall game;
-    //private static GameView gameView;
-/*
+    private static DownFall game;
+    private static GameModel gameModel;
+
     private void init(int numPlayers)
     {
         game = new DownFall();
-        gameView = new GameView(game, numPlayers);
+        GameModel.PLAYERS_COUNT = numPlayers;
+        gameModel = GameModel.getInstance();
     }
-    */
 
     @Test
     public void testObjectsCreation() {
-       // assertEquals(true, true);
-       //init(1);
+       init(1);
         GameModel gameModel = GameModel.getInstance();
-        /*
+
         assertEquals(1,gameModel.getPlayers().size());
 
         assertNotEquals(null,gameModel.getPlatformsInUse());
@@ -35,12 +35,10 @@ public class GameModelTest  {
 
         assertNotEquals(null,gameModel.getBoostsInUse());
         assertNotEquals(0,gameModel.getFreeBoosts().getFree());
-        */
     }
 
     @Test
     public void testUpdateMethod() {
-       // init(1);
 
     }
 }
