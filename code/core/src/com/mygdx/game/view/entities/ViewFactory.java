@@ -13,8 +13,10 @@ public class ViewFactory {
 
     public static EntityView makeView(DownFall game, EntityModel model) {
         if (!cache.containsKey(model.getType())) {
-            if (model.getType() == EntityModel.ModelType.PLAYER)
-                cache.put(model.getType(), new PlayerView(game));
+            if (model.getType() == EntityModel.ModelType.PLAYER1)
+                cache.put(model.getType(), new PlayerView(game,1));
+            if (model.getType() == EntityModel.ModelType.PLAYER2)
+                cache.put(model.getType(), new PlayerView(game,2));
             if (model.getType() == EntityModel.ModelType.OBSTACLE)
                 cache.put(model.getType(), new ObstacleView(game));
             if (model.getType() == EntityModel.ModelType.FLY_BOOST)

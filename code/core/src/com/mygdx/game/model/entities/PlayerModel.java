@@ -1,6 +1,10 @@
 package com.mygdx.game.model.entities;
 
 
+import com.mygdx.game.controller.GameController;
+
+import static com.mygdx.game.controller.GameController.WORLD_HEIGHT;
+
 public class PlayerModel extends EntityModel {
 
     int num;
@@ -17,7 +21,14 @@ public class PlayerModel extends EntityModel {
 
     @Override
     public ModelType getType() {
-        return ModelType.PLAYER;
+        switch (num)
+        {
+            case 1:
+                return ModelType.PLAYER1;
+            case 2:
+                return ModelType.PLAYER2;
+        }
+        return null;
     }
 
     public int getNum() {
@@ -38,5 +49,12 @@ public class PlayerModel extends EntityModel {
 
     public void setBoostPresent(boolean boostPresent) {
         this.boostPresent = boostPresent;
+    }
+
+    public void setPosition(float x, float y)
+    {
+        super.setPosition(x,y);
+        if(y == WORLD_HEIGHT)
+            GameController.getInstance().endGame(false);
     }
 }

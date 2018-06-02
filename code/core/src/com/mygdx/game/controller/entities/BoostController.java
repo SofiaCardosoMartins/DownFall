@@ -7,8 +7,8 @@ import com.mygdx.game.model.entities.BoostModel;
 public class BoostController extends EntityController implements BoostStrategy {
 
     protected static final float ACTIVE_TIME = 100000;  //in seconds
-    protected static final float UP_FORCE =  400;
-    protected static final float SIDE_FORCE = 30;
+    protected static final float UP_FORCE =  200;
+    protected static final float SIDE_FORCE = 5;
 
     long lastTimeMeasurement; //in nanoseconds
     long elapsedTime;

@@ -185,7 +185,7 @@ public class GameController implements ContactListener {
         }
     }
 
-    private void endGame(boolean lost)
+    public void endGame(boolean lost)
     {
         this.LOST = lost;
         this.END = true;

@@ -30,7 +30,7 @@ public class GameView extends AppView {
     Box2DDebugRenderer debugRenderer;
     Matrix4 debugCamera;
     private static float CAMERA_SPEED = 1;
-    private static final boolean DEBUG_PHYSICS = false;
+    private static final boolean DEBUG_PHYSICS = true;
     private static final float CAMERA_SPEED_INC = 0.3f; //camera speed increment
     private static final float TIME_TO_NEXT_INC = 10;   //time between camera's speed increment (in seconds)
     private static final float FONT_SCALE  = 1.2f;
@@ -66,7 +66,8 @@ public class GameView extends AppView {
     protected void loadAssets() {
         this.game.getAssetManager().load("landscape.png", Texture.class);
         this.game.getAssetManager().load("platform.png", Texture.class);
-        this.game.getAssetManager().load("player.png", Texture.class);
+        this.game.getAssetManager().load("player1.png", Texture.class);
+        this.game.getAssetManager().load("player2.png", Texture.class);
         this.game.getAssetManager().load("endosphere.png", Texture.class);
         this.game.getAssetManager().load("astenosphere.png", Texture.class);
         this.game.getAssetManager().load("mesosphere.png", Texture.class);

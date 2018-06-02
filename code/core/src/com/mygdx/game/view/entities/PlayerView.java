@@ -6,16 +6,22 @@ import com.mygdx.game.DownFall;
 
 public class PlayerView extends EntityView {
 
-    PlayerView(DownFall game)
+    int num;
+
+    PlayerView(DownFall game, int playerNum)
     {
         super(game);
+        this.num = playerNum;
     }
 
     @Override
     public Sprite createSprite(DownFall game) {
-        Texture texture = game.getAssetManager().get("player.png");
+        Texture texture;
+        if(num == 1)
+            texture = game.getAssetManager().get("player1.png");
+        else
+            texture = game.getAssetManager().get("player2.png");
         Sprite sprite = new Sprite(texture, texture.getWidth(), texture.getHeight());
-        //sprite.setSize(50, 50);
         return sprite;
     }
 }

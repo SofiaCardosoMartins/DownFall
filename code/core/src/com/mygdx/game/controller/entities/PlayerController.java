@@ -15,7 +15,7 @@ public class PlayerController extends EntityController {
     public PlayerController(World world, PlayerModel playerModel) {
         super(world, playerModel, BodyDef.BodyType.DynamicBody, false);
         float density = 1.0f; //heavy
-        float friction = 0.8f;
+        float friction = 0.9f;
         float restitution = 0.0f; //no restitution
         int width = 128;
         int height = 128;
@@ -23,7 +23,15 @@ public class PlayerController extends EntityController {
         strategy = new NaturalBoost(world, boostModel);
         context = new Context(this);
         createFixture(body, new float[]{
-                98.56f, 10.24f, 30.72f, 10.24f, 30.72f, 116.48f, 98.56f, 116.48f
+                46,68,47,110,92,111,92,68,92,53
+        }, width, height, density, friction, restitution, PLAYER_BITS, (short) (PLATFORM_BITS | LAVA_BITS | PLAYER_BITS | OBSTACLE_BITS | BOOST_BITS));
+
+        createFixture(body, new float[]{
+                89,43,82,33,68,30
+        }, width, height, density, friction, restitution, PLAYER_BITS, (short) (PLATFORM_BITS | LAVA_BITS | PLAYER_BITS | OBSTACLE_BITS | BOOST_BITS));
+
+        createFixture(body, new float[]{
+                58,32,50,40,46,53,46,68
         }, width, height, density, friction, restitution, PLAYER_BITS, (short) (PLATFORM_BITS | LAVA_BITS | PLAYER_BITS | OBSTACLE_BITS | BOOST_BITS));
 
     }
