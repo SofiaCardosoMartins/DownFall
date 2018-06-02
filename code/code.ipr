@@ -201,6 +201,22 @@
       <JAVADOC />
       <SOURCES />
     </library>
+    <library name="gdx-freetype-1.9.8">
+      <CLASSES>
+        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.badlogicgames.gdx/gdx-freetype/1.9.8/d92b5b8beab10e3b3c0dd836d4fc186f95e7ea4b/gdx-freetype-1.9.8.jar!/" />
+      </CLASSES>
+      <JAVADOC />
+      <SOURCES>
+        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.badlogicgames.gdx/gdx-freetype/1.9.8/a16774d14a95c8e45b9ae4cd3f2d7450fa1f7c94/gdx-freetype-1.9.8-sources.jar!/" />
+      </SOURCES>
+    </library>
+    <library name="gdx-freetype-platform-1.9.8-natives-desktop">
+      <CLASSES>
+        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.badlogicgames.gdx/gdx-freetype-platform/1.9.8/b21a8def0c70ec49ea5e2658e788b7a9177399f8/gdx-freetype-platform-1.9.8-natives-desktop.jar!/" />
+      </CLASSES>
+      <JAVADOC />
+      <SOURCES />
+    </library>
     <library name="gdx-platform-1.9.8-natives-desktop">
       <CLASSES>
         <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.badlogicgames.gdx/gdx-platform/1.9.8/604a2ef2c7c92a5900114757cbd3fb4dcbb8270c/gdx-platform-1.9.8-natives-desktop.jar!/" />
@@ -224,6 +240,15 @@
       <JAVADOC />
       <SOURCES>
         <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.badlogicgames.gdx/gdx-box2d/1.9.8/1fd1df309f965e52196900b270afc2bcd0acd0a2/gdx-box2d-1.9.8-sources.jar!/" />
+      </SOURCES>
+    </library>
+    <library name="Gradle: com.badlogicgames.gdx:gdx-freetype:1.9.8@jar">
+      <CLASSES>
+        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.badlogicgames.gdx/gdx-freetype/1.9.8/d92b5b8beab10e3b3c0dd836d4fc186f95e7ea4b/gdx-freetype-1.9.8.jar!/" />
+      </CLASSES>
+      <JAVADOC />
+      <SOURCES>
+        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.badlogicgames.gdx/gdx-freetype/1.9.8/a16774d14a95c8e45b9ae4cd3f2d7450fa1f7c94/gdx-freetype-1.9.8-sources.jar!/" />
       </SOURCES>
     </library>
     <library name="Gradle: com.badlogicgames.gdx:gdx:1.9.8@jar">

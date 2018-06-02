@@ -75,4 +75,9 @@ public class PlayerController extends EntityController {
             ((PlayerModel) this.getUserData()).setBoostPresent(false);
         }
     }
+
+    public void updateStrategyTime()
+    {
+        this.strategy.setLastTimeMeasurement(System.nanoTime());
+    }
 }

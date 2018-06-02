@@ -213,7 +213,6 @@ public class GameView extends AppView {
         //Boosts
 
         List<BoostModel> boosts = GameModel.getInstance().getBoostsInUse();
-        System.out.println("numero de boosts: " + boosts.size());
         for (BoostModel boost : boosts) {
             if(boost.getType() == EntityModel.ModelType.NATURAL_BOOST) continue;
             EntityView view = ViewFactory.makeView(game, boost);

@@ -4,12 +4,14 @@ import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.World;
 import com.mygdx.game.model.entities.BoostModel;
 
+import org.omg.Messaging.SYNC_WITH_TRANSPORT;
+
 
 public class BoostController extends EntityController implements BoostStrategy {
 
     public static final double ACTIVE_TIME = 10;  //in seconds
 
-    long beginTimeMeasurement; //in nanoseconds
+    long lastTimeMeasurement; //in nanoseconds
     long elapsedTime;
     boolean TIMEOUT;
     boolean CAUGHT;
@@ -19,7 +21,7 @@ public class BoostController extends EntityController implements BoostStrategy {
     }
 
     public BoostController(){
-        this.beginTimeMeasurement = System.nanoTime();
+        this.lastTimeMeasurement = System.nanoTime();
         this.elapsedTime = 0;
         TIMEOUT = false;
         CAUGHT = false;
@@ -35,7 +37,7 @@ public class BoostController extends EntityController implements BoostStrategy {
                 0,0,55,0,55,55,0,55
         }, width, height, density, friction, restitution, BOOST_BITS, PLAYER_BITS);
 
-        this.beginTimeMeasurement = System.nanoTime();
+        this.lastTimeMeasurement = System.nanoTime();
         this.elapsedTime = 0;
         TIMEOUT = false;
     }
@@ -63,10 +65,16 @@ public class BoostController extends EntityController implements BoostStrategy {
     @Override
     public void updateRemainingTime() {
         if(CAUGHT)
-            this.elapsedTime = (long)((System.nanoTime() - this.beginTimeMeasurement)/Math.pow(10,9));
-        if(elapsedTime >= ACTIVE_TIME) {
+            this.elapsedTime += System.nanoTime() - this.lastTimeMeasurement;
+        this.lastTimeMeasurement = System.nanoTime();
+        if(roundTime() >= ACTIVE_TIME) {
             this.TIMEOUT = true;
         }
+    }
+
+    private int roundTime()
+    {
+        return (int)Math.floor(elapsedTime/ Math.pow(10,9));
     }
 
     @Override
@@ -74,8 +82,13 @@ public class BoostController extends EntityController implements BoostStrategy {
         return elapsedTime;
     }
 
+    public void setLastTimeMeasurement(long lastTimeMeasurement)
+    {
+        this.lastTimeMeasurement = lastTimeMeasurement;
+    }
+
     @Override
-    public double getRemainingTime() {return ACTIVE_TIME - elapsedTime;}
+    public double getRemainingTime() {return ACTIVE_TIME - roundTime();}
 
 
     public void setCAUGHT() {

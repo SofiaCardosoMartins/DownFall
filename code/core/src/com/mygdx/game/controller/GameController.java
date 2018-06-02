@@ -16,6 +16,7 @@ import com.mygdx.game.model.entities.*;
 import com.mygdx.game.view.entities.AppView;
 import com.mygdx.game.view.entities.EntityView;
 import com.mygdx.game.view.entities.ViewFactory;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -283,7 +284,10 @@ public class GameController implements ContactListener {
 
     public static void setPAUSED(boolean paused)
     {
+
         PAUSED = paused;
+        if(!paused)
+            GameController.getInstance().restoreBoostsTime();
     }
 
     public static boolean getPAUSED()
@@ -295,6 +299,12 @@ public class GameController implements ContactListener {
     {
         instance = null;
         GameModel.delete();
+    }
+
+    public void restoreBoostsTime()
+    {
+        for(PlayerController playerController: playerControllers)
+            playerController.updateStrategyTime();
     }
 
     public boolean isDoublePlayer(){

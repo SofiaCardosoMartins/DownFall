@@ -1,27 +1,28 @@
 package com.mygdx.game.model;
 
 import com.mygdx.game.DownFall;
+import com.mygdx.game.view.entities.GameView;
 
 import org.junit.Test;
 
 import static org.junit.Assert.*;
 
-public class GameModelTest {
+public class GameModelTest  {
 
     private static DownFall game;
-    private static GameModel gameModel;
+    private static GameView gameView;
 
     private void init(int numPlayers)
     {
         game = new DownFall();
-        GameModel.PLAYERS_COUNT = numPlayers;
-        gameModel = GameModel.getInstance();
+        gameView = new GameView(game, numPlayers);
     }
 
     @Test
     public void testObjectsCreation() {
         init(1);
-        assertNotEquals(null,gameModel.getPlayers());
+        /*GameModel gameModel = GameModel.getInstance();
+        assertEquals(1,gameModel.getPlayers().size());
 
         assertNotEquals(null,gameModel.getPlatformsInUse());
         assertNotEquals(0,gameModel.getFreePlatforms().getFree());
@@ -30,7 +31,7 @@ public class GameModelTest {
         assertNotEquals(0,gameModel.getFreeObstacles().getFree());
 
         assertNotEquals(null,gameModel.getBoostsInUse());
-        assertNotEquals(0,gameModel.getFreeBoosts().getFree());
+        assertNotEquals(0,gameModel.getFreeBoosts().getFree());*/
     }
 
     @Test

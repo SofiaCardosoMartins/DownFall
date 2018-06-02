@@ -58,7 +58,6 @@ public class PausedView extends AppView {
 
         stage.act();
         stage.draw();
-
     }
 
     @Override

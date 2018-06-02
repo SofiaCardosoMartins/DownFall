@@ -7,7 +7,6 @@ import com.badlogic.gdx.Game;
 import com.mygdx.game.controller.GameController;
 import com.mygdx.game.view.entities.AppView;
 import com.mygdx.game.view.entities.GameView;
-import com.badlogic.gdx.Game;
 import com.mygdx.game.view.entities.MenuView;
 import com.mygdx.game.view.entities.NetworkMenuView;
 import com.mygdx.game.view.entities.PausedView;
@@ -78,6 +77,7 @@ public class DownFall extends Game {
 		GameController.setPAUSED(false);
 		views.pop();
 		setScreen(views.peek());
+		GameController.getInstance().restoreBoostsTime();
 	}
 
 	public void deleteGame()

@@ -7,5 +7,6 @@ public interface BoostStrategy {
     void collisionHandler(PlayerController player);
     void updateRemainingTime();
     double getTime();
+    void setLastTimeMeasurement(long lastTimeMeasurement);
     double getRemainingTime();
 }
