@@ -11,6 +11,7 @@ import com.mygdx.game.view.entities.MenuView;
 import com.mygdx.game.view.entities.NetworkMenuView;
 import com.mygdx.game.view.entities.PausedView;
 
+import java.util.EmptyStackException;
 import java.util.Stack;
 
 public class DownFall extends Game {
@@ -34,7 +35,11 @@ public class DownFall extends Game {
 	public void switchToGameView(int numPlayers)
 	{
 		deleteGame();
-		views.pop();
+		try {
+			views.pop();
+		} catch (EmptyStackException e){
+
+		}
 		views.push(new GameView(this,numPlayers));
 		setScreen(views.peek());
 	}

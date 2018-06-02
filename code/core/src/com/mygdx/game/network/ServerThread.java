@@ -54,6 +54,8 @@ public class ServerThread extends Thread {
                 }
 
                 String input = in.readLine();
+                if (input == null)
+                    continue;
                 if (input.equals("END"))
                     break;
 

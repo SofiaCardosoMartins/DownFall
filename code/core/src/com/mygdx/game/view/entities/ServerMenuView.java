@@ -24,11 +24,12 @@ public class ServerMenuView extends MenuView {
 
         try {
             server = new Server(game);
+            IP = server.getServerIP();
         } catch (Exception e){
             System.out.println("Couldn't create Server");
         } finally {
-            server.run();
-            IP = server.getServerIP();
+            server.start();
+
         }
     }
 

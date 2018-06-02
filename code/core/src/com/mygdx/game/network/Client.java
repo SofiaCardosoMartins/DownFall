@@ -16,13 +16,13 @@ public class Client {
     public Client(DownFall game, String serverAddress) throws IOException {
         // Make connection and initialize streams
         this.serverAddress = serverAddress;
-
+        System.out.println("server:" + serverAddress);
             Socket socket = new Socket(serverAddress, 8050);
 
         try {
-            ClientThread ct = new ClientThread(game);
+            ClientThread ct = new ClientThread(game, socket);
             ct.start();
-        } finally {
+        }  finally {
             socket.close();
         }
 

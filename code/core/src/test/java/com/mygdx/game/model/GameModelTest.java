@@ -9,19 +9,22 @@ import static org.junit.Assert.*;
 
 public class GameModelTest  {
 
-    private static DownFall game;
-    private static GameView gameView;
-
+    //private static DownFall game;
+    //private static GameView gameView;
+/*
     private void init(int numPlayers)
     {
         game = new DownFall();
         gameView = new GameView(game, numPlayers);
     }
+    */
 
     @Test
     public void testObjectsCreation() {
-        init(1);
-        /*GameModel gameModel = GameModel.getInstance();
+       // assertEquals(true, true);
+       //init(1);
+        GameModel gameModel = GameModel.getInstance();
+        /*
         assertEquals(1,gameModel.getPlayers().size());
 
         assertNotEquals(null,gameModel.getPlatformsInUse());
@@ -31,12 +34,13 @@ public class GameModelTest  {
         assertNotEquals(0,gameModel.getFreeObstacles().getFree());
 
         assertNotEquals(null,gameModel.getBoostsInUse());
-        assertNotEquals(0,gameModel.getFreeBoosts().getFree());*/
+        assertNotEquals(0,gameModel.getFreeBoosts().getFree());
+        */
     }
 
     @Test
     public void testUpdateMethod() {
-        init(1);
+       // init(1);
 
     }
 }

@@ -5,7 +5,7 @@ import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
 
-public class Server {
+public class Server extends Thread {
 
     private static final String getIPAddressURL = "google.pt";
     private static final int getIPAddressPort = 80;
@@ -15,7 +15,7 @@ public class Server {
     ServerSocket listener;
     DownFall game;
 
-    public Server(DownFall game) throws  Exception{
+    public Server (DownFall game) throws  Exception{
         getIPAddress();
         listener = new ServerSocket(8050);
         this.game = game;

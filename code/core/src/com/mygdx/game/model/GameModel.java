@@ -73,6 +73,7 @@ public class GameModel {
                 return new PlatformModel(0, 0, 0);
             }
         };
+
         this.maxPlatformY = 0;
         this.platformX = WORLD_WIDTH / 2;
         this.platformsToNextObstacles = random(MIN_PLATFORMS_BETWEEN_OBSTACLES,MAX_PLATFORMS_BETWEEN_OBSTACLES);
@@ -87,6 +88,7 @@ public class GameModel {
             players.add(new PlayerModel(x,50,0,i+1));
              x+=2;
         }
+
     }
 
     private void initializeBoosts(){

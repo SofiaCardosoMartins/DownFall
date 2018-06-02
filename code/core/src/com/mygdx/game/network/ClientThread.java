@@ -5,10 +5,7 @@ import com.badlogic.gdx.Input;
 import com.mygdx.game.DownFall;
 import com.mygdx.game.controller.GameController;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.PrintWriter;
+import java.io.*;
 import java.net.Socket;
 
 public class ClientThread extends Thread {
@@ -16,14 +13,19 @@ public class ClientThread extends Thread {
     Socket socket;
     DownFall game;
 
-    public ClientThread(DownFall game){
+    public ClientThread(DownFall game, Socket socket){
         this.game = game;
+        this.socket = socket;
     }
     public void run(){
+        game.switchToGameView(2);
         try {
             /* in and out opening might throw IOException */
             BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+            System.out.println("in");
             PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
+            System.out.println("out");
+
 
             while(true){
                 boolean accelerometerAvail = Gdx.input.isPeripheralAvailable(Input.Peripheral.Accelerometer);
@@ -59,9 +61,12 @@ public class ClientThread extends Thread {
                     GameController.getInstance().handleInput(GameController.Direction.UP, 1);
 
             }
-        } catch (IOException e){
-        System.out.println("Error handling input/output streams");
-        } finally{
+        } catch (EOFException e){
+
+        } catch (IOException e) {
+
+            System.out.println("Error handling input/output streams");
+        } finally {
             try {
                 socket.close();
             } catch (IOException e){
