@@ -14,10 +14,16 @@ public class GameControllerTest {
         State idle = new Idle();
         State jump = new Jump();
         State fall = new Fall();
-        
-        State result = idle.handleInput(GameController.Direction.UP);
+        State dead = new Dead();
 
+        State result = idle.handleInput(GameController.Direction.UP);
         assertEquals(jump.getClass(), result.getClass());
+
+        result = fall.handleInput(GameController.Direction.UP);
+        assertEquals(fall.getClass(), result.getClass());
+
+        result = dead.handleInput(GameController.Direction.UP);
+        assertEquals(dead.getClass(), result.getClass());
 
 
     }
