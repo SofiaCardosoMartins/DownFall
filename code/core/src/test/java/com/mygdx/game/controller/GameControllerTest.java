@@ -25,7 +25,6 @@ public class GameControllerTest {
         result = dead.handleInput(GameController.Direction.UP);
         assertEquals(dead.getClass(), result.getClass());
 
-
     }
 
 
