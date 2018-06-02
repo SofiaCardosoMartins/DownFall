@@ -123,11 +123,11 @@ public class GameController implements ContactListener {
         return instance;
     }
 
-    private void updateLava(OrthographicCamera camera)
+    private void updateLava(float minViewportY)
     {
         EntityModel em = (EntityModel)lavaController.getBody().getUserData();
-        em.setY(getMinCameraY(camera)+ (PIXEL_TO_METER * (lavaController.getHeight()/2)));
-        this.lavaController.setY(getMinCameraY(camera) + (PIXEL_TO_METER * (lavaController.getHeight()/2)));
+        em.setY(minViewportY + (PIXEL_TO_METER * (lavaController.getHeight()/2)));
+        this.lavaController.setY(minViewportY + (PIXEL_TO_METER * (lavaController.getHeight()/2)));
     }
 
     public void updateObstacles(float minCameraY, float maxCameraY) {
@@ -139,17 +139,17 @@ public class GameController implements ContactListener {
         }
     }
 
-    public void updateBoosts(float minCameraY) {
+    public void updateBoosts(float minViewportY) {
         for(BoostController boost: boostControllers){
-            if(boost.getY() < minCameraY)
+            if(boost.getY() < minViewportY)
                 GameModel.getInstance().remove((BoostModel)(boost.getBody().getUserData()));
         }
     }
 
-    public void update(float delta, OrthographicCamera camera) {
+    public void update(float delta, float minViewportY, float maxViewportY) {
 
         //System.out.println("player pos: " + playerControllers.get(0).getY());
-        GameModel.getInstance().update(delta, camera);
+        GameModel.getInstance().update(delta, minViewportY);
 
         float frameTime = Math.min(delta, 0.25f);
         accumulator += frameTime;
@@ -168,9 +168,9 @@ public class GameController implements ContactListener {
                 boostControllers.remove(e);
         }
 
-        this.updateLava(camera);
-        this.updateObstacles(getMinCameraY(camera),getMaxCameraY(camera));
-        this.updateBoosts(getMinCameraY(camera));
+        this.updateLava(minViewportY);
+        this.updateObstacles(minViewportY,maxViewportY);
+        this.updateBoosts(minViewportY);
 
         Array<Body> bodies = new Array<Body>();
         world.getBodies(bodies);
@@ -178,7 +178,7 @@ public class GameController implements ContactListener {
         List<EntityController> controllers = getAllControllers();
         for (EntityController controller : controllers) {
             Body body = controller.getBody();
-            verifyBounds(controller, camera);
+            verifyBounds(controller, minViewportY, maxViewportY);
             ((EntityModel) body.getUserData()).setPosition(body.getPosition().x, body.getPosition().y);
             ((EntityModel) body.getUserData()).setRotation(body.getAngle());
             controller.update();
@@ -294,18 +294,8 @@ public class GameController implements ContactListener {
         }
     }
 
-    public float getMaxCameraY(OrthographicCamera camera) {
-        return PIXEL_TO_METER * (camera.position.y + (camera.viewportHeight / 2));
-    }
-
-    public float getMinCameraY(OrthographicCamera camera) {
-        return PIXEL_TO_METER * (camera.position.y - (camera.viewportHeight / 2));
-    }
-
-    private void verifyBounds(EntityController ec, OrthographicCamera camera) {
+    private void verifyBounds(EntityController ec,float minViewportY, float maxViewportY) {
         if((ec instanceof PlatformController) || (ec instanceof ObstacleController)) return;
-        float maxCameraY = getMaxCameraY(camera);
-        float minCameraY = getMinCameraY(camera);
 
         EntityView ev = ViewFactory.makeView(AppView.game, (EntityModel) ec.getBody().getUserData());
         float height = ev.getSprite().getHeight() * PIXEL_TO_METER;
@@ -313,13 +303,12 @@ public class GameController implements ContactListener {
 
         this.checkLeftWallCollision(ec, width);
         this.checkRightWallCollision(ec, width);
-        this.checkUpWallCollision(ec, maxCameraY, height);
-        this.checkDownWallCollision(ec, minCameraY, height);
+        this.checkUpWallCollision(ec, maxViewportY, height);
+        this.checkDownWallCollision(ec, minViewportY, height);
     }
 
     public void setPAUSED(boolean paused)
     {
-
         PAUSED = paused;
         if(!paused)
             GameController.getInstance().restoreBoostsTime();

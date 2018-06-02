@@ -128,14 +128,13 @@ public class GameModel {
         GameController.getInstance().remove(model);
     }
 
-    private void updatePlatforms(OrthographicCamera camera) {
+    private void updatePlatforms(float minViewportY) {
         //check platforms out of display
         EntityView ev = ViewFactory.makeView(AppView.game, new PlatformModel());
-        float minCameraY = PIXEL_TO_METER * (camera.position.y - (camera.viewportHeight / 2));
 
         //check platforms in use
         for (PlatformModel pm : new ArrayList<PlatformModel>(platformsInUse))
-            pm.checkBounds(minCameraY);
+            pm.checkBounds(minViewportY);
 
 
         int numberFree = freePlatforms.getFree();
@@ -186,24 +185,24 @@ public class GameModel {
         GameController.getInstance().add(bm);
     }
 
-    private void updateObstacles(OrthographicCamera camera)
+    private void updateObstacles(float minViewportY)
     {
         //check obstacles in use
         for (ObstacleModel om : new ArrayList<ObstacleModel>(obstaclesInUse))
-            om.checkBounds(GameController.getInstance().getMinCameraY(camera));
+            om.checkBounds(minViewportY);
     }
 
-    private void updateBoosts(OrthographicCamera camera)
+    private void updateBoosts(float minViewportY)
     {
         //check obstacles in use
         for (BoostModel om : new ArrayList<BoostModel>(boostsInUse))
-            om.checkBounds(GameController.getInstance().getMinCameraY(camera));
+            om.checkBounds(minViewportY);
     }
 
-    public void update(float delta, OrthographicCamera camera) {
-        this.updatePlatforms(camera);
-        this.updateObstacles(camera);
-        this.updateBoosts(camera);
+    public void update(float delta, float minViewportY) {
+        this.updatePlatforms(minViewportY);
+        this.updateObstacles(minViewportY);
+        this.updateBoosts(minViewportY);
     }
 
     public static void delete()

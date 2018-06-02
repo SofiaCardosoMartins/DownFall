@@ -1,6 +1,5 @@
 package com.mygdx.game.view.entities;
 
-import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
@@ -101,7 +100,7 @@ public class GameView extends AppView {
         checkGameState();
         if(!GameController.getInstance().getPAUSED()){
             handleInputs(delta);
-            GameController.getInstance().update(delta, camera);}
+            GameController.getInstance().update(delta, getMinCameraY(),getMaxCameraY());}
 
         //move camera upwards
         camera.position.y += CAMERA_SPEED;
@@ -168,20 +167,19 @@ public class GameView extends AppView {
         } else if (Gdx.input.isKeyPressed(Input.Keys.W)) {
             GameController.getInstance().handleInput(GameController.Direction.UP,2);
         }
-/*
-        boolean accelerometerAvail = Gdx.input.isPeripheralAvailable(Input.Peripheral.Accelerometer);
-        if (accelerometerAvail) {
-            float acceX = Gdx.input.getAccelerometerX();
-            float acceY = Gdx.input.getAccelerometerY();
-            float acceZ = Gdx.input.getAccelerometerZ();
-            if (acceX < 0)
-                GameController.getInstance().handleInput(GameController.Direction.RIGHT,1);
-            else if (acceX > 0)
-                GameController.getInstance().handleInput(GameController.Direction.LEFT,1);
+
+        if(GameModel.PLAYERS_COUNT == 1) {
+            boolean accelerometerAvail = Gdx.input.isPeripheralAvailable(Input.Peripheral.Accelerometer);
+            if (accelerometerAvail) {
+                float acceX = Gdx.input.getAccelerometerX();
+                if (acceX < 0)
+                    GameController.getInstance().handleInput(GameController.Direction.RIGHT, 1);
+                else if (acceX > 0)
+                    GameController.getInstance().handleInput(GameController.Direction.LEFT, 1);
+            }
+            if (Gdx.input.isTouched())
+                GameController.getInstance().handleInput(GameController.Direction.UP, 1);
         }
-        if (Gdx.input.isTouched())
-            GameController.getInstance().handleInput(GameController.Direction.UP,1);
-*/
     }
 
     private void drawBitMapFont(PlayerModel playerModel)
@@ -255,8 +253,6 @@ public class GameView extends AppView {
             game.getBatch().draw(background, 0, 0, 0, 0, (int) (WORLD_WIDTH / PIXEL_TO_METER), (int) (WORLD_HEIGHT / PIXEL_TO_METER));
         }
         */
-
-
     }
 
     private void drawLava(float delta) {
@@ -266,7 +262,15 @@ public class GameView extends AppView {
     }
 
     private void drawBar(){
-        barView.update(WORLD_WIDTH / 2, GameController.getInstance().getMaxCameraY(camera));
+        barView.update(WORLD_WIDTH / 2, getMaxCameraY());
         barView.draw(game.getBatch());
+    }
+
+    private float getMaxCameraY() {
+        return PIXEL_TO_METER * (camera.position.y + (camera.viewportHeight / 2));
+    }
+
+    private float getMinCameraY() {
+        return PIXEL_TO_METER * (camera.position.y - (camera.viewportHeight / 2));
     }
 }
