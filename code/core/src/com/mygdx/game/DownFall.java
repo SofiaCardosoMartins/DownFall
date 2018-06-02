@@ -60,6 +60,20 @@ public class DownFall extends Game {
 		setScreen(views.peek());
 	}
 
+	public void switchToLostView()
+	{
+		views.pop();
+		views.push(new LostView(this));
+		setScreen(views.peek());
+	}
+
+	public void switchToWonView()
+	{
+		views.pop();
+		views.push(new WonView(this));
+		setScreen(views.peek());
+	}
+
 	public void switchToMenuView()
 	{
 		views.pop();
@@ -74,7 +88,7 @@ public class DownFall extends Game {
 
 	public void resumeGame()
 	{
-		GameController.setPAUSED(false);
+		GameController.getInstance().setPAUSED(false);
 		views.pop();
 		setScreen(views.peek());
 		GameController.getInstance().restoreBoostsTime();

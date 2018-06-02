@@ -1,5 +1,6 @@
 package com.mygdx.game.view.entities;
 
+import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
@@ -97,9 +98,8 @@ public class GameView extends AppView {
             this.lastCameraSpeedIncreaseTime = System.nanoTime();
         }
 
-        checkPausedGame();
-
-        if(!GameController.getPAUSED()){
+        checkGameState();
+        if(!GameController.getInstance().getPAUSED()){
             handleInputs(delta);
             GameController.getInstance().update(delta, camera);}
 
@@ -128,11 +128,28 @@ public class GameView extends AppView {
         }
     }
 
+    private void checkGameState()
+    {
+        checkPausedGame();
+        checkEndGame();
+    }
+
     private void checkPausedGame()
     {
         if (Gdx.input.isKeyPressed(Input.Keys.ESCAPE)) {
                 game.switchToPausedView();
-                GameController.setPAUSED(true); }
+                GameController.getInstance().setPAUSED(true); }
+    }
+
+    public void checkEndGame()
+    {
+        if(GameController.getInstance().isEndGame())
+        {
+            if(GameController.getInstance().isLost())
+                game.switchToLostView();
+            else
+                game.switchToWonView();
+        }
     }
 
     @Override

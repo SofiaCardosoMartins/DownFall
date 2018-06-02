@@ -28,7 +28,6 @@ public class GameController implements ContactListener {
     public static final String TITLE = "DownFall";
     public static final int WORLD_WIDTH = 10;
     public static final int WORLD_HEIGHT = 1050;
-    private static boolean PAUSED = false;
     public static final Vector2 GRAVITY = new Vector2(0, -3f);
     private final World world;
     private List<PlayerController> playerControllers;
@@ -37,11 +36,16 @@ public class GameController implements ContactListener {
     private List<BoostController> boostControllers;
     private final LavaController lavaController;
     private float accumulator;
+    private boolean PAUSED;
+    private  boolean LOST;
+    private boolean END;
 
     public enum Direction {LEFT, RIGHT, UP}
 
     private GameController() {
         PAUSED=false;
+        LOST = false;
+        END = false;
         world = new World(GRAVITY, true);
 
         //Create players bodies
@@ -160,10 +164,20 @@ public class GameController implements ContactListener {
         }
     }
 
-    private void endGame()
+    private void endGame(boolean lost)
     {
-        System.out.println("O jogo terminou");
-        System.exit(121);
+        this.LOST = lost;
+        this.END = true;
+    }
+
+    public boolean isEndGame()
+    {
+        return this.END;
+    }
+
+    public boolean isLost()
+    {
+        return this.LOST;
     }
 
     @Override
@@ -174,7 +188,7 @@ public class GameController implements ContactListener {
 
         if(((body1.getUserData() instanceof LavaModel) && (body2.getUserData() instanceof PlayerModel)) ||
                 ((body1.getUserData() instanceof PlayerModel) && (body2.getUserData() instanceof LavaModel)))
-            this.endGame();
+            this.endGame(true);
 
         if(body1.getUserData() instanceof PlayerModel && body2.getUserData() instanceof BoostModel)
             playerBoostCollision(body1, body2);
@@ -282,7 +296,7 @@ public class GameController implements ContactListener {
         this.checkDownWallCollision(ec, minCameraY, height);
     }
 
-    public static void setPAUSED(boolean paused)
+    public void setPAUSED(boolean paused)
     {
 
         PAUSED = paused;
@@ -290,7 +304,7 @@ public class GameController implements ContactListener {
             GameController.getInstance().restoreBoostsTime();
     }
 
-    public static boolean getPAUSED()
+    public boolean getPAUSED()
     {
         return PAUSED;
     }
