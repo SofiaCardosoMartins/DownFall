@@ -17,7 +17,7 @@ public class Context {
         else if (dir == GameController.Direction.LEFT)
             player.moveLeft();
         if (dir == GameController.Direction.UP )
-            if ((player.strategy.getClass() == NaturalBoost.class) || (player.strategy.getClass() == NoCollisionsBoost.class)) {
+            if ((player.strategy.getClass() == NaturalBoost.class) || (player.strategy.getClass() == NoCollisionsBoostController.class)) {
                 if ((currentState instanceof Idle))
                     player.jump();
             } else player.jump();

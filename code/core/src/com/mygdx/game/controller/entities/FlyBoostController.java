@@ -6,16 +6,16 @@ import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
 import com.mygdx.game.model.entities.BoostModel;
 
-public class FlyBoost extends BoostController {
+public class FlyBoostController extends BoostController {
 
 
-    public FlyBoost(World world, BoostModel boostModel) {
+    public FlyBoostController(World world, BoostModel boostModel) {
         super(world, boostModel);
     }
 
     @Override
     public void jump(PlayerController player) {
-        player.getBody().applyForceToCenter(0, 200, true);
+        player.getBody().applyForceToCenter(0, UP_FORCE, true);
     }
 
     @Override

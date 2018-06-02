@@ -32,7 +32,7 @@ public class GameView extends AppView {
     Matrix4 debugCamera;
     private static float CAMERA_SPEED = 1;
     private static final boolean DEBUG_PHYSICS = false;
-    private static final float CAMERA_SPEED_INC = 0; //camera speed increment
+    private static final float CAMERA_SPEED_INC = 0.3f; //camera speed increment
     private static final float TIME_TO_NEXT_INC = 10;   //time between camera's speed increment (in seconds)
     private static final float FONT_SCALE  = 1.2f;
     private BarView barView;

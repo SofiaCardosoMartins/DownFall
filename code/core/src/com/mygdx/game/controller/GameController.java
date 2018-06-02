@@ -11,6 +11,7 @@ import com.badlogic.gdx.physics.box2d.Manifold;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
 import com.mygdx.game.controller.entities.*;
+import com.mygdx.game.controller.entities.NoCollisionsBoostController;
 import com.mygdx.game.model.GameModel;
 import com.mygdx.game.model.entities.*;
 import com.mygdx.game.view.entities.AppView;
@@ -82,7 +83,38 @@ public class GameController implements ContactListener {
         controllers.addAll(platformControllers);
         controllers.addAll(playerControllers);
         controllers.addAll(obstacleControllers);
+        controllers.addAll(boostControllers);
         return controllers;
+    }
+
+    public void remove(EntityModel model)
+    {
+        List<EntityController> entityControllers = getAllControllers();
+        for(EntityController entityController: entityControllers)
+        {
+            EntityModel modelController = ((EntityModel)entityController.getBody().getUserData());
+            if(model == modelController)
+                entityController.setFlaggedForRemoval(true);
+        }
+    }
+
+    public void add(EntityModel entityModel)
+    {
+        switch (entityModel.getType())
+        {
+            case PLATFORM:
+                platformControllers.add(new PlatformController(world, (PlatformModel) entityModel));
+                break;
+            case OBSTACLE:
+                obstacleControllers.add(new ObstacleController(world, (ObstacleModel) entityModel));
+                break;
+            case FLY_BOOST:
+                boostControllers.add(new FlyBoostController(world, (FlyBoostModel) entityModel));
+                break;
+            case NO_COLLISIONS_BOOST:
+                boostControllers.add(new NoCollisionsBoostController(world, (NoCollisionsBoostModel) entityModel));
+                break;
+        }
     }
 
     public static GameController getInstance() {
@@ -98,24 +130,10 @@ public class GameController implements ContactListener {
         this.lavaController.setY(getMinCameraY(camera) + (PIXEL_TO_METER * (lavaController.getHeight()/2)));
     }
 
-    public void updatePlatforms() {
-        this.platformControllers.clear();
-        List<PlatformModel> platforms = GameModel.getInstance().getPlatformsInUse();
-        for (PlatformModel platform : platforms)
-            platformControllers.add(new PlatformController(world, platform));
-    }
-
     public void updateObstacles(float minCameraY, float maxCameraY) {
-        for(ObstacleController obstacle: obstacleControllers)
-            world.destroyBody(obstacle.getBody());
-
-        this.obstacleControllers.clear();
-
         List<ObstacleModel> obstacles = GameModel.getInstance().getObstaclesInUse();
-        for (ObstacleModel obstacle : obstacles) {
-            ObstacleController oc = new ObstacleController(world, obstacle);
-            obstacleControllers.add(oc);
-            float obstacleY = obstacle.getY();
+        for (ObstacleController oc: obstacleControllers){
+            float obstacleY = oc.getY();
             if((obstacleY < maxCameraY) && (obstacleY > minCameraY))
                 oc.move();
         }
@@ -125,18 +143,12 @@ public class GameController implements ContactListener {
         for(BoostController boost: boostControllers){
             if(boost.getY() < minCameraY)
                 GameModel.getInstance().remove((BoostModel)(boost.getBody().getUserData()));
-            world.destroyBody(boost.getBody());
-        }
-
-        this.boostControllers.clear();
-        List<BoostModel> boosts = GameModel.getInstance().getBoostsInUse();
-        for (BoostModel boost : boosts) {
-            BoostController oc = new FlyBoost(world, boost);
-            boostControllers.add(oc);
         }
     }
 
     public void update(float delta, OrthographicCamera camera) {
+
+        //System.out.println("player pos: " + playerControllers.get(0).getY());
         GameModel.getInstance().update(delta, camera);
 
         float frameTime = Math.min(delta, 0.25f);
@@ -146,8 +158,17 @@ public class GameController implements ContactListener {
             accumulator -= 1 / 60f;
         }
 
+        List<EntityController> entityControllers = getAllControllers();
+        for(EntityController e: entityControllers)
+            if(e.isFlaggedForRemoval()) {
+                world.destroyBody(e.getBody());
+                playerControllers.remove(e);
+                platformControllers.remove(e);
+                obstacleControllers.remove(e);
+                boostControllers.remove(e);
+        }
+
         this.updateLava(camera);
-        this.updatePlatforms();
         this.updateObstacles(getMinCameraY(camera),getMaxCameraY(camera));
         this.updateBoosts(getMinCameraY(camera));
 

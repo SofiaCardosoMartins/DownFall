@@ -1,27 +1,20 @@
 package com.mygdx.game.controller.entities;
 
-import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.Filter;
 import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
-import com.mygdx.game.controller.GameController;
 import com.mygdx.game.model.entities.BoostModel;
-import com.mygdx.game.model.entities.EntityModel;
 
-import java.util.ArrayList;
-import java.util.List;
+public class NoCollisionsBoostController extends BoostController {
 
-public class NoCollisionsBoost extends BoostController {
-
-
-    public NoCollisionsBoost(World world, BoostModel boostModel) {
+    public NoCollisionsBoostController(World world, BoostModel boostModel) {
         super(world, boostModel);
     }
 
     @Override
     public void jump(PlayerController player) {
-        player.getBody().applyForceToCenter(0, 800, true);
+        player.getBody().applyForceToCenter(0, UP_FORCE, true);
     }
 
     @Override

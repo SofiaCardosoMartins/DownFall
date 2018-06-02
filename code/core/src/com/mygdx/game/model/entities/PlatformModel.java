@@ -1,16 +1,13 @@
 package com.mygdx.game.model.entities;
 
-import com.mygdx.game.controller.GameController;
 import com.mygdx.game.model.GameModel;
 import com.mygdx.game.view.entities.AppView;
-import com.mygdx.game.view.entities.EntityView;
 import com.mygdx.game.view.entities.ViewFactory;
 
 import static com.badlogic.gdx.math.MathUtils.random;
 
 import static com.mygdx.game.controller.GameController.WORLD_WIDTH;
 import static com.mygdx.game.view.entities.AppView.PIXEL_TO_METER;
-import static com.mygdx.game.view.entities.AppView.game;
 
 public class PlatformModel extends EntityModel {
 

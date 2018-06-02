@@ -4,12 +4,11 @@ import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.World;
 import com.mygdx.game.model.entities.BoostModel;
 
-import org.omg.Messaging.SYNC_WITH_TRANSPORT;
-
-
 public class BoostController extends EntityController implements BoostStrategy {
 
-    public static final double ACTIVE_TIME = 10;  //in seconds
+    protected static final float ACTIVE_TIME = 100000;  //in seconds
+    protected static final float UP_FORCE =  400;
+    protected static final float SIDE_FORCE = 30;
 
     long lastTimeMeasurement; //in nanoseconds
     long elapsedTime;
@@ -44,12 +43,12 @@ public class BoostController extends EntityController implements BoostStrategy {
 
     @Override
     public void moveRight(PlayerController player) {
-        player.getBody().applyForceToCenter(40, 0, true);
+        player.getBody().applyForceToCenter(SIDE_FORCE, 0, true);
     }
 
     @Override
     public void moveLeft(PlayerController player) {
-        player.getBody().applyForceToCenter(-40, 0, true);
+        player.getBody().applyForceToCenter(-SIDE_FORCE, 0, true);
     }
 
     @Override

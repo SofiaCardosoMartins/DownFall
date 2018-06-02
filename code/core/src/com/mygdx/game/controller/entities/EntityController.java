@@ -12,6 +12,7 @@ public abstract class EntityController {
     protected Body body;
     protected int width;
     protected int height;
+    protected boolean flaggedForRemoval;
 
     public static final short PLAYER_BITS = 1;
     public static final short PLATFORM_BITS = 2;
@@ -31,6 +32,7 @@ public abstract class EntityController {
         bodyDef.fixedRotation = !rotate;
         body = world.createBody(bodyDef);
         body.setUserData(model);
+        flaggedForRemoval = false;
     }
 
     final void createFixture(Body body, float[] vertexes, int width, int height, float density, float friction, float restitution, short category, short mask)
@@ -125,4 +127,12 @@ public abstract class EntityController {
     }
 
     public void update(){}
+
+    public boolean isFlaggedForRemoval() {
+        return flaggedForRemoval;
+    }
+
+    public void setFlaggedForRemoval(boolean flaggedForRemoval) {
+        this.flaggedForRemoval = flaggedForRemoval;
+    }
 }

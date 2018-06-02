@@ -1,11 +1,11 @@
 package com.mygdx.game.model.entities;
 
-public class NoCollisionsBoost extends BoostModel {
-    public NoCollisionsBoost(float x, float y, float rotation) {
+public class NoCollisionsBoostModel extends BoostModel {
+    public NoCollisionsBoostModel(float x, float y, float rotation) {
         super(x, y, rotation);
     }
 
-    public NoCollisionsBoost(){
+    public NoCollisionsBoostModel(){
         super();
     }
 
