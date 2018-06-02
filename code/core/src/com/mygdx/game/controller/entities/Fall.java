@@ -11,8 +11,8 @@ public class Fall extends State {
 
     @Override
     public State update(float vx, float vy) {
-        if (vy == 0)
-                return new Idle();
+        if ((vy < 0.002) && (vy > -0.002))
+            return new Idle();
         else return this;
     }
 }

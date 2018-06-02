@@ -35,11 +35,14 @@ public class DownFall extends Game {
 	public void switchToGameView(int numPlayers)
 	{
 		deleteGame();
+		/*
 		try {
 			views.pop();
 		} catch (EmptyStackException e){
 
 		}
+		*/
+		views.pop().dispose();
 		views.push(new GameView(this,numPlayers));
 		setScreen(views.peek());
 	}

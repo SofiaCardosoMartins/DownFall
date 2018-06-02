@@ -178,8 +178,10 @@ public class GameView extends AppView {
                 else if (acceX > 0)
                     GameController.getInstance().handleInput(GameController.Direction.LEFT, 1);
             }
-            if (Gdx.input.isTouched())
+            if (Gdx.input.isTouched()) {
                 GameController.getInstance().handleInput(GameController.Direction.UP, 1);
+                System.out.println("SINCERAMENTE");
+            }
         }
     }
 

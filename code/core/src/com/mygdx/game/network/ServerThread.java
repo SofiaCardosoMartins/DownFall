@@ -27,6 +27,7 @@ public class ServerThread extends Thread {
 
     public void run(){
         try{
+            System.out.println("RUNNING");
             BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
             PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
 

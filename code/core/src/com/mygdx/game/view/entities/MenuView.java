@@ -113,7 +113,6 @@ public class MenuView extends AppView {
         singlePlayerBtn.addListener(new InputListener(){
             @Override
             public void touchUp (InputEvent event, float x, float y, int pointer, int button) {
-
                 game.switchToGameView(1);
             }
             @Override
@@ -126,9 +125,10 @@ public class MenuView extends AppView {
             @Override
             public void touchUp (InputEvent event, float x, float y, int pointer, int button) {
                 boolean accelerometerAvail = Gdx.input.isPeripheralAvailable(Input.Peripheral.Accelerometer);
-                if (accelerometerAvail)
+               /* if (accelerometerAvail)
                     game.switchToNetworkView();
                 else
+                */
                     game.switchToGameView(2);
 
             }
@@ -153,5 +153,11 @@ public class MenuView extends AppView {
     private void drawTitle(float delta) {
         Texture title = game.getAssetManager().get("downFall.png",Texture.class);
         game.getBatch().draw(title,camera.viewportWidth/2 - (title.getWidth()/2),(camera.viewportHeight/2)+2*title.getHeight());
+    }
+
+    @Override
+    public void dispose() {
+        super.dispose();
+        stage.dispose();
     }
 }
