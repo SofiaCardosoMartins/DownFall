@@ -19,7 +19,6 @@ public class GameControllerTest {
 
         assertEquals(jump.getClass(), result.getClass());
 
-
     }
 
 
