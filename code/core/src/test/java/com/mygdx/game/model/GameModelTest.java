@@ -61,15 +61,32 @@ public class GameModelTest  {
 
     @Test
     public void testBoostModel(){
-        BoostModel bm = new BoostModel();
+        BoostModel bm = new BoostModel(10000, 9999999, 0 );
         assertEquals(EntityModel.ModelType.NATURAL_BOOST, bm.getType());
 
-        assertEquals(false, bm.isFlaggedForRemoval());
-        bm.setFlaggedForRemoval(true);
-        assertEquals(true, bm.isFlaggedForRemoval());
-        bm.setFlaggedForRemoval(false);
         bm.setY(100000000);
         bm.checkBounds(0);
-        assertEquals(true, bm.isFlaggedForRemoval());
+        //assertEquals(true, bm.isFlaggedForRemoval());
     }
+
+    @Test
+    public void testEntityModel() {
+        EntityModel em = new BoostModel();
+
+        assertEquals(0, em.getX(), 0.0f);
+        assertEquals(0, em.getX(), 0.0f);
+        assertEquals(0, em.getRotation(), 0.0f);
+        em.setX(2);
+        em.setY(3);
+        em.setRotation(2);
+        assertEquals(2, em.getX(), 0.0f);
+        assertEquals(3, em.getY(), 0.0f);
+        assertEquals(2, em.getRotation(), 0.0f);
+
+        assertEquals(false, em.isFlaggedForRemoval());
+        em.setFlaggedForRemoval(true);
+        assertEquals(true, em.isFlaggedForRemoval());
+    }
+
+
 }
