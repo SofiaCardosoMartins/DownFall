@@ -8,6 +8,10 @@ import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
 
+/**
+ * A ReadThread deals with reading info from a socket
+ */
+
 public class ReadThread extends Thread {
     BufferedReader in;
     int myPlayer;

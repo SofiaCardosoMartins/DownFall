@@ -9,6 +9,10 @@ import com.mygdx.game.model.GameModel;
 import java.io.*;
 import java.net.Socket;
 
+/**
+ * The ClientThread starts threads for the receiving and sending of input themselves
+ */
+
 public class ServerThread extends Thread {
     private Socket socket;
     private int clientNumber;

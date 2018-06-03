@@ -8,6 +8,10 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.net.Socket;
 
+/**
+ * A WriteThread deals with writing info from a socket
+ */
+
 public class WriteThread extends Thread {
 
     int myPlayer;
