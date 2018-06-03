@@ -17,20 +17,21 @@ public class ServerThread extends Thread {
     private Socket socket;
     private int clientNumber;
     private DownFall game;
+    int playerNum;
 
 
-    ServerThread(DownFall game, Socket socket, int clientNumber){
+    ServerThread(DownFall game, Socket socket, int playerNum){
         this.socket = socket;
-        this.clientNumber = clientNumber;
-        System.out.println("New connection with client# " + clientNumber + " at " + socket);
+        System.out.println("New connection with client# " + playerNum + " at " + socket);
         this.game = game;
+        this.playerNum = playerNum;
+        this.playerNum++;
 
     }
 
     public void run(){
-        //GameModel.PLAYERS_COUNT = 2;
-        game.startGame = true;
         ReadThread rd;
+        /*
         WriteThread wr;
         try {
             wr = new WriteThread(socket, 1);
@@ -39,21 +40,16 @@ public class ServerThread extends Thread {
             System.out.println("Lost connection with write server");
             return;
         }
-
+*/
         try {
-            rd = new ReadThread(socket, 1);
+            rd = new ReadThread(socket, playerNum);
         } catch (Exception e){
             e.printStackTrace();
             System.out.println("Lost connection with write server");
             return;
         }
 
-
-        while(!game.createdGame){
-
-        }
-
-        wr.start();
+        //wr.start();
         rd.start();
 
         try {

@@ -7,6 +7,7 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.mygdx.game.DownFall;
+import com.mygdx.game.controller.GameController;
 import com.mygdx.game.network.Client;
 import com.mygdx.game.network.Server;
 

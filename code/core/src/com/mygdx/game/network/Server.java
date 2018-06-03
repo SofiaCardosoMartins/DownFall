@@ -13,7 +13,6 @@ public class Server extends Thread {
     private static final int getIPAddressPort = 80;
 
     private static String serverIP;
-    int clientNumber = 0;
     ServerSocket listener;
     DownFall game;
 
@@ -27,20 +26,24 @@ public class Server extends Thread {
         this.game = game;
     }
     /**
-     * Creates a ServerThread
+     * Creates 2 ServerThreads, one for each player
      */
     public void run(){
-        try {
-            ServerThread st = new ServerThread(this.game, listener.accept(), clientNumber++);
-            st.start();
-        } catch (Exception e) {
-        } finally {
+        for(int i = 0; i < 2; i++) {
+            System.out.println("i:" +i);
             try {
-                listener.close();
-            }
-            catch (Exception e){
+                ServerThread st = new ServerThread(this.game, listener.accept(), i);
+                System.out.println("recognized");
+                st.start();
+            } catch (Exception e) {
             }
         }
+
+        try {
+            listener.close();
+        } catch (Exception e) {
+        }
+        game.startGame = true;
     }
 
     /**
@@ -56,7 +59,7 @@ public class Server extends Thread {
     /**
      * Establishes a connection to google.pt to know its IP address
      */
-    
+
     public void getIPAddress(){
 
         try {
