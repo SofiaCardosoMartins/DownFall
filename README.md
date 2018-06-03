@@ -73,3 +73,26 @@ View
 You may choose to play this game in either single or multiple mode.
 
 ![alt text](https://github.com/SofiaCardosoMartins/DownFall/blob/master/final_delivery/screenshots/MainMenu.png)
+
+## Game
+In single mode desktop you control the player with the -> and <- keys to move to the right and left accordingly. In order to jump, you need to press the up arrow.
+In single mode android you need to turn the mobile phone rightwards and leftwards for the right and left movement, and touch for jumps.
+In multiplayer mode, you use the same android controls in each phone. If you prefer, you may also use the desktop controls in addition to A, W, D keys for the according movements.
+![alt text](https://github.com/SofiaCardosoMartins/DownFall/blob/master/final_delivery/screenshots/GameMenu.png)
+
+## Server Menu
+In case you want to play multiplayer mode (desktop, at the beggining), you will be faced with this menu. It contains the IP to be inserted on both mobile phones.
+![alt text](https://github.com/SofiaCardosoMartins/DownFall/blob/master/final_delivery/screenshots/ServerMenu.png)
+
+## Client Menu
+In case you want to play multiplayer mode (mobile), you will be faced with this menu. Both players must insert the IP they see on the desktop's screen so that the game begins.
+![alt text](https://github.com/SofiaCardosoMartins/DownFall/blob/master/final_delivery/screenshots/ClientMenu.png)
+
+## Lose Game
+When you lose the game, you will be faced with this menu in order to return to the main menu.
+![alt text](https://github.com/SofiaCardosoMartins/DownFall/blob/master/final_delivery/screenshots/LoseMenu.png)
+
+## Win Game
+When you lose the game, you will be faced with this menu in order to return to the main menu.
+![alt text](https://github.com/SofiaCardosoMartins/DownFall/blob/master/final_delivery/screenshots/WinMenu.png)
+
