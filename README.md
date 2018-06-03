@@ -107,3 +107,11 @@ When you lose the game, you will be faced with this menu in order to return to t
 - How to use LibGDX and Box2D in the context of game development
 - Manage time and resources throughout project development
 
+###### Time Spent Developing
+
+- Approximately between 1 and 2 hours a day during 3 weeks (for each of us)
+
+###### Work Distribution Amongst Team Members
+
+- Sofia Martins: 50 %
+- Margarida Silva: 50 %
