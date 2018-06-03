@@ -34,7 +34,8 @@ public class NaturalBoostController extends BoostController {
      */
     @Override
     public void jump(PlayerController player) {
-        player.getBody().applyForceToCenter(0, UP_FORCE, true);
+        if (!(player.getBody().getLinearVelocity().y > 4))
+            player.getBody().applyForceToCenter(0, UP_FORCE, true);
     }
 
     /**
