@@ -55,7 +55,7 @@ You may choose to play this game in either single or multiple mode.
 ![alt text](https://github.com/SofiaCardosoMartins/DownFall/blob/master/final_delivery/screenshots/MainMenu.png)
 
 ## Game
-In single mode desktop you control the player with the -> and <- keys to move to the right and left accordingly. In order to jump, you need to press the up arrow.
+In single mode desktop you control the player with the -> and <- keys to move to the right and left accordingly. In order to jump, you need to press the up arrow.You can also pause the game by pressing the ESC key.
 In single mode android you need to turn the mobile phone rightwards and leftwards for the right and left movement, and touch for jumps.
 In multiplayer mode, you use the same android controls in each phone. If you prefer, you may also use the desktop controls in addition to A, W, D keys for the according movements.
 
@@ -77,9 +77,14 @@ When you lose the game, you will be faced with this menu in order to return to t
 ![alt text](https://github.com/SofiaCardosoMartins/DownFall/blob/master/final_delivery/screenshots/LostMenu.png)
 
 ## Won Game
-When you lose the game, you will be faced with this menu in order to return to the main menu.
+When you win the game, you will be faced with this menu in order to return to the main menu.
 
 ![alt text](https://github.com/SofiaCardosoMartins/DownFall/blob/master/final_delivery/screenshots/WonMenu.png)
+
+## Pause Menu
+When you are controlling Desktop, you can switch to this menu by pressing ESC. You can either return to the game, or to the main menu.
+
+![alt text](https://github.com/SofiaCardosoMartins/DownFall/blob/master/final_delivery/screenshots/PauseMenu.png)
 
 ## Test Design
 
@@ -108,6 +113,7 @@ When you lose the game, you will be faced with this menu in order to return to t
 - How to apply design patterns to improve code flexibility and development
 - How to use LibGDX and Box2D in the context of game development
 - Manage time and resources throughout project development
+- Pair programming
 
 ###### Time Spent Developing
 
