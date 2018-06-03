@@ -125,10 +125,10 @@ public class MenuView extends AppView {
             @Override
             public void touchUp (InputEvent event, float x, float y, int pointer, int button) {
                 boolean accelerometerAvail = Gdx.input.isPeripheralAvailable(Input.Peripheral.Accelerometer);
-               /* if (accelerometerAvail)
+                if (accelerometerAvail)
                     game.switchToNetworkView();
                 else
-                */
+
                     game.switchToGameView(2);
 
             }

@@ -13,17 +13,17 @@ public class Client {
     private static PrintWriter out;
     static String serverAddress = "";
 
-    public Client(DownFall game, String serverAddress) throws IOException {
+    public Client(DownFall game, String serverAddress) {
         // Make connection and initialize streams
         this.serverAddress = serverAddress;
         System.out.println("server:" + serverAddress);
-            Socket socket = new Socket(serverAddress, 8050);
 
         try {
+            Socket socket = new Socket(serverAddress, 8050);
             ClientThread ct = new ClientThread(game, socket);
             ct.start();
-        }  finally {
-            socket.close();
+        }  catch(Exception e) {
+            e.printStackTrace();
         }
 
     }

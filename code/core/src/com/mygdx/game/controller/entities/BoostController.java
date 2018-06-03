@@ -1,5 +1,7 @@
 package com.mygdx.game.controller.entities;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.World;
 import com.mygdx.game.model.entities.BoostModel;
@@ -7,7 +9,7 @@ import com.mygdx.game.model.entities.BoostModel;
 public class BoostController extends EntityController implements BoostStrategy {
 
     protected static final float ACTIVE_TIME = 100000;  //in seconds
-    protected static final float UP_FORCE =  200;
+    protected static final float UP_FORCE =  120;
     protected static final float SIDE_FORCE = 5;
 
     long lastTimeMeasurement; //in nanoseconds
@@ -39,16 +41,34 @@ public class BoostController extends EntityController implements BoostStrategy {
         this.lastTimeMeasurement = System.nanoTime();
         this.elapsedTime = 0;
         TIMEOUT = false;
+
+
     }
 
     @Override
     public void moveRight(PlayerController player) {
-        player.getBody().applyForceToCenter(SIDE_FORCE, 0, true);
+        float side_force = SIDE_FORCE;
+        boolean accelerometerAvail = Gdx.input.isPeripheralAvailable(Input.Peripheral.Accelerometer);
+        if (accelerometerAvail) {
+         side_force = 3;
+        }
+        System.out.println(player.getBody().getLinearVelocity().x);
+
+        if (!(player.getBody().getLinearVelocity().x > 5))
+        player.getBody().applyForceToCenter(side_force, 0, true);
     }
 
     @Override
     public void moveLeft(PlayerController player) {
-        player.getBody().applyForceToCenter(-SIDE_FORCE, 0, true);
+        float side_force = SIDE_FORCE;
+        boolean accelerometerAvail = Gdx.input.isPeripheralAvailable(Input.Peripheral.Accelerometer);
+        if (accelerometerAvail) {
+            side_force = 3;
+        }
+        System.out.println(player.getBody().getLinearVelocity().x);
+
+        if (!(player.getBody().getLinearVelocity().x < -5))
+        player.getBody().applyForceToCenter(-side_force, 0, true);
     }
 
     @Override

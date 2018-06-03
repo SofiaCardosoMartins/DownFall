@@ -38,10 +38,10 @@ public class GameView extends AppView {
 
     public GameView(DownFall game, int numPlayers) {
         super(game);
+        GameModel.PLAYERS_COUNT = numPlayers;
         this.lastCameraSpeedIncreaseTime = System.nanoTime();
         loadAssets();
         createCamera();
-        GameModel.PLAYERS_COUNT = numPlayers;
         barView = new BarView(game, GameController.getInstance().isDoublePlayer());
     }
 
@@ -94,7 +94,11 @@ public class GameView extends AppView {
         //update camera speed
         long elapsedTime = System.nanoTime() - this.lastCameraSpeedIncreaseTime;
         if (elapsedTime >= (TIME_TO_NEXT_INC * Math.pow(10, 9))) {
-            CAMERA_SPEED += CAMERA_SPEED_INC;
+            boolean accelerometerAvail = Gdx.input.isPeripheralAvailable(Input.Peripheral.Accelerometer);
+            if (accelerometerAvail) {
+                CAMERA_SPEED += CAMERA_SPEED_INC/4;
+            }
+            else CAMERA_SPEED += CAMERA_SPEED_INC;
             this.lastCameraSpeedIncreaseTime = System.nanoTime();
         }
 
@@ -104,7 +108,13 @@ public class GameView extends AppView {
             GameController.getInstance().update(delta, getMinCameraY(),getMaxCameraY());}
 
         //move camera upwards
-        camera.position.y += CAMERA_SPEED;
+        boolean accelerometerAvail = Gdx.input.isPeripheralAvailable(Input.Peripheral.Accelerometer);
+        if (accelerometerAvail) {
+            camera.position.y += CAMERA_SPEED/2;
+        }
+        else {
+            camera.position.y += CAMERA_SPEED;
+        }
         camera.update();
 
 
@@ -156,31 +166,34 @@ public class GameView extends AppView {
     protected void handleInputs(float delta) {
 
         if (Gdx.input.isKeyPressed(Input.Keys.LEFT)) {
-            GameController.getInstance().handleInput(GameController.Direction.LEFT,1);
+            GameController.getInstance().handleInput(GameController.Direction.LEFT,  1);
         } else if (Gdx.input.isKeyPressed(Input.Keys.RIGHT)) {
-            GameController.getInstance().handleInput(GameController.Direction.RIGHT,1);
+            GameController.getInstance().handleInput(GameController.Direction.RIGHT, 1);
         } else if (Gdx.input.isKeyPressed(Input.Keys.UP)) {
-            GameController.getInstance().handleInput(GameController.Direction.UP,1);
+            GameController.getInstance().handleInput(GameController.Direction.UP,  1);
         } else if (Gdx.input.isKeyPressed(Input.Keys.A)) {
-            GameController.getInstance().handleInput(GameController.Direction.LEFT,2);
+            GameController.getInstance().handleInput(GameController.Direction.LEFT, 2);
         } else if (Gdx.input.isKeyPressed(Input.Keys.D)) {
-            GameController.getInstance().handleInput(GameController.Direction.RIGHT,2);
+            GameController.getInstance().handleInput(GameController.Direction.RIGHT,  2);
         } else if (Gdx.input.isKeyPressed(Input.Keys.W)) {
-            GameController.getInstance().handleInput(GameController.Direction.UP,2);
+            GameController.getInstance().handleInput(GameController.Direction.UP, 2);
         }
 
         if(GameModel.PLAYERS_COUNT == 1) {
             boolean accelerometerAvail = Gdx.input.isPeripheralAvailable(Input.Peripheral.Accelerometer);
             if (accelerometerAvail) {
                 float acceX = Gdx.input.getAccelerometerX();
-                if (acceX < 0)
-                    GameController.getInstance().handleInput(GameController.Direction.RIGHT, 1);
-                else if (acceX > 0)
-                    GameController.getInstance().handleInput(GameController.Direction.LEFT, 1);
-            }
+                float velX = Gdx.input.getX();
+                System.out.println(acceX);
+                float velY = Gdx.input.getDeltaY();
+
+                if ((acceX < -2) && (acceX >= -8))
+                    GameController.getInstance().handleInput(GameController.Direction.RIGHT,   1);
+                else if ((acceX > 2) && (acceX < 6))
+                    GameController.getInstance().handleInput(GameController.Direction.LEFT,   1);
+                }
             if (Gdx.input.isTouched()) {
-                GameController.getInstance().handleInput(GameController.Direction.UP, 1);
-                System.out.println("SINCERAMENTE");
+                GameController.getInstance().handleInput(GameController.Direction.UP,  1);
             }
         }
     }

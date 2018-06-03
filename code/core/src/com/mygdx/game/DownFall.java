@@ -18,7 +18,9 @@ public class DownFall extends Game {
 	SpriteBatch batch;
     AssetManager assetManager;
 	Stack<AppView> views;
-	
+	public boolean startGame = false;
+	public boolean createdGame = false;
+
 	@Override
 	public void create () {
 		batch = new SpriteBatch();
@@ -35,14 +37,8 @@ public class DownFall extends Game {
 	public void switchToGameView(int numPlayers)
 	{
 		deleteGame();
-		/*
-		try {
-			views.pop();
-		} catch (EmptyStackException e){
-
-		}
-		*/
-		views.pop().dispose();
+		if(!views.empty())
+			views.pop().dispose();
 		views.push(new GameView(this,numPlayers));
 		setScreen(views.peek());
 	}

@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.mygdx.game.DownFall;
+import com.mygdx.game.model.GameModel;
 import com.mygdx.game.network.Server;
 import com.badlogic.gdx.scenes.scene2d.ui.TextField;
 
@@ -25,16 +26,22 @@ public class ServerMenuView extends MenuView {
         try {
             server = new Server(game);
             IP = server.getServerIP();
+            if (server != null)
+                server.start();
         } catch (Exception e){
             System.out.println("Couldn't create Server");
         } finally {
-            server.start();
-
         }
     }
 
     @Override
     public void render(float delta) {
+        if (game.startGame) {
+            game.switchToGameView(2);
+            GameModel.getInstance().updatePlayers();
+            game.createdGame = true;
+            return;
+        }
 
         game.getBatch().setProjectionMatrix(camera.combined);
 
