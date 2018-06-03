@@ -37,7 +37,6 @@ View
 
 ###### Main Functionalities
 - Selecionar modo 'Single Player' ou 'Multiplayer'
-- Visualizar instruções do jogo (como superar o jogo e comandos a usar)
 - Visualizar o jogo (que acompanha o movimento de um ou de dois jogadores), bem como indicadores do seu estado (terminado com ou sem sucesso, nível do jogo, entre outros)
 
 ## Test Design
@@ -51,6 +50,10 @@ View
   - Verificar se ao colecionar um boost, é recebido um aviso no ecrã do telemóvel com o tipo do respetido boost, enquanto este durar
 - Elementos do jogo
   - Verificar a criação de objetos no jogo
+	GameModel
+	PlayerModel
+	BoostModel
+	EntityModel
   - Verificar o carregamento de sprites
 - Lógica de jogo
   - Verificar se ultrapassada uma plataforma, o player cai

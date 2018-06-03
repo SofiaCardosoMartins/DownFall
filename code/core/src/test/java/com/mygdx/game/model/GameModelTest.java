@@ -24,7 +24,7 @@ public class GameModelTest  {
     }
 
     @Test
-    public void testObjectsCreation() {
+    public void testGameModel() {
        init(1);
         GameModel gameModel = GameModel.getInstance();
 
