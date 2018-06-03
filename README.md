@@ -47,6 +47,15 @@ Test
 - Selecionar modo 'Single Player' ou 'Multiplayer'
 - Visualizar o jogo (que acompanha o movimento de um ou de dois jogadores), bem como indicadores do seu estado (terminado com ou sem sucesso, nível do jogo, entre outros)
 
+###### Setup/Installation
+
+## Project (Development Environment)
+1. Clone this repository and open it with IntelliJ/Android Studio.
+2. Set the Run Configuration to work with either Android or Desktop module, and android/assets folder either way.
+
+## App
+-On desktop, double-click on .jar file - download [here](https://github.com/SofiaCardosoMartins/DownFall/blob/master/final_delivery/executables/desktop-1.0.jar)
+
 ###### User Manual
 
 ## Main menu
