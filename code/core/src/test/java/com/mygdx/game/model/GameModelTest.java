@@ -2,9 +2,7 @@ package com.mygdx.game.model;
 
 import com.mygdx.game.DownFall;
 import com.mygdx.game.controller.GameController;
-import com.mygdx.game.model.entities.BoostModel;
-import com.mygdx.game.model.entities.EntityModel;
-import com.mygdx.game.model.entities.PlayerModel;
+import com.mygdx.game.model.entities.*;
 import com.mygdx.game.view.entities.GameView;
 
 import org.junit.Test;
@@ -60,16 +58,6 @@ public class GameModelTest  {
     }
 
     @Test
-    public void testBoostModel(){
-        BoostModel bm = new BoostModel(10000, 9999999, 0 );
-        assertEquals(EntityModel.ModelType.NATURAL_BOOST, bm.getType());
-
-        bm.setY(100000000);
-        bm.checkBounds(0);
-        //assertEquals(true, bm.isFlaggedForRemoval());
-    }
-
-    @Test
     public void testEntityModel() {
         EntityModel em = new BoostModel();
 
@@ -86,6 +74,23 @@ public class GameModelTest  {
         assertEquals(false, em.isFlaggedForRemoval());
         em.setFlaggedForRemoval(true);
         assertEquals(true, em.isFlaggedForRemoval());
+    }
+
+    @Test
+    public void testGetType(){
+        FlyBoostModel fm = new FlyBoostModel();
+        LavaModel lm = new LavaModel();
+        NoCollisionsBoostModel nm = new NoCollisionsBoostModel();
+        ObstacleModel om =  new ObstacleModel();
+        PlatformModel pm = new PlatformModel();
+        BoostModel bm = new BoostModel();
+
+        assertEquals(EntityModel.ModelType.NATURAL_BOOST, bm.getType());
+        assertEquals(EntityModel.ModelType.FLY_BOOST, fm.getType());
+        assertEquals(EntityModel.ModelType.LAVA, lm.getType());
+        assertEquals(EntityModel.ModelType.NO_COLLISIONS_BOOST, nm.getType());
+        assertEquals(EntityModel.ModelType.OBSTACLE, om.getType());
+        assertEquals(EntityModel.ModelType.PLATFORM, pm.getType());
     }
 
 
