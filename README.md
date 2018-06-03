@@ -56,7 +56,7 @@ Test
 ## App
 - On desktop, double-click on .jar file - download [here](https://github.com/SofiaCardosoMartins/DownFall/blob/master/final_delivery/executables/desktop-1.0.jar)
 
-- On android, download [here](https://github.com/SofiaCardosoMartins/DownFall/blob/master/final_delivery/executables/android-release-unsigned.apk)
+- On android, download .apk [here](https://github.com/SofiaCardosoMartins/DownFall/blob/master/final_delivery/executables/android-release-unsigned.apk)
 
 ###### User Manual
 
