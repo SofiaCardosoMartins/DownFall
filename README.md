@@ -96,7 +96,11 @@ When you are controlling Desktop, you can switch to this menu by pressing ESC. Y
   - Test the collision between the player and the world's bounds
   
 - Tests to the models
-  - 
+  - Test the creation and attributes of Game Model
+  - Test the creation and attributes of Player Model 
+  - Test the creation and attributes of Boost Model
+  - Test the creation and attributes of Entity Model
+  - Test the function getType of each Model not tested yet
 
 ## Development of the Final Project
 
