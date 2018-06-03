@@ -11,6 +11,7 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.TextField;
 import com.mygdx.game.DownFall;
+import com.mygdx.game.model.GameModel;
 import com.mygdx.game.network.Client;
 
 public class ClientMenuView extends MenuView {
@@ -29,10 +30,11 @@ public class ClientMenuView extends MenuView {
             @Override
             public boolean keyUp(InputEvent event, int keycode) {
                 if (keycode == Input.Keys.ENTER) {
-                    System.out.println(field.getText());
+                    System.out.println("IP" + field.getText());
                     try{
                         new Client(g, field.getText());
                     } catch (Exception e) {
+                        e.printStackTrace();
                         System.out.println("couldn't open socket");
                     } finally {
                         g.switchToGameView(2);
@@ -49,6 +51,12 @@ public class ClientMenuView extends MenuView {
 
     @Override
     public void render(float delta) {
+        if (game.startGame) {
+            game.switchToGameView(2);
+            GameModel.getInstance().updatePlayers();
+            game.createdGame = true;
+            return;
+        }
 
         game.getBatch().begin();
         drawBackground();

@@ -15,8 +15,8 @@ public class PlatformController extends EntityController {
      */
     public PlatformController(World world, PlatformModel platformModel) {
         super(world, platformModel, BodyDef.BodyType.KinematicBody,false);
-        float density = 0.5f;
-        float friction = 0.9f; //low friction
+        float density = 0.1f;
+        float friction = 1f; //low friction
         float restitution = 0.0f; //no restitution
         int width = 170;
         int height = 170;

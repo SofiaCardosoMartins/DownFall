@@ -21,7 +21,7 @@ public class PlayerController extends EntityController {
      */
     public PlayerController(World world, PlayerModel playerModel) {
         super(world, playerModel, BodyDef.BodyType.DynamicBody, false);
-        float density = 1.0f; //heavy
+        float density = 0.6f; //heavy
         float friction = 0.9f;
         float restitution = 0.0f; //no restitution
         int width = 128;

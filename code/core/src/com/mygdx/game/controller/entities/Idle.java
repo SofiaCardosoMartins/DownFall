@@ -28,6 +28,7 @@ public class Idle extends State {
      */
     @Override
     public State update(float vx, float vy) {
+
         if(vy < -0.1)
             return new Fall();
         return this;

@@ -31,7 +31,7 @@ public class GameController implements ContactListener {
     public static final String TITLE = "DownFall";
     public static final int WORLD_WIDTH = 10;
     public static final int WORLD_HEIGHT = 1050;
-    public static final Vector2 GRAVITY = new Vector2(0, -3f);
+    public static final Vector2 GRAVITY = new Vector2(0, -7f);
     private final World world;
     private List<PlayerController> playerControllers;
     private List<PlatformController> platformControllers;

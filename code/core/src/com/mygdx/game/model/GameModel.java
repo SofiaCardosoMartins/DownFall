@@ -93,7 +93,15 @@ public class GameModel {
             players.add(new PlayerModel(x, 50, 0, i + 1));
             x += 2;
         }
+    }
 
+    public void updatePlayers(){
+        players.clear();
+        int x = 2;
+        for(int i = 0;i<PLAYERS_COUNT;i++){
+            players.add(new PlayerModel(x,50,0,i+1));
+            x+=2;
+        }
     }
 
     /**
