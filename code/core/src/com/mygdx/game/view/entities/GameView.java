@@ -41,7 +41,7 @@ public class GameView extends AppView {
         this.lastCameraSpeedIncreaseTime = System.nanoTime();
         loadAssets();
         createCamera();
-        GameModel.PLAYERS_COUNT = numPlayers;
+        GameModel.setPlayersCount(numPlayers);
         barView = new BarView(game, GameController.getInstance().isDoublePlayer());
     }
 
@@ -169,7 +169,7 @@ public class GameView extends AppView {
             GameController.getInstance().handleInput(GameController.Direction.UP,2);
         }
 
-        if(GameModel.PLAYERS_COUNT == 1) {
+        if(GameModel.getPlayersCount() == 1) {
             boolean accelerometerAvail = Gdx.input.isPeripheralAvailable(Input.Peripheral.Accelerometer);
             if (accelerometerAvail) {
                 float acceX = Gdx.input.getAccelerometerX();

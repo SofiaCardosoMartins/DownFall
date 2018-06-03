@@ -1,6 +1,5 @@
 package com.mygdx.game.model;
 
-import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.utils.Pool;
 import com.mygdx.game.controller.GameController;
 import com.mygdx.game.model.entities.*;
@@ -26,7 +25,7 @@ public class GameModel {
     private static final int MAX_PLATFORMS_BETWEEN_OBSTACLES = 25;
     private static final int MIN_PLATFORMS_BETWEEN_BOOSTS = 20;
     private static final int MAX_PLATFORMS_BETWEEN_BOOSTS = 25;
-    public static int PLAYERS_COUNT;
+    private static int PLAYERS_COUNT;
 
     private static GameModel instance;
 
@@ -212,6 +211,14 @@ public class GameModel {
         instance = null;
     }
 
+    public static void setPlayersCount(int playersCount) {
+        PLAYERS_COUNT = playersCount;
+    }
+
+    public static int getPlayersCount() {
+        return PLAYERS_COUNT;
+    }
+
     public List<PlayerModel> getPlayers() {
         return players;
     }
@@ -241,4 +248,14 @@ public class GameModel {
     }
 
     public LavaModel getLava(){return lava;}
+
+    public PlayerModel getFirstPlayer()
+    {
+        return players.get(0);
+    }
+
+    public void erasePlatforms()
+    {
+        this.platformsInUse.clear();
+    }
 }

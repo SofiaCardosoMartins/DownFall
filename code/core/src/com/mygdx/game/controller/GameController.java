@@ -18,6 +18,8 @@ import com.mygdx.game.view.entities.AppView;
 import com.mygdx.game.view.entities.EntityView;
 import com.mygdx.game.view.entities.ViewFactory;
 
+import org.omg.Messaging.SYNC_WITH_TRANSPORT;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -98,23 +100,29 @@ public class GameController implements ContactListener {
         }
     }
 
-    public void add(EntityModel entityModel)
+    public EntityController add(EntityModel entityModel)
     {
+        EntityController entityController = null;
         switch (entityModel.getType())
         {
             case PLATFORM:
-                platformControllers.add(new PlatformController(world, (PlatformModel) entityModel));
+                entityController = new PlatformController(world, (PlatformModel) entityModel);
+                platformControllers.add((PlatformController)entityController);
                 break;
             case OBSTACLE:
-                obstacleControllers.add(new ObstacleController(world, (ObstacleModel) entityModel));
+                entityController = new ObstacleController(world, (ObstacleModel) entityModel);
+                obstacleControllers.add((ObstacleController) entityController);
                 break;
             case FLY_BOOST:
-                boostControllers.add(new FlyBoostController(world, (FlyBoostModel) entityModel));
+                entityController = new FlyBoostController(world, (FlyBoostModel) entityModel);
+                boostControllers.add((FlyBoostController)entityController);
                 break;
             case NO_COLLISIONS_BOOST:
-                boostControllers.add(new NoCollisionsBoostController(world, (NoCollisionsBoostModel) entityModel));
+                entityController = new NoCollisionsBoostController(world, (NoCollisionsBoostModel) entityModel);
+                boostControllers.add((NoCollisionsBoostController)entityController);
                 break;
         }
+        return entityController;
     }
 
     public static GameController getInstance() {
@@ -203,6 +211,7 @@ public class GameController implements ContactListener {
 
     @Override
     public void beginContact(Contact contact) {
+        System.out.println("collision!");
 
         Body body1 = contact.getFixtureA().getBody();
         Body body2 = contact.getFixtureB().getBody();
@@ -261,7 +270,7 @@ public class GameController implements ContactListener {
         player.handleInput(dir);
     }
 
-    private void checkLeftWallCollision(EntityController ec, float width) {
+    public void checkLeftWallCollision(EntityController ec, float width) {
         Body body = ec.getBody();
         if (body.getPosition().x < (width / 2)) {
             body.setTransform((width / 2), body.getPosition().y, body.getAngle());
@@ -269,7 +278,7 @@ public class GameController implements ContactListener {
         }
     }
 
-    private void checkRightWallCollision(EntityController ec, float width) {
+    public void checkRightWallCollision(EntityController ec, float width) {
         Body body = ec.getBody();
         if (body.getPosition().x > (WORLD_WIDTH - (width / 2))) {
             body.setTransform(WORLD_WIDTH - (width / 2), body.getPosition().y, body.getAngle());
@@ -277,7 +286,7 @@ public class GameController implements ContactListener {
         }
     }
 
-    private void checkUpWallCollision(EntityController ec, float maxCameraY, float height) {
+    public void checkUpWallCollision(EntityController ec, float maxCameraY, float height) {
         Body body = ec.getBody();
         if ((body.getPosition().y + (height / 2)) > maxCameraY) {
             body.setLinearVelocity(0, 0);
@@ -286,7 +295,7 @@ public class GameController implements ContactListener {
         }
     }
 
-    private void checkDownWallCollision(EntityController ec, float minCameraY, float height) {
+    public void checkDownWallCollision(EntityController ec, float minCameraY, float height) {
         Body body = ec.getBody();
         if (body.getPosition().y < (minCameraY + (height / 2))) {
             if (body.getUserData() instanceof PlayerModel)
@@ -340,5 +349,29 @@ public class GameController implements ContactListener {
 
     public List<PlayerController> getPlayerControllers() {
         return playerControllers;
+    }
+
+    public LavaController getLavaController() {
+        return lavaController;
+    }
+
+    public List<PlatformController> getPlatformControllers() {
+        return platformControllers;
+    }
+
+    public List<ObstacleController> getObstacleControllers() {
+        return obstacleControllers;
+    }
+
+    public List<BoostController> getBoostControllers() {
+        return boostControllers;
+    }
+
+    public PlayerController getFirstPlayer()
+    {
+        if(! playerControllers.isEmpty())
+            return playerControllers.get(0);
+        else
+            return null;
     }
 }

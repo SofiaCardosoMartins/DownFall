@@ -9,8 +9,10 @@ import static com.mygdx.game.view.entities.AppView.PIXEL_TO_METER;
 
 public class LavaModel extends EntityModel{
 
+
+
     public LavaModel() {
-        super(WORLD_WIDTH/2, 100*PIXEL_TO_METER ,0); //200: lava height
+        super(WORLD_WIDTH/2, 100*PIXEL_TO_METER ,0);
     }
 
     public LavaModel(float x, float y, float rotation)
