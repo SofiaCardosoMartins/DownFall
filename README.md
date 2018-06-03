@@ -19,11 +19,11 @@ Controller
 
 Model
 
-![alt text](https://github.com/SofiaCardosoMartins/DownFall/blob/master/final_delivery/model/picture.png)
+![alt text](https://github.com/SofiaCardosoMartins/DownFall/blob/master/final_delivery/uml/class_diagram/model/picture.png)
 
 View
 
-![alt text](https://github.com/SofiaCardosoMartins/DownFall/blob/master/final_delivery/view/picture.png)
+![alt text](https://github.com/SofiaCardosoMartins/DownFall/blob/master/final_delivery/uml/class_diagram/view/picture.png)
 
 ###### Design Patterns
 
