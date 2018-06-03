@@ -5,19 +5,23 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.mygdx.game.DownFall;
 import com.mygdx.game.controller.GameController;
-import com.mygdx.game.model.GameModel;
 import com.mygdx.game.network.Server;
-import com.badlogic.gdx.scenes.scene2d.ui.TextField;
 
 
+/**
+ * The Client Menu Screen - to be displayed in multiplayer android
+ */
 public class ServerMenuView extends MenuView {
     private static final float FONT_SCALE  = 4f;
     private Server server;
     private String IP;
 
+    /**
+     * Creates this screen.
+     * @param game The game this screen belongs to
+     */
     public ServerMenuView(DownFall game) {
         super(game);
         this.createCamera();
@@ -34,7 +38,11 @@ public class ServerMenuView extends MenuView {
         } finally {
         }
     }
-
+    /**
+     * Renders this screen.
+     *
+     * @param delta time since last renders in seconds.
+     */
     @Override
     public void render(float delta) {
 
@@ -57,7 +65,9 @@ public class ServerMenuView extends MenuView {
 
     }
 
-
+    /**
+     * Draws the server IP
+     */
     void drawIP(){
         FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("Rubik-Regular.ttf"));
         FreeTypeFontGenerator.FreeTypeFontParameter parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();

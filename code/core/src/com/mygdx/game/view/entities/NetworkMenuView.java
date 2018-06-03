@@ -7,10 +7,10 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.mygdx.game.DownFall;
-import com.mygdx.game.controller.GameController;
-import com.mygdx.game.network.Client;
-import com.mygdx.game.network.Server;
 
+/**
+ * Screen related to the beginning of menu view
+ */
 public class NetworkMenuView extends MenuView {
 
     private static int BUTTON_WIDTH_LONG = 350;
@@ -24,6 +24,9 @@ public class NetworkMenuView extends MenuView {
         setBtnSkin(new Skin(Gdx.files.internal("skin/comic-ui.json")));
         createBtns();
     }
+    /**
+     * Creates the Buttons needed for the screen
+     */
 
     private void createBtns()
     {

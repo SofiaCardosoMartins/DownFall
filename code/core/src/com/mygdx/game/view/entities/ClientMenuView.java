@@ -11,14 +11,22 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.TextField;
 import com.mygdx.game.DownFall;
-import com.mygdx.game.model.GameModel;
 import com.mygdx.game.network.Client;
 
+
+/**
+ * The Client Menu Screen - to be displayed in multiplayer android
+ */
 public class ClientMenuView extends MenuView {
     protected Skin skin = new Skin(Gdx.files.internal("skin/comic-ui.json"));
     protected float FONT_SCALE = 1.6f;
     private Stage stageC;
     TextField field;
+
+    /**
+     * Creates this screen.
+     * @param game The game this screen belongs to
+     */
 
     public ClientMenuView(DownFall game) {
         super(game);
@@ -28,12 +36,10 @@ public class ClientMenuView extends MenuView {
             @Override
             public boolean keyUp(InputEvent event, int keycode) {
                 if (keycode == Input.Keys.ENTER) {
-                    System.out.println("IP" + field.getText());
                     try{
                         new Client(g, field.getText());
                     } catch (Exception e) {
                         e.printStackTrace();
-                        System.out.println("couldn't open socket");
                     } finally {
                     }
                 }
@@ -46,6 +52,11 @@ public class ClientMenuView extends MenuView {
 
     }
 
+    /**
+     * Renders this screen.
+     *
+     * @param delta time since last renders in seconds.
+     */
     @Override
     public void render(float delta) {
 
@@ -56,12 +67,11 @@ public class ClientMenuView extends MenuView {
 
         stageC.act();
         stageC.draw();
-
-
-        /*
-        new Client();
-         */
     }
+
+    /**
+     * Creates the text field where the user inputs the IP Address to join
+     */
     void createTextField(){
         TextField.TextFieldStyle textFieldStyle = skin.get(TextField.TextFieldStyle.class);
         textFieldStyle.font.getData().scale(2*FONT_SCALE);
@@ -73,6 +83,10 @@ public class ClientMenuView extends MenuView {
 
         stageC.addActor(field);
     }
+
+    /**
+     * Draws an explanatory label for the user to input the IP Addresss
+     */
 
     void drawLabel(){
         FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("Rubik-Regular.ttf"));
