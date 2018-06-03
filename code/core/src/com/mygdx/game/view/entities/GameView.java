@@ -24,6 +24,10 @@ import java.util.List;
 import static com.mygdx.game.controller.GameController.WORLD_WIDTH;
 import static com.mygdx.game.controller.GameController.WORLD_HEIGHT;
 
+/**
+ * A view representing the game screen. Draws all the other model's views and
+ * controls the camera.
+ */
 public class GameView extends AppView {
 
     long lastCameraSpeedIncreaseTime; //in nanoseconds
@@ -36,6 +40,10 @@ public class GameView extends AppView {
     private static final float FONT_SCALE  = 1.2f;
     private BarView barView;
 
+    /**
+     * Creates this screen.
+     * @param game The game this screen belongs to
+     */
     public GameView(DownFall game, int numPlayers) {
         super(game);
         GameModel.setPlayersCount(numPlayers);
@@ -45,6 +53,9 @@ public class GameView extends AppView {
         barView = new BarView(game, GameController.getInstance().isDoublePlayer());
     }
 
+    /**
+     * Initializes the view's camera
+     */
     @Override
     protected void createCamera() {
         OrthographicCamera camera = new OrthographicCamera(VIEWPORT_WIDTH / PIXEL_TO_METER, VIEWPORT_WIDTH / PIXEL_TO_METER * ((float) 14 / (float) 10));
@@ -62,6 +73,9 @@ public class GameView extends AppView {
         this.camera = camera;
     }
 
+    /**
+     * Loads the assets needed by this screen.
+     */
     @Override
     protected void loadAssets() {
         this.game.getAssetManager().load("landscape.png", Texture.class);
@@ -83,11 +97,14 @@ public class GameView extends AppView {
         this.game.getAssetManager().load("flyBoost.png", Texture.class);
         this.game.getAssetManager().load("noCollisionsBoost.png", Texture.class);
 
-        //end
         this.game.getAssetManager().finishLoading();
 
     }
 
+    /**
+     * Renders this screen.
+     * @param delta time since last renders in seconds
+     */
     @Override
     public void render(float delta) {
 
@@ -138,12 +155,18 @@ public class GameView extends AppView {
         }
     }
 
+    /**
+     * Checks if the game is on a paused or ended state
+     */
     private void checkGameState()
     {
         checkPausedGame();
         checkEndGame();
     }
 
+    /**
+     * Checks if the game is on a paused state
+     */
     private void checkPausedGame()
     {
         if (Gdx.input.isKeyPressed(Input.Keys.ESCAPE)) {
@@ -151,6 +174,9 @@ public class GameView extends AppView {
                 GameController.getInstance().setPAUSED(true); }
     }
 
+    /**
+     * Checks if the game is on an ended state
+     */
     public void checkEndGame()
     {
         if(GameController.getInstance().isEndGame())
@@ -162,6 +188,10 @@ public class GameView extends AppView {
         }
     }
 
+    /**
+     * Handles any inputs and passes them to the controller
+     * @param delta time since last time inputs where handled in seconds
+     */
     @Override
     protected void handleInputs(float delta) {
 
@@ -184,7 +214,6 @@ public class GameView extends AppView {
             if (accelerometerAvail) {
                 float acceX = Gdx.input.getAccelerometerX();
                 float velX = Gdx.input.getX();
-                System.out.println(acceX);
                 float velY = Gdx.input.getDeltaY();
 
                 if ((acceX < -2) && (acceX >= -8))
@@ -198,6 +227,10 @@ public class GameView extends AppView {
         }
     }
 
+    /**
+     * Displays (draws) the remaining time of a boost belonging to a certain PlayerModel
+     * @param playerModel The player which has a boost whose remaining time needs to be displayed
+     */
     private void drawBitMapFont(PlayerModel playerModel)
     {
         if(playerModel.isBoostPresent())
@@ -211,6 +244,9 @@ public class GameView extends AppView {
         }
     }
 
+    /**
+     * Draws the entities to the screen.
+     */
     @Override
     protected void drawEntities(float delta) {
 
@@ -252,40 +288,45 @@ public class GameView extends AppView {
         }
     }
 
+    /**
+     * Draws the background
+     */
     @Override
     protected void drawBackground() {
 
         Texture background = game.getAssetManager().get("endosphere.png", Texture.class);
         background.setWrap(Texture.TextureWrap.Repeat, Texture.TextureWrap.Repeat);
         game.getBatch().draw(background, 0, 0, 0, 0, (int) (WORLD_WIDTH / PIXEL_TO_METER), (int) (WORLD_HEIGHT / PIXEL_TO_METER));
-        /*
-        if(camera.position.y >= 0 && camera.position.y <= 9000) {
-
-        }
-
-        else {
-            Texture background = game.getAssetManager().get("transition1.png", Texture.class);
-            background.setWrap(Texture.TextureWrap.Repeat, Texture.TextureWrap.Repeat);
-            game.getBatch().draw(background, 0, 0, 0, 0, (int) (WORLD_WIDTH / PIXEL_TO_METER), (int) (WORLD_HEIGHT / PIXEL_TO_METER));
-        }
-        */
     }
 
+    /**
+     * Draws the lava after updating the corresponding LavaView
+     * @param delta time since last renders in seconds
+     */
     private void drawLava(float delta) {
         EntityView view = ViewFactory.makeView(game, GameModel.getInstance().getLava());
         ((LavaView) view).update(delta, GameModel.getInstance().getLava());
         view.draw(game.getBatch());
     }
 
+    /**
+     * Draws the score bar
+     */
     private void drawBar(){
         barView.update(WORLD_WIDTH / 2, getMaxCameraY());
         barView.draw(game.getBatch());
     }
 
+    /**
+     * @return The maximum camera's y
+     */
     private float getMaxCameraY() {
         return PIXEL_TO_METER * (camera.position.y + (camera.viewportHeight / 2));
     }
 
+    /**
+     * @return The minimum camera's y
+     */
     private float getMinCameraY() {
         return PIXEL_TO_METER * (camera.position.y - (camera.viewportHeight / 2));
     }

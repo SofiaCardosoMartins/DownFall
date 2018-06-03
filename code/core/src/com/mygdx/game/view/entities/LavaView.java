@@ -7,15 +7,27 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.mygdx.game.DownFall;
 import com.mygdx.game.model.entities.EntityModel;
 
+/**
+ * The view that belongs to the lava
+ */
 public class LavaView extends EntityView {
 
     private Animation<TextureRegion> animation;
     private float stateTime = 0;
 
+    /**
+     * Constructor with arguments of the LavaView class
+     * @param game The game the lava belongs to
+     */
     LavaView(DownFall game) {
         super(game);
     }
 
+    /**
+     * Creates the sprite representing the lava
+     * @param game the game this view belongs to. Needed to access the asset manager to get textures
+     * @return The lava's sprite
+     */
     @Override
     public Sprite createSprite(DownFall game) {
         Texture texture = game.getAssetManager().get("fire.png");
@@ -27,6 +39,11 @@ public class LavaView extends EntityView {
         return sprite;
     }
 
+    /**
+     * Updates the lava's animation
+     * @param delta Time since last renders in seconds.
+     * @param model The lava's model
+     */
     public void update(float delta,EntityModel model) {
         stateTime += delta;
         sprite.setRegion(animation.getKeyFrame(stateTime, true));

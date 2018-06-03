@@ -11,11 +11,19 @@ public abstract class EntityView {
 
     Sprite sprite;
 
+    /**
+     * Constructor with arguments of the EntityView class
+     * @param game The game this entity belongs to
+     */
     EntityView(DownFall game)
     {
         sprite = createSprite(game);
     }
 
+    /**
+     * Draws the sprite from this view using a sprite batch
+     * @param batch The sprite batch to be used for drawing
+     */
     public void draw(SpriteBatch batch)
     {
         sprite.draw(batch);
@@ -23,12 +31,19 @@ public abstract class EntityView {
 
     public abstract Sprite createSprite(DownFall game);
 
+    /**
+     * Updates this view based on a certain model
+     * @param model the model used to update this view
+     */
     public void update(EntityModel model)
     {
         sprite.setCenter(model.getX()/PIXEL_TO_METER,model.getY()/PIXEL_TO_METER);  //pixel to meter: na appview
         sprite.setRotation((float) Math.toDegrees(model.getRotation()));
     }
 
+    /**
+     * @return The view's sprite
+     */
     public Sprite getSprite(){
         return sprite;
     }

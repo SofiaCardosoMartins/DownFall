@@ -15,15 +15,15 @@ A game based on Java and LibGDX for the LPOO course
 
 Controller
 
-![alt text](https://github.com/SofiaCardosoMartins/DownFall/blob/master/intermediate_delivery/architecture/class_diagram/images/controller.png)
+![alt text](https://github.com/SofiaCardosoMartins/DownFall/blob/master/final_delivery/controller/picture.png)
 
 Model
 
-![alt text](https://github.com/SofiaCardosoMartins/DownFall/blob/master/intermediate_delivery/architecture/class_diagram/images/model.png)
+![alt text](https://github.com/SofiaCardosoMartins/DownFall/blob/master/final_delivery/model/picture.png)
 
 View
 
-![alt text](https://github.com/SofiaCardosoMartins/DownFall/blob/master/intermediate_delivery/architecture/class_diagram/images/view.png)
+![alt text](https://github.com/SofiaCardosoMartins/DownFall/blob/master/final_delivery/view/picture.png)
 
 ###### Design Patterns
 

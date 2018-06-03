@@ -68,7 +68,6 @@ public abstract class BoostController extends EntityController implements BoostS
         if (accelerometerAvail) {
          side_force = 3;
         }
-        System.out.println(player.getBody().getLinearVelocity().x);
 
         if (!(player.getBody().getLinearVelocity().x > 5))
         player.getBody().applyForceToCenter(side_force, 0, true);
@@ -85,7 +84,6 @@ public abstract class BoostController extends EntityController implements BoostS
         if (accelerometerAvail) {
             side_force = 3;
         }
-        System.out.println(player.getBody().getLinearVelocity().x);
 
         if (!(player.getBody().getLinearVelocity().x < -5))
         player.getBody().applyForceToCenter(-side_force, 0, true);

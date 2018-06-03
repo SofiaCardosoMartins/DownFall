@@ -14,10 +14,17 @@ import com.mygdx.game.view.entities.PausedView;
 import java.util.EmptyStackException;
 import java.util.Stack;
 
+/**
+ * The game class
+ */
 public class DownFall extends Game {
 	SpriteBatch batch;
     AssetManager assetManager;
 	Stack<AppView> views;
+
+	/**
+	 * Initializes the bath, assetManager and stack of views
+	 */
 	public boolean startGame = false;
 	public boolean createdGame = false;
 
@@ -29,11 +36,18 @@ public class DownFall extends Game {
 		startGame();
 	}
 
+	/**
+	 * Starts a new game
+	 */
 	private void startGame(){
 	    views.push(new MenuView(this));
 		setScreen(views.peek());
 	}
 
+	/**
+	 * Sets the current screen to the game screen
+	 * @param numPlayers The number of players in a new game
+	 */
 	public void switchToGameView(int numPlayers)
 	{
 		deleteGame();
@@ -43,6 +57,9 @@ public class DownFall extends Game {
 		setScreen(views.peek());
 	}
 
+	/**
+	 * Switches the current view to the network screen
+	 */
 	public void switchToNetworkView()
 	{
 		views.pop();
@@ -50,6 +67,9 @@ public class DownFall extends Game {
 		setScreen(views.peek());
 	}
 
+	/**
+	 * Switches the current view to the server screen
+	 */
 	public void switchToServerView()
 	{
 		views.pop();
@@ -57,6 +77,9 @@ public class DownFall extends Game {
 		setScreen(views.peek());
 	}
 
+	/**
+	 * Switches the current view to the client screen
+	 */
 	public void switchToClientView()
 	{
 		views.pop();
@@ -64,13 +87,18 @@ public class DownFall extends Game {
 		setScreen(views.peek());
 	}
 
+	/**
+	 * Switches the current view to the lost screen
+	 */
 	public void switchToLostView()
 	{
 		views.pop();
 		views.push(new LostView(this));
 		setScreen(views.peek());
 	}
-
+	/**
+	 * Switches the current view to the won screen
+	 */
 	public void switchToWonView()
 	{
 		views.pop();
@@ -78,18 +106,27 @@ public class DownFall extends Game {
 		setScreen(views.peek());
 	}
 
+	/**
+	 * Switches the current view to the menu screen
+	 */
 	public void switchToMenuView()
 	{
 		views.pop();
 		startGame();
 	}
 
+	/**
+	 * Switches the current view to the paused screen
+	 */
 	public void switchToPausedView()
 	{
 		views.push(new PausedView(this));
 		setScreen(views.peek());
 	}
 
+	/**
+	 * Switches the current view to the resume game screen
+	 */
 	public void resumeGame()
 	{
 		GameController.getInstance().setPAUSED(false);
@@ -98,22 +135,34 @@ public class DownFall extends Game {
 		GameController.getInstance().restoreBoostsTime();
 	}
 
+	/**
+	 * Deletes the previous game
+	 */
 	public void deleteGame()
 	{
 		GameController.delete();
 	}
 
+	/**
+	 * Deletes useless items
+	 */
 	@Override
 	public void dispose () {
 		batch.dispose();
 		assetManager.dispose();
 	}
 
+	/**
+	 * @return The game's batch
+	 */
     public SpriteBatch getBatch() {
         return batch;
     }
 
-    public AssetManager getAssetManager() {
+	/**
+	 * @return The game's asset manager
+	 */
+	public AssetManager getAssetManager() {
         return assetManager;
     }
 

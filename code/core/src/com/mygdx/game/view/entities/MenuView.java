@@ -8,19 +8,17 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
-import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.mygdx.game.DownFall;
-import com.mygdx.game.model.GameModel;
-
-import javax.xml.soap.Text;
 
 import static com.mygdx.game.controller.GameController.WORLD_HEIGHT;
 import static com.mygdx.game.controller.GameController.WORLD_WIDTH;
 
+/**
+ * The main menu screen
+ */
 public class MenuView extends AppView {
 
     private static final int BUTTON_WIDTH = 220;
@@ -31,6 +29,10 @@ public class MenuView extends AppView {
     protected Stage stage;
     protected Skin btnSkin;
 
+    /**
+     * Creates this screen.
+     * @param game The game this screen belongs to
+     */
     public MenuView(DownFall game) {
         super(game);
         this.loadAssets();
@@ -53,7 +55,9 @@ public class MenuView extends AppView {
     }
 
 
-
+    /**
+     * Initializes the view's camera
+     */
     @Override
     protected void createCamera() {
         OrthographicCamera camera = new OrthographicCamera(VIEWPORT_WIDTH / PIXEL_TO_METER, VIEWPORT_WIDTH / PIXEL_TO_METER * ((float) 14 / (float) 10));
@@ -66,6 +70,9 @@ public class MenuView extends AppView {
 
     }
 
+    /**
+     * Loads the assets needed by this screen.
+     */
     @Override
     protected void loadAssets() {
         this.game.getAssetManager().load("menu_background.png", Texture.class);
@@ -73,6 +80,11 @@ public class MenuView extends AppView {
         this.game.getAssetManager().finishLoading();
     }
 
+    /**
+     * Renders this screen.
+     *
+     * @param delta time since last renders in seconds.
+     */
     @Override
     public void render(float delta) {
 
@@ -90,16 +102,26 @@ public class MenuView extends AppView {
         stage.draw();
     }
 
+    /**
+     * Handles any inputs and passes them to the controller
+     * @param delta time since last time inputs where handled in seconds
+     */
     @Override
     protected void handleInputs(float delta) {
 
     }
 
+    /**
+     * Draws the entities to the screen.
+     */
     @Override
     protected void drawEntities(float delta) {
         drawTitle(delta);
     }
 
+    /**
+     * Draws the background
+     */
     @Override
     protected void drawBackground(){
         Texture background = game.getAssetManager().get("menu_background.png", Texture.class);
@@ -107,6 +129,9 @@ public class MenuView extends AppView {
         game.getBatch().draw(background, 0, 0, 0, 0, (int) (WORLD_WIDTH / PIXEL_TO_METER), (int) (WORLD_HEIGHT / PIXEL_TO_METER));
     }
 
+    /**
+     * Creates the needed buttons
+     */
     private void createBtns()
     {
         TextButton singlePlayerBtn = createBtn("Single Player",camera.viewportHeight / 2, BUTTON_WIDTH,stage);
@@ -150,11 +175,18 @@ public class MenuView extends AppView {
         });
     }
 
+    /**
+     * Draws the title of the game
+     * @param delta time since last time inputs where handled in seconds
+     */
     private void drawTitle(float delta) {
         Texture title = game.getAssetManager().get("downFall.png",Texture.class);
         game.getBatch().draw(title,camera.viewportWidth/2 - (title.getWidth()/2),(camera.viewportHeight/2)+2*title.getHeight());
     }
 
+    /**
+     * Disposes needless resources
+     */
     @Override
     public void dispose() {
         super.dispose();

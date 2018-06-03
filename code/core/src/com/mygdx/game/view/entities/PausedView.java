@@ -14,6 +14,9 @@ import com.mygdx.game.DownFall;
 import static com.mygdx.game.controller.GameController.WORLD_HEIGHT;
 import static com.mygdx.game.controller.GameController.WORLD_WIDTH;
 
+/**
+ * The paused screen
+ */
 public class PausedView extends AppView {
 
     private Stage stage;
@@ -27,6 +30,9 @@ public class PausedView extends AppView {
         createBtns();
     }
 
+    /**
+     * Initializes the view's camera
+     */
     @Override
     protected void createCamera() {
         OrthographicCamera camera = new OrthographicCamera(VIEWPORT_WIDTH / PIXEL_TO_METER, VIEWPORT_WIDTH / PIXEL_TO_METER * ((float) 14 / (float) 10));
@@ -38,12 +44,19 @@ public class PausedView extends AppView {
 
     }
 
+    /**
+     * Loads the assets needed by this screen.
+     */
     @Override
     protected void loadAssets() {
         this.game.getAssetManager().load("menu_background.png", Texture.class);
         this.game.getAssetManager().finishLoading();
     }
 
+    /**
+     * Renders this screen.
+     * @param delta time since last renders in seconds
+     */
     @Override
     public void render(float delta) {
         game.getBatch().setProjectionMatrix(camera.combined);
@@ -60,16 +73,26 @@ public class PausedView extends AppView {
         stage.draw();
     }
 
+    /**
+     * Handles any inputs and passes them to the controller
+     * @param delta time since last time inputs where handled in seconds
+     */
     @Override
     protected void handleInputs(float delta) {
 
     }
 
+    /**
+     * Draws the entities to the screen.
+     */
     @Override
     protected void drawEntities(float delta) {
 
     }
 
+    /**
+     * Draws the background
+     */
     @Override
     protected void drawBackground() {
         Texture background = game.getAssetManager().get("menu_background.png", Texture.class);
@@ -77,6 +100,9 @@ public class PausedView extends AppView {
         game.getBatch().draw(background, 0, 0, 0, 0, (int) (WORLD_WIDTH / PIXEL_TO_METER), (int) (WORLD_HEIGHT / PIXEL_TO_METER));
     }
 
+    /**
+     * Creates the needed buttons
+     */
     private void createBtns()
     {
         TextButton returnGameBtn = createBtn("Return",camera.viewportHeight / 2, BUTTON_WIDTH,stage);

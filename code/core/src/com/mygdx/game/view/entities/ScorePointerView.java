@@ -8,9 +8,15 @@ import static com.mygdx.game.controller.GameController.WORLD_HEIGHT;
 import static com.mygdx.game.controller.GameController.WORLD_WIDTH;
 import static com.mygdx.game.view.entities.AppView.PIXEL_TO_METER;
 
+/**
+ * The view representing a score indicator in the game's score bar
+ */
 public class ScorePointerView extends EntityView {
 
-
+    /**
+     * Constructor with arguments of the ScorePointerView class
+     * @param game The game the pointer belongs to
+     */
     ScorePointerView(DownFall game) {
         super(game);
     }
@@ -24,6 +30,12 @@ public class ScorePointerView extends EntityView {
 
         sprite.setCenter(x ,(maxCamY / PIXEL_TO_METER) - 19.637f);  //pixel to meter: na appview
     }
+
+    /**
+     * Creates the sprite representing the score pointer
+     * @param game the game this view belongs to. Needed to access the asset manager to get textures
+     * @return The score pointer's sprite
+     */
     @Override
     public Sprite createSprite(DownFall game) {
         Texture texture = game.getAssetManager().get("scorePointer.png");
