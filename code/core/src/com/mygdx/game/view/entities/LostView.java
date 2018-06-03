@@ -27,6 +27,9 @@ public class LostView extends AppView {
         createBtns();
     }
 
+    /**
+     * Initializes the view's camera
+     */
     @Override
     protected void createCamera() {
         OrthographicCamera camera = new OrthographicCamera(VIEWPORT_WIDTH / PIXEL_TO_METER, VIEWPORT_WIDTH / PIXEL_TO_METER * ((float) 14 / (float) 10));
@@ -38,6 +41,9 @@ public class LostView extends AppView {
 
     }
 
+    /**
+     * Loads the assets needed by this screen.
+     */
     @Override
     protected void loadAssets() {
         this.game.getAssetManager().load("menu_background.png", Texture.class);
@@ -61,17 +67,27 @@ public class LostView extends AppView {
         stage.draw();
     }
 
+    /**
+     * Handles any inputs and passes them to the controller
+     * @param delta time since last time inputs where handled in seconds
+     */
     @Override
     protected void handleInputs(float delta) {
 
     }
 
+    /**
+     * Draws the entities to the screen.
+     */
     @Override
     protected void drawEntities(float delta) {
         Texture lostFont = game.getAssetManager().get("you_lost.png",Texture.class);
         game.getBatch().draw(lostFont,camera.viewportWidth/2 - (lostFont.getWidth()/2),(camera.viewportHeight/2)-(lostFont.getHeight()/2));
     }
 
+    /**
+     * Draws the background
+     */
     @Override
     protected void drawBackground() {
         Texture background = game.getAssetManager().get("menu_background.png", Texture.class);
@@ -79,6 +95,9 @@ public class LostView extends AppView {
         game.getBatch().draw(background, 0, 0, 0, 0, (int) (WORLD_WIDTH / PIXEL_TO_METER), (int) (WORLD_HEIGHT / PIXEL_TO_METER));
     }
 
+    /**
+     * Creates the needed buttons
+     */
     private void createBtns()
     {
         TextButton mainMenuBtn = createBtn("Go to main menu",camera.viewportHeight / 2 - BTN_DISTANCE, BUTTON_WIDTH,stage);
