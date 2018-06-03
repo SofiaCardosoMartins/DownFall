@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<XMI verified="false" xmi.version="1.2" timestamp="2018-06-03T20:07:51" xmlns:UML="http://schema.omg.org/spec/UML/1.4">
+<XMI verified="false" xmi.version="1.2" timestamp="2018-06-03T22:59:01" xmlns:UML="http://schema.omg.org/spec/UML/1.4">
  <XMI.header>
   <XMI.documentation>
    <XMI.exporter>umbrello uml modeller http://umbrello.kde.org</XMI.exporter>
@@ -105,7 +105,7 @@
                   <UML:Parameter visibility="private" isSpecification="false" xmi.id="uYJo6LPZWVJ5b" type="uxCFOTHz91TEc" value="" name="numPlayers"/>
                  </UML:BehavioralFeature.parameter>
                 </UML:Operation>
-                <UML:Operation visibility="public" isSpecification="false" isQuery="false" isAbstract="false" isLeaf="false" isRoot="false" xmi.id="uPhqzjjNZIdN9" isOverride="false" name="testObjectsCreation"/>
+                <UML:Operation visibility="public" isSpecification="false" isQuery="false" isAbstract="false" isLeaf="false" isRoot="false" xmi.id="uPhqzjjNZIdN9" isOverride="false" name="testGameModel"/>
                 <UML:Operation visibility="public" isSpecification="false" isQuery="false" isAbstract="false" isLeaf="false" isRoot="false" xmi.id="uMrseVuR9YvIf" isOverride="false" name="testPlayerModel"/>
                 <UML:Operation visibility="public" isSpecification="false" isQuery="false" isAbstract="false" isLeaf="false" isRoot="false" xmi.id="uleVKefV4O6O2" isOverride="false" name="testBoostModel"/>
                 <UML:Operation visibility="public" isSpecification="false" isQuery="false" isAbstract="false" isLeaf="false" isRoot="false" xmi.id="uKLmUOE2hyMjF" isOverride="false" name="testEntityModel"/>
@@ -125,7 +125,7 @@
      </UML:Namespace.ownedElement>
      <XMI.extension xmi.extender="umbrello">
       <diagrams resolution="96">
-       <diagram showopsig="1" linecolor="#ff0000" snapx="25" showattribassocs="1" snapy="25" linewidth="0" showattsig="1" textcolor="#000000" isopen="1" showpackage="1" showpubliconly="0" showstereotype="1" name="class diagram" font="Sans Serif,9,-1,0,50,0,0,0,0,0" canvasheight="527" canvaswidth="1067" localid="-1" snapcsgrid="0" showgrid="0" showops="1" griddotcolor="#d3d3d3" backgroundcolor="#ffffff" usefillcolor="1" fillcolor="#ffff00" zoom="100" xmi.id="u7NKOUjzxBuoY" documentation="" showscope="1" snapgrid="0" showatts="1" type="1">
+       <diagram showopsig="1" linecolor="#ff0000" snapx="25" showattribassocs="1" snapy="25" linewidth="0" showattsig="1" textcolor="#000000" isopen="1" showpackage="1" showpubliconly="0" showstereotype="1" name="class diagram" font="Sans Serif,9,-1,0,50,0,0,0,0,0" canvasheight="266" canvaswidth="765" localid="-1" snapcsgrid="0" showgrid="0" showops="1" griddotcolor="#d3d3d3" backgroundcolor="#ffffff" usefillcolor="1" fillcolor="#ffff00" zoom="100" xmi.id="u7NKOUjzxBuoY" documentation="" showscope="1" snapgrid="0" showatts="1" type="1">
         <widgets>
          <classwidget linecolor="#ff0000" usesdiagramfillcolor="0" linewidth="0" textcolor="#000000" showoperations="1" usesdiagramusefillcolor="0" showpubliconly="0" showpackage="1" x="-1432" showattsigs="601" showstereotype="1" y="-591" showattributes="1" font="Sans Serif,9,-1,0,50,0,0,0,0,0" localid="uSepe5uUPyl0G" width="482" isinstance="0" usefillcolor="0" fillcolor="#ffff00" xmi.id="uXooycuAhxx8c" autoresize="1" showscope="1" height="240" showopsigs="601"/>
          <classwidget linecolor="#ff0000" usesdiagramfillcolor="0" linewidth="0" textcolor="#000000" showoperations="1" usesdiagramusefillcolor="0" showpubliconly="0" showpackage="1" x="-909" showattsigs="601" showstereotype="1" y="-586" showattributes="1" font="Sans Serif,9,-1,0,50,0,0,0,0,0" localid="uUFdlcPadvaQc" width="190" isinstance="0" usefillcolor="0" fillcolor="#ffff00" xmi.id="ugVcgQL9rea1E" autoresize="1" showscope="1" height="37" showopsigs="601"/>
@@ -162,7 +162,7 @@
   </UML:Model>
  </XMI.content>
  <XMI.extensions xmi.extender="umbrello">
-  <docsettings viewid="u7NKOUjzxBuoY" uniqueid="uYwC2QfVbmcl1" documentation=""/>
+  <docsettings viewid="u7NKOUjzxBuoY" uniqueid="u7T7JLWad56h9" documentation=""/>
   <listview>
    <listitem open="1" type="800" id="Views">
     <listitem open="1" type="821" id="Component_View"/>
