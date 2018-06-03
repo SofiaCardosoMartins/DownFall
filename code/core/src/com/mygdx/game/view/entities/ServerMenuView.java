@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.mygdx.game.DownFall;
+import com.mygdx.game.controller.GameController;
 import com.mygdx.game.model.GameModel;
 import com.mygdx.game.network.Server;
 import com.badlogic.gdx.scenes.scene2d.ui.TextField;
@@ -36,12 +37,14 @@ public class ServerMenuView extends MenuView {
 
     @Override
     public void render(float delta) {
+
         if (game.startGame) {
             game.switchToGameView(2);
-            GameModel.getInstance().updatePlayers();
             game.createdGame = true;
             return;
         }
+
+        checkEndGame();
 
         game.getBatch().setProjectionMatrix(camera.combined);
 
@@ -62,12 +65,28 @@ public class ServerMenuView extends MenuView {
         BitmapFont font = generator.generateFont(parameter); // font size 12 pixels
 
         generator.dispose();
-        font.setColor(Color.FOREST);
-        font.getData().setScale(FONT_SCALE);
+        font.setColor(Color.BLACK);
+        font.getData().setScale(FONT_SCALE*2/3);
         IP = server.getServerIP();
 
-        font.draw(game.getBatch(), IP , 200, 500);
+        font.draw(game.getBatch(), "Insert this IP Addess\n on your mobile phone" , 50, 800);
+        font.setColor(Color.DARK_GRAY);
+        font.getData().setScale(FONT_SCALE);
+        font.draw(game.getBatch(), IP , 100, 700);
 
+
+    }
+
+
+    /**
+     * Checks if the game is on an ended state
+     */
+    public void checkEndGame()
+    {
+        if(GameController.getInstance().isEndGame())
+        {
+            game.switchToMenuView();
+        }
     }
 
 }

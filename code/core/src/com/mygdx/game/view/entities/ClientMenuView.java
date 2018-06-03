@@ -15,10 +15,8 @@ import com.mygdx.game.model.GameModel;
 import com.mygdx.game.network.Client;
 
 public class ClientMenuView extends MenuView {
-
-
     protected Skin skin = new Skin(Gdx.files.internal("skin/comic-ui.json"));
-    protected float FONT_SCALE = 1.2f;
+    protected float FONT_SCALE = 1.6f;
     private Stage stageC;
     TextField field;
 
@@ -37,7 +35,6 @@ public class ClientMenuView extends MenuView {
                         e.printStackTrace();
                         System.out.println("couldn't open socket");
                     } finally {
-                        g.switchToGameView(2);
                     }
                 }
                 return false;
@@ -51,12 +48,6 @@ public class ClientMenuView extends MenuView {
 
     @Override
     public void render(float delta) {
-        if (game.startGame) {
-            game.switchToGameView(2);
-            GameModel.getInstance().updatePlayers();
-            game.createdGame = true;
-            return;
-        }
 
         game.getBatch().begin();
         drawBackground();
@@ -73,10 +64,10 @@ public class ClientMenuView extends MenuView {
     }
     void createTextField(){
         TextField.TextFieldStyle textFieldStyle = skin.get(TextField.TextFieldStyle.class);
-        textFieldStyle.font.getData().scale(FONT_SCALE);
+        textFieldStyle.font.getData().scale(2*FONT_SCALE);
 
         field = new TextField("", btnSkin);
-        field.setPosition(100, 300);
+        field.setPosition(100, 400);
         field.setSize(500,100);
         field.setStyle(textFieldStyle);
 
@@ -92,6 +83,6 @@ public class ClientMenuView extends MenuView {
 
         font2.getData().setScale(FONT_SCALE);
 
-        font2.draw(game.getBatch(), "Please insert the IP Address you see\n on you partner's screen", 100, 600);
+        font2.draw(game.getBatch(), "Please insert the IP Address\n you see on you partner's screen", 50, 600);
     }
 }

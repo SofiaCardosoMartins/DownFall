@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
+import java.net.SocketException;
 
 /**
  * A ReadThread deals with reading info from a socket
@@ -31,26 +32,21 @@ public class ReadThread extends Thread {
             try {
                 input = in.readLine();
             } catch (IOException e) {
-                e.printStackTrace();
-                return;
+                //e.printStackTrace();
+            } finally {
+                if (input != null) {
+                    System.out.println("input:" + input);
+                    if (input.equals("END"))
+                        break;
+                    if (input.equals("LEFT"))
+                        GameController.getInstance().handleInput(GameController.Direction.LEFT, myPlayer);
+                    else if (input.equals("RIGHT"))
+                        GameController.getInstance().handleInput(GameController.Direction.RIGHT, myPlayer);
+                    else if (input.equals("UP"))
+                        GameController.getInstance().handleInput(GameController.Direction.UP, myPlayer);
+                }
             }
-
-            System.out.println("input:" + input.toUpperCase());
-            if (input == null)
-                return;
-            if (input.equals("END"))
-                break;
-
-
-
-            if (input.equals("LEFT"))
-                GameController.getInstance().handleInput(GameController.Direction.LEFT,  myPlayer);
-            else if (input.equals("RIGHT"))
-                GameController.getInstance().handleInput(GameController.Direction.RIGHT,  myPlayer);
-            else if (input.equals("UP"))
-                GameController.getInstance().handleInput(GameController.Direction.UP,   myPlayer);
         }
-
     }
 
 }

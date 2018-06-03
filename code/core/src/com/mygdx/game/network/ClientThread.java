@@ -16,6 +16,7 @@ public class ClientThread extends Thread {
 
     Socket socket;
     DownFall game;
+    int playerNum;
 
     public ClientThread(DownFall game, Socket socket){
         this.game = game;
@@ -23,17 +24,16 @@ public class ClientThread extends Thread {
         System.out.println("running client");
     }
     public void run(){
-        game.startGame = true;
         ReadThread rd;
         WriteThread wr;
         try {
-            wr = new WriteThread(socket, 2);
+            wr = new WriteThread(socket);
         } catch (Exception e){
             e.printStackTrace();
             System.out.println("Lost connection with write client");
             return;
         }
-
+/*
         try {
             rd = new ReadThread(socket, 2);
         } catch (Exception e){
@@ -42,18 +42,18 @@ public class ClientThread extends Thread {
             return;
         }
 
-
+*/
         while(!game.createdGame){
 
         }
 
         wr.start();
-        rd.start();
+        //rd.start();
 
         try {
             socket.close();
         } catch (IOException e){
-            System.out.println("Couldn't close a socket, what's going on?");
+            System.out.println("Couldn't close a socket.");
         }
     }
 }

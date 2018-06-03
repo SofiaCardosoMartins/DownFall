@@ -151,10 +151,12 @@ public class MenuView extends AppView {
             public void touchUp (InputEvent event, float x, float y, int pointer, int button) {
                 boolean accelerometerAvail = Gdx.input.isPeripheralAvailable(Input.Peripheral.Accelerometer);
                 if (accelerometerAvail)
-                    game.switchToNetworkView();
+                    game.switchToClientView();
                 else
+                    game.switchToServerView();
 
-                    game.switchToGameView(2);
+                    /* IF IT DOESN'T WORK, REPLACE */
+                    //game.switchToGameView(2);
 
             }
             @Override

@@ -24,7 +24,6 @@ public class Client {
     public Client(DownFall game, String serverAddress) {
         // Make connection and initialize streams
         this.serverAddress = serverAddress;
-        System.out.println("server:" + serverAddress);
 
         try {
             Socket socket = new Socket(serverAddress, 8050);

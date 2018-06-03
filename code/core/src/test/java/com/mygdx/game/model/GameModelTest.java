@@ -2,6 +2,7 @@ package com.mygdx.game.model;
 
 import com.mygdx.game.DownFall;
 import com.mygdx.game.controller.GameController;
+import com.mygdx.game.model.entities.BoostModel;
 import com.mygdx.game.model.entities.EntityModel;
 import com.mygdx.game.model.entities.PlayerModel;
 import com.mygdx.game.view.entities.GameView;
@@ -56,9 +57,19 @@ public class GameModelTest  {
         assertEquals(0, p.getRemainingTime(), 0.0f);
         p.setRemainingTime(1);
         assertEquals(1, p.getRemainingTime(), 0.0f);
+    }
 
+    @Test
+    public void testBoostModel(){
+        BoostModel bm = new BoostModel();
+        assertEquals(EntityModel.ModelType.NATURAL_BOOST, bm.getType());
 
-
-
+        assertEquals(false, bm.isFlaggedForRemoval());
+        bm.setFlaggedForRemoval(true);
+        assertEquals(true, bm.isFlaggedForRemoval());
+        bm.setFlaggedForRemoval(false);
+        bm.setY(100000000);
+        bm.checkBounds(0);
+        assertEquals(true, bm.isFlaggedForRemoval());
     }
 }
