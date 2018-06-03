@@ -79,7 +79,7 @@ In single mode desktop you control the player with the -> and <- keys to move to
 In single mode android you need to turn the mobile phone rightwards and leftwards for the right and left movement, and touch for jumps.
 In multiplayer mode, you use the same android controls in each phone. If you prefer, you may also use the desktop controls in addition to A, W, D keys for the according movements.
 
-![alt text](https://github.com/SofiaCardosoMartins/DownFall/blob/master/final_delivery/screenshots/GameMenu.png)
+![alt text](https://github.com/SofiaCardosoMartins/DownFall/blob/master/final_delivery/screenshots/Game.png)
 
 ## Server Menu
 In case you want to play multiplayer mode (desktop, at the beggining), you will be faced with this menu. It contains the IP to be inserted on both mobile phones.
