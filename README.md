@@ -47,17 +47,6 @@ Test
 - Selecionar modo 'Single Player' ou 'Multiplayer'
 - Visualizar o jogo (que acompanha o movimento de um ou de dois jogadores), bem como indicadores do seu estado (terminado com ou sem sucesso, nível do jogo, entre outros)
 
-## Test Design
-
-- Tests to the controllers
-  - Test the initialization of the GameController instance
-  - Test the transition between the player's states
-  - Test the addition of a new controller to the game
-  - Test the deletion of a model and the consequent effects in the GameController (a controller should be eliminated)
-  - Test the collision between the player and the world's bounds
-  
-- Tests to the models
-  - 
 ###### User Manual
 
 ## Main menu
@@ -91,4 +80,30 @@ When you lose the game, you will be faced with this menu in order to return to t
 When you lose the game, you will be faced with this menu in order to return to the main menu.
 
 ![alt text](https://github.com/SofiaCardosoMartins/DownFall/blob/master/final_delivery/screenshots/WonMenu.png)
+
+## Test Design
+
+- Tests to the controllers
+  - Test the initialization of the GameController instance
+  - Test the transition between the player's states
+  - Test the addition of a new controller to the game
+  - Test the deletion of a model and the consequent effects in the GameController (a controller should be eliminated)
+  - Test the collision between the player and the world's bounds
+  
+- Tests to the models
+  - 
+
+## Development of the Final Project
+
+###### Major difficulties along the way
+
+- This year's school calendar was an obstacle given the close distribution of tests and deliveries of various projects
+- Handling the JUnit tests in the LibGDX environment (more precisely using Box2D)
+- Attempt to add multiple design patterns (probably more than the ones requested by the project)
+
+###### Lessons learned
+
+- How to apply design patterns to improve code flexibility and development
+- How to use LibGDX and Box2D in the context of game development
+- Manage time and resources throughout project development
 
