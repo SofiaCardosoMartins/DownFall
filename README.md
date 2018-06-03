@@ -91,13 +91,13 @@ In case you want to play multiplayer mode (mobile), you will be faced with this 
 
 ![alt text](https://github.com/SofiaCardosoMartins/DownFall/blob/master/final_delivery/screenshots/ClientMenu.png)
 
-## Lose Game
+## Lost Game
 When you lose the game, you will be faced with this menu in order to return to the main menu.
 
-![alt text](https://github.com/SofiaCardosoMartins/DownFall/blob/master/final_delivery/screenshots/LoseMenu.png)
+![alt text](https://github.com/SofiaCardosoMartins/DownFall/blob/master/final_delivery/screenshots/LostMenu.png)
 
-## Win Game
+## Won Game
 When you lose the game, you will be faced with this menu in order to return to the main menu.
 
-![alt text](https://github.com/SofiaCardosoMartins/DownFall/blob/master/final_delivery/screenshots/WinMenu.png)
+![alt text](https://github.com/SofiaCardosoMartins/DownFall/blob/master/final_delivery/screenshots/WonMenu.png)
 
