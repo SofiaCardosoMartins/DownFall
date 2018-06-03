@@ -7,17 +7,24 @@ import com.badlogic.gdx.utils.Array;
 import com.mygdx.game.model.entities.BoostModel;
 
 /**
- * A class to represent the fly boost in the world
+ * A class to represent the default boost of a player
  */
-public class FlyBoostController extends BoostController {
+public class NaturalBoostController extends BoostController {
+    /**
+     * Constructor without arguments of the NaturalBoostController class
+     * @see BoostController#BoostController()
+     */
+    public NaturalBoostController(){
+        super();
+    }
 
     /**
-     * Constructor with arguments of the FlyBoostController class. Sets the body's fixtures
+     * Constructor with arguments of the NaturalBoostController class. Sets the body's fixtures
      * @param world A Box2D world
      * @param boostModel Object of class BoostModel to be set as the body's user data
      * @see BoostController#BoostController(World, BoostModel)
      */
-    public FlyBoostController(World world, BoostModel boostModel) {
+    public NaturalBoostController(World world, BoostModel boostModel) {
         super(world, boostModel);
     }
 

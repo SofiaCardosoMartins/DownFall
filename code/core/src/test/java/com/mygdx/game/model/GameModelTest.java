@@ -16,7 +16,7 @@ public class GameModelTest  {
     private void init(int numPlayers)
     {
         game = new DownFall();
-        GameModel.PLAYERS_COUNT = numPlayers;
+        GameModel.setPlayersCount(numPlayers);
         gameModel = GameModel.getInstance();
     }
 

@@ -1,6 +1,5 @@
 package com.mygdx.game.controller;
 
-import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
@@ -23,6 +22,9 @@ import java.util.List;
 
 import static com.mygdx.game.view.entities.AppView.PIXEL_TO_METER;
 
+/**
+ * Controls the physics aspect of the game.
+ */
 public class GameController implements ContactListener {
 
     private static GameController instance;
@@ -43,6 +45,9 @@ public class GameController implements ContactListener {
 
     public enum Direction {LEFT, RIGHT, UP}
 
+    /**
+     * Creates a new GameController that controls the physics of a certain GameModel.
+     */
     private GameController() {
         PAUSED=false;
         LOST = false;
@@ -71,13 +76,17 @@ public class GameController implements ContactListener {
         boostControllers = new ArrayList<BoostController>();
         List<BoostModel> boosts = GameModel.getInstance().getBoostsInUse();
         for (BoostModel boost : boosts)
-            boostControllers.add(new BoostController(world, boost));
+            boostControllers.add(new NaturalBoostController(world, boost));
 
         //Create lava body
         this.lavaController = new LavaController(world, GameModel.getInstance().getLava(), BodyDef.BodyType.StaticBody, false);
         world.setContactListener(this);
     }
 
+    /**
+     * Returns all the controllers in the game
+     * @return A list of all the controllers in the game
+     */
     public List<EntityController> getAllControllers() {
         List<EntityController> controllers = new ArrayList<EntityController>();
         controllers.addAll(platformControllers);
@@ -87,6 +96,10 @@ public class GameController implements ContactListener {
         return controllers;
     }
 
+    /**
+     * Sets the controller of the given model as flagged from removal
+     * @param model The model being removed in the game
+     */
     public void remove(EntityModel model)
     {
         List<EntityController> entityControllers = getAllControllers();
@@ -98,38 +111,63 @@ public class GameController implements ContactListener {
         }
     }
 
-    public void add(EntityModel entityModel)
+    /**
+     * Adds a new controller of specified model to the game
+     * @param entityModel The new model in the game
+     * @return The controller of the new entity
+     */
+    public EntityController add(EntityModel entityModel)
     {
+        EntityController entityController = null;
         switch (entityModel.getType())
         {
             case PLATFORM:
-                platformControllers.add(new PlatformController(world, (PlatformModel) entityModel));
+                entityController = new PlatformController(world, (PlatformModel) entityModel);
+                platformControllers.add((PlatformController)entityController);
                 break;
             case OBSTACLE:
-                obstacleControllers.add(new ObstacleController(world, (ObstacleModel) entityModel));
+                entityController = new ObstacleController(world, (ObstacleModel) entityModel);
+                obstacleControllers.add((ObstacleController) entityController);
                 break;
             case FLY_BOOST:
-                boostControllers.add(new FlyBoostController(world, (FlyBoostModel) entityModel));
+                entityController = new FlyBoostController(world, (FlyBoostModel) entityModel);
+                boostControllers.add((FlyBoostController)entityController);
                 break;
             case NO_COLLISIONS_BOOST:
-                boostControllers.add(new NoCollisionsBoostController(world, (NoCollisionsBoostModel) entityModel));
+                entityController = new NoCollisionsBoostController(world, (NoCollisionsBoostModel) entityModel);
+                boostControllers.add((NoCollisionsBoostController)entityController);
                 break;
         }
+        return entityController;
     }
 
+    /**
+     * Returns a singleton instance of a game controller
+     *
+     * @return the singleton instance
+     */
     public static GameController getInstance() {
         if (instance == null)
             instance = new GameController();
         return instance;
     }
 
-    private void updateLava(float minViewportY)
+    /**
+     * Updates the lava's position
+     * @param minCameraY The minimum value of the camera's y position
+     */
+    private void updateLava(float minCameraY)
     {
         EntityModel em = (EntityModel)lavaController.getBody().getUserData();
-        em.setY(minViewportY + (PIXEL_TO_METER * (lavaController.getHeight()/2)));
-        this.lavaController.setY(minViewportY + (PIXEL_TO_METER * (lavaController.getHeight()/2)));
+        em.setY(minCameraY + (PIXEL_TO_METER * (lavaController.getHeight()/2)));
+        this.lavaController.setY(minCameraY + (PIXEL_TO_METER * (lavaController.getHeight()/2)));
     }
 
+    /**
+     * Updates the obstacle's movement
+     * @param minCameraY  The minimum value of the camera's y position
+     * @param maxCameraY  The maximum value of the camera's y position
+     */
     public void updateObstacles(float minCameraY, float maxCameraY) {
         List<ObstacleModel> obstacles = GameModel.getInstance().getObstaclesInUse();
         for (ObstacleController oc: obstacleControllers){
@@ -139,17 +177,26 @@ public class GameController implements ContactListener {
         }
     }
 
-    public void updateBoosts(float minViewportY) {
+    /**
+     * Removes from the world the boosts which are no longer visible
+     * @param minCameraY  The minimum value of the camera's y position
+     */
+    public void updateBoosts(float minCameraY) {
         for(BoostController boost: boostControllers){
-            if(boost.getY() < minViewportY)
+            if(boost.getY() < minCameraY)
                 GameModel.getInstance().remove((BoostModel)(boost.getBody().getUserData()));
         }
     }
 
-    public void update(float delta, float minViewportY, float maxViewportY) {
+    /**
+     * Calculates the next physics step of duration delta (in seconds) and updates the bodies' states
+     * @param delta The size of this physics step in seconds.
+     * @param minCameraY  The minimum value of the camera's y position
+     * @param maxCameraY  The maximum value of the camera's y position
+     */
+    public void update(float delta, float minCameraY, float maxCameraY) {
 
-        //System.out.println("player pos: " + playerControllers.get(0).getY());
-        GameModel.getInstance().update(delta, minViewportY);
+        GameModel.getInstance().update(minCameraY);
 
         float frameTime = Math.min(delta, 0.25f);
         accumulator += frameTime;
@@ -168,9 +215,9 @@ public class GameController implements ContactListener {
                 boostControllers.remove(e);
         }
 
-        this.updateLava(minViewportY);
-        this.updateObstacles(minViewportY,maxViewportY);
-        this.updateBoosts(minViewportY);
+        this.updateLava(minCameraY);
+        this.updateObstacles(minCameraY,maxCameraY);
+        this.updateBoosts(minCameraY);
 
         Array<Body> bodies = new Array<Body>();
         world.getBodies(bodies);
@@ -178,29 +225,45 @@ public class GameController implements ContactListener {
         List<EntityController> controllers = getAllControllers();
         for (EntityController controller : controllers) {
             Body body = controller.getBody();
-            verifyBounds(controller, minViewportY, maxViewportY);
+            verifyBounds(controller, minCameraY, maxCameraY);
             ((EntityModel) body.getUserData()).setPosition(body.getPosition().x, body.getPosition().y);
             ((EntityModel) body.getUserData()).setRotation(body.getAngle());
             controller.update();
         }
     }
 
+    /**
+     * Sets the flag END to true and the flag LOST to the specified value
+     * @param lost True if a player fell into the lava and false otherwise
+     */
     public void endGame(boolean lost)
     {
         this.LOST = lost;
         this.END = true;
     }
 
+    /**
+     * Returns the value of the END flag
+     * @return Returns true if a game ended and false otherwise
+     */
     public boolean isEndGame()
     {
         return this.END;
     }
 
+    /**
+     * Returns the value of the LOST flag
+     * @return Returns true if a game ended and a player lost and false otherwise
+     */
     public boolean isLost()
     {
         return this.LOST;
     }
 
+    /**
+     * A contact between two objects was detected
+     * @param contact the detected contact
+     */
     @Override
     public void beginContact(Contact contact) {
 
@@ -218,6 +281,11 @@ public class GameController implements ContactListener {
 
     }
 
+    /**
+     * Handles a collision between a boost and a player
+     * @param player Player which suffered the collision
+     * @param boost  Boost which suffered the collision
+     */
     private void playerBoostCollision(Body player, Body boost){
         PlayerController pc = null;
 
@@ -255,13 +323,23 @@ public class GameController implements ContactListener {
 
     }
 
+    /**
+     * Handles the input of the user, affecting the player's movement
+     * @param dir The direction of the player's movement
+     * @param playerNum The player at which the input applies
+     */
     public void handleInput(Direction dir, int playerNum)
     {
         PlayerController player = playerControllers.get(playerNum - 1);
         player.handleInput(dir);
     }
 
-    private void checkLeftWallCollision(EntityController ec, float width) {
+    /**
+     * Checks if a body is colliding with the world's left wall
+     * @param ec The controller whose position is going to be testes
+     * @param width The width of the controller's body
+     */
+    public void checkLeftWallCollision(EntityController ec, float width) {
         Body body = ec.getBody();
         if (body.getPosition().x < (width / 2)) {
             body.setTransform((width / 2), body.getPosition().y, body.getAngle());
@@ -269,7 +347,12 @@ public class GameController implements ContactListener {
         }
     }
 
-    private void checkRightWallCollision(EntityController ec, float width) {
+    /**
+     * Checks if a body is colliding with the world's right wall
+     * @param ec The controller whose position is going to be testes
+     * @param width The width of the controller's body
+     */
+    public void checkRightWallCollision(EntityController ec, float width) {
         Body body = ec.getBody();
         if (body.getPosition().x > (WORLD_WIDTH - (width / 2))) {
             body.setTransform(WORLD_WIDTH - (width / 2), body.getPosition().y, body.getAngle());
@@ -277,7 +360,13 @@ public class GameController implements ContactListener {
         }
     }
 
-    private void checkUpWallCollision(EntityController ec, float maxCameraY, float height) {
+    /**
+     * Checks if a body is colliding with the world's upper wall
+     * @param ec The controller whose position is going to be testes
+     * @param maxCameraY The maximum value of the camera's y position
+     * @param height The height of the controller's body
+     */
+    public void checkUpWallCollision(EntityController ec, float maxCameraY, float height) {
         Body body = ec.getBody();
         if ((body.getPosition().y + (height / 2)) > maxCameraY) {
             body.setLinearVelocity(0, 0);
@@ -286,7 +375,13 @@ public class GameController implements ContactListener {
         }
     }
 
-    private void checkDownWallCollision(EntityController ec, float minCameraY, float height) {
+    /**
+     * Checks if a body is colliding with the world's bottom wall
+     * @param ec The controller whose position is going to be testes
+     * @param minCameraY The minimum value of the camera's y position
+     * @param height The height of the controller's body
+     */
+    public void checkDownWallCollision(EntityController ec, float minCameraY, float height) {
         Body body = ec.getBody();
         if (body.getPosition().y < (minCameraY + (height / 2))) {
             if (body.getUserData() instanceof PlayerModel)
@@ -294,6 +389,12 @@ public class GameController implements ContactListener {
         }
     }
 
+    /**
+     * Checks if the controller is within the camera's section
+     * @param ec The controller whose position is going to be testes
+     * @param minViewportY The minimum value of the camera's y position
+     * @param maxViewportY The maximum value of the camera's y position
+     */
     private void verifyBounds(EntityController ec,float minViewportY, float maxViewportY) {
         if((ec instanceof PlatformController) || (ec instanceof ObstacleController)) return;
 
@@ -307,6 +408,10 @@ public class GameController implements ContactListener {
         this.checkDownWallCollision(ec, minViewportY, height);
     }
 
+    /**
+     * Sets the value of the PAUSED flag and updates the boost's tiem
+     * @param paused The value of the PAUSED flag
+     */
     public void setPAUSED(boolean paused)
     {
         PAUSED = paused;
@@ -314,31 +419,98 @@ public class GameController implements ContactListener {
             GameController.getInstance().restoreBoostsTime();
     }
 
+    /**
+     * Returns the value of the PAUSED flag
+     * @return The value of the PAUSED flag
+     */
     public boolean getPAUSED()
     {
         return PAUSED;
     }
 
+    /**
+     * Deletes the current game
+     */
     public static void delete()
     {
         instance = null;
         GameModel.delete();
     }
 
+    /**
+     * Updates the boost's time in each player
+     */
     public void restoreBoostsTime()
     {
         for(PlayerController playerController: playerControllers)
             playerController.updateStrategyTime();
     }
 
+    /**
+     * Returns true if the current game has two players
+     * @return True if the current game has two players and false otherwise
+     */
     public boolean isDoublePlayer(){
         return (this.playerControllers.size() == 2);
     }
+
+    /**
+     * Returns the game's world
+     * @return The game's world
+     */
     public World getWorld() {
         return world;
     }
 
+    /**
+     * Returns the list of the players' controllers
+     * @return The list of the players' controllers
+     */
     public List<PlayerController> getPlayerControllers() {
         return playerControllers;
+    }
+
+    /**
+     * Returns the lava's controller
+     * @return The lava's controller
+     */
+    public LavaController getLavaController() {
+        return lavaController;
+    }
+
+    /**
+     * Returns the list of the platform' controllers
+     * @return The list of the platform' controllers
+     */
+    public List<PlatformController> getPlatformControllers() {
+        return platformControllers;
+    }
+
+    /**
+     * Returns the list of the obstacles' controllers
+     * @return The list of the obstacles' controllers
+     */
+    public List<ObstacleController> getObstacleControllers() {
+        return obstacleControllers;
+    }
+
+    /**
+     * Returns the list of the boosts' controllers
+     * @return The list of the boosts' controllers
+     */
+    public List<BoostController> getBoostControllers() {
+        return boostControllers;
+    }
+
+    /**
+     * Returns the first player of the game
+     * @return The first player of the game
+     */
+    public PlayerController getFirstPlayer()
+    {
+        if(! playerControllers.isEmpty())
+            return playerControllers.get(0);
+        else
+            return null;
     }
 }

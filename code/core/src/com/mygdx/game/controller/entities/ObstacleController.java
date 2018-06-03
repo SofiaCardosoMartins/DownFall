@@ -3,12 +3,18 @@ package com.mygdx.game.controller.entities;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.World;
 import com.mygdx.game.model.entities.ObstacleModel;
-
-
+/**
+ * A class to represent the controller of an obstacle model
+ */
 public class ObstacleController extends EntityController {
 
     private static final float DX = 0.05f;  //increment in the x direction
 
+    /**
+     * Constructor with arguments of the EntityController class
+     * @param world A Box2D world
+     * @param obstacleModel The model belonging to the controller
+     */
     public ObstacleController(World world, ObstacleModel obstacleModel)
     {
         super(world,obstacleModel, BodyDef.BodyType.KinematicBody,true);
@@ -29,6 +35,9 @@ public class ObstacleController extends EntityController {
         }, width, height, density, friction, restitution, OBSTACLE_BITS, PLAYER_BITS);
     }
 
+    /**
+     * Applies movement to the obstacle (only in the x direction)
+     */
     public void move()
     {
         body.setTransform(body.getPosition().x + DX, body.getPosition().y, 0);

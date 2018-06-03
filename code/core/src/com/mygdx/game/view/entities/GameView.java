@@ -30,7 +30,7 @@ public class GameView extends AppView {
     Box2DDebugRenderer debugRenderer;
     Matrix4 debugCamera;
     private static float CAMERA_SPEED = 1;
-    private static final boolean DEBUG_PHYSICS = true;
+    private static final boolean DEBUG_PHYSICS = false;
     private static final float CAMERA_SPEED_INC = 0.3f; //camera speed increment
     private static final float TIME_TO_NEXT_INC = 10;   //time between camera's speed increment (in seconds)
     private static final float FONT_SCALE  = 1.2f;
@@ -38,7 +38,7 @@ public class GameView extends AppView {
 
     public GameView(DownFall game, int numPlayers) {
         super(game);
-        GameModel.PLAYERS_COUNT = numPlayers;
+        GameModel.setPlayersCount(numPlayers);
         this.lastCameraSpeedIncreaseTime = System.nanoTime();
         loadAssets();
         createCamera();
@@ -179,7 +179,7 @@ public class GameView extends AppView {
             GameController.getInstance().handleInput(GameController.Direction.UP, 2);
         }
 
-        if(GameModel.PLAYERS_COUNT == 1) {
+        if(GameModel.getPlayersCount() == 1) {
             boolean accelerometerAvail = Gdx.input.isPeripheralAvailable(Input.Peripheral.Accelerometer);
             if (accelerometerAvail) {
                 float acceX = Gdx.input.getAccelerometerX();
