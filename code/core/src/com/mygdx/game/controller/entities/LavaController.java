@@ -4,8 +4,18 @@ import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.World;
 import com.mygdx.game.model.entities.EntityModel;
 
+/**
+ * A class to represent the controller of a lava model
+ */
 public class LavaController extends EntityController {
 
+    /**
+     * Constructor with arguments of the LavaController class
+     * @param world A Box2D world
+     * @param model The model belonging to the controller
+     * @param bodyType A Box2D BodyType
+     * @param rotate True if the body should rotate and false otherwise
+     */
     public LavaController(World world, EntityModel model, BodyDef.BodyType bodyType, boolean rotate) {
         super(world, model, bodyType, rotate);
         float density = 0.5f;
@@ -29,25 +39,5 @@ public class LavaController extends EntityController {
         createFixture(body, new float[]{
                 680,193,673,25,592,44,529,121
         }, width, height, density, friction, restitution, LAVA_BITS, PLAYER_BITS);
-
-/*
-
-        createFixture(body, new float[]{
-                249,190,153,155,73,151,6,161,1,200,250,199
-        }, width, height, density, friction, restitution, LAVA_BITS , PLAYER_BITS);
-
-        createFixture(body, new float[]{
-               293,199,332,190,278,177,249,190,250,199
-        }, width, height, density, friction, restitution, LAVA_BITS , PLAYER_BITS);
-
-        createFixture(body, new float[]{
-                679,198,546,172,332,190,293,199
-        }, width, height, density, friction, restitution, LAVA_BITS , PLAYER_BITS);
-
-        createFixture(body, new float[]{
-               679,198,677,147,594,149,546,172
-        }, width, height, density, friction, restitution, LAVA_BITS , PLAYER_BITS);
-        */
-
     }
 }
