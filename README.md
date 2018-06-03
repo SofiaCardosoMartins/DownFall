@@ -6,7 +6,7 @@ A game based on Java and LibGDX for the LPOO course
 
 ###### Package Diagram
 
-![alt text](https://github.com/SofiaCardosoMartins/DownFall/blob/master/intermediate_delivery/architecture/package_diagram/package_diagram.png)
+![alt text](https://github.com/SofiaCardosoMartins/DownFall/blob/master/final_delivery/uml/package_diagram/package_diagram.png)
 
 
 ![alt text](https://github.com/SofiaCardosoMartins/DownFall/blob/master/intermediate_delivery/architecture/package_diagram/packages_relations.png)
@@ -15,15 +15,15 @@ A game based on Java and LibGDX for the LPOO course
 
 Controller
 
-![alt text](https://github.com/SofiaCardosoMartins/DownFall/blob/master/final_delivery/controller/picture.png)
+![alt text](https://github.com/SofiaCardosoMartins/DownFall/blob/master/final_delivery/uml/class_diagram/controller/picture.png)
 
 Model
 
-![alt text](https://github.com/SofiaCardosoMartins/DownFall/blob/master/final_delivery/model/picture.png)
+![alt text](https://github.com/SofiaCardosoMartins/DownFall/blob/master/final_delivery/uml/class_diagram/model/picture.png)
 
 View
 
-![alt text](https://github.com/SofiaCardosoMartins/DownFall/blob/master/final_delivery/view/picture.png)
+![alt text](https://github.com/SofiaCardosoMartins/DownFall/blob/master/final_delivery/uml/class_diagram/view/picture.png)
 
 ###### Design Patterns
 
