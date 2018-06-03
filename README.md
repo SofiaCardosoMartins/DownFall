@@ -15,7 +15,7 @@ A game based on Java and LibGDX for the LPOO course
 
 Controller
 
-![alt text](https://github.com/SofiaCardosoMartins/DownFall/blob/master/final_delivery/controller/picture.png)
+![alt text](https://github.com/SofiaCardosoMartins/DownFall/blob/master/final_delivery/uml/class_diagram/controller/picture.png)
 
 Model
 
