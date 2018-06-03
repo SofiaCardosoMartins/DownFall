@@ -19,7 +19,11 @@ public class ServerThread extends Thread {
     private DownFall game;
     int playerNum;
 
-
+    /**
+     * Created the Server Thread
+     * @param game game on which the thread will operate
+     * @param socket socket on which the info will be (mainly) read
+     */
     ServerThread(DownFall game, Socket socket, int playerNum){
         this.socket = socket;
         System.out.println("New connection with client# " + playerNum + " at " + socket);
@@ -29,18 +33,14 @@ public class ServerThread extends Thread {
 
     }
 
+    /**
+     *  Opens the Write Thread to write info
+     *  Closes the socket afterwards
+     */
+
     public void run(){
         ReadThread rd;
-        /*
-        WriteThread wr;
-        try {
-            wr = new WriteThread(socket, 1);
-        } catch (Exception e){
-            e.printStackTrace();
-            System.out.println("Lost connection with write server");
-            return;
-        }
-*/
+
         try {
             rd = new ReadThread(socket, playerNum);
         } catch (Exception e){
@@ -49,7 +49,6 @@ public class ServerThread extends Thread {
             return;
         }
 
-        //wr.start();
         rd.start();
 
         try {
@@ -57,24 +56,6 @@ public class ServerThread extends Thread {
         } catch (IOException e){
             System.out.println("Couldn't close a socket, what's going on?");
         }
-
-/*
-        try{
-
-
-
-            }
-        }catch (IOException e){
-            System.out.println("Error handling client# " + clientNumber + ": " + e);
-        } finally{
-            try {
-                socket.close();
-            } catch (IOException e){
-                System.out.println("Couldn't close a socket, what's going on?");
-            }
-            System.out.println("Connection with client# " + clientNumber + " closed");
-        }
-        */
     }
 
 }

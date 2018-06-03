@@ -16,6 +16,10 @@ public class WriteThread extends Thread {
 
     PrintWriter out;
 
+    /**
+     * Creates a thread to write input info to server
+     * @param socket on which the info will be written
+     */
     public WriteThread(Socket socket) {
             try {
             out = new PrintWriter(socket.getOutputStream(), true);
@@ -24,6 +28,9 @@ public class WriteThread extends Thread {
         }
     }
 
+    /**
+     * Writes info on a socket when new input arrives
+     */
     public void run() {
         while (true) {
             boolean accelerometerAvail = Gdx.input.isPeripheralAvailable(Input.Peripheral.Accelerometer);

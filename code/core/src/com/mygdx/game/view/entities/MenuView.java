@@ -43,13 +43,27 @@ public class MenuView extends AppView {
         createBtns();
     }
 
+    /**
+     * Sets the value of the stage
+     * @param stage The stage to be set
+     */
     public void setStage(Stage stage) {
         this.stage = stage;
     }
 
+    /**
+     * Gets the value of the stage
+     * @return The current stage
+     */
+
     public Stage getStage() {
         return stage;
     }
+
+    /**
+     * Sets the skin of the button
+     * @param btnSkin The skin to be set
+     */
     public void setBtnSkin(Skin btnSkin) {
         this.btnSkin = btnSkin;
     }
@@ -154,10 +168,6 @@ public class MenuView extends AppView {
                     game.switchToClientView();
                 else
                     game.switchToServerView();
-
-                    /* IF IT DOESN'T WORK, REPLACE */
-                    //game.switchToGameView(2);
-
             }
             @Override
             public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
