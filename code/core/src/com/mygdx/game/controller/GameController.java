@@ -196,7 +196,7 @@ public class GameController implements ContactListener {
      */
     public void update(float delta, float minCameraY, float maxCameraY) {
 
-        GameModel.getInstance().update(delta, minCameraY);
+        GameModel.getInstance().update(minCameraY);
 
         float frameTime = Math.min(delta, 0.25f);
         accumulator += frameTime;
