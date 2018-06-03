@@ -99,7 +99,9 @@ When you lose the game, you will be faced with this menu in order to return to t
 
 - This year's school calendar was an obstacle given the close distribution of tests and deliveries of various projects
 - Handling the JUnit tests in the LibGDX environment (more precisely using Box2D)
-- Attempt to add multiple design patterns (probably more than the ones requested by the project)
+- Understanding and implementing multiple design patterns
+- Problems developing and testing the network connection 
+- Difficult gameplay
 
 ###### Lessons learned
 
