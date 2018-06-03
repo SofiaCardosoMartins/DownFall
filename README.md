@@ -54,8 +54,9 @@ Test
 2. Set the Run Configuration to work with either Android or Desktop module, and android/assets folder either way.
 
 ## App
--On desktop, double-click on .jar file - download [here](https://github.com/SofiaCardosoMartins/DownFall/blob/master/final_delivery/executables/desktop-1.0.jar)
--On android, download [here](https://github.com/SofiaCardosoMartins/DownFall/blob/master/final_delivery/executables/android-release-unsigned.apk)
+- On desktop, double-click on .jar file - download [here](https://github.com/SofiaCardosoMartins/DownFall/blob/master/final_delivery/executables/desktop-1.0.jar)
+
+- On android, download [here](https://github.com/SofiaCardosoMartins/DownFall/blob/master/final_delivery/executables/android-release-unsigned.apk)
 
 ###### User Manual
 
