@@ -6,7 +6,7 @@ A game based on Java and LibGDX for the LPOO course
 
 ###### Package Diagram
 
-![alt text](https://github.com/SofiaCardosoMartins/DownFall/blob/master/final_delivery/uml/package_diagram/package_diagram.png)
+![alt text](https://github.com/SofiaCardosoMartins/DownFall/blob/master/intermediate_delivery/architecture/package_diagram/package_diagram.png)
 
 
 ![alt text](https://github.com/SofiaCardosoMartins/DownFall/blob/master/intermediate_delivery/architecture/package_diagram/packages_relations.png)
@@ -15,15 +15,15 @@ A game based on Java and LibGDX for the LPOO course
 
 Controller
 
-![alt text](https://github.com/SofiaCardosoMartins/DownFall/blob/master/final_delivery/uml/class_diagram/controller/picture.png)
+![alt text](https://github.com/SofiaCardosoMartins/DownFall/blob/master/final_delivery/controller/picture.png)
 
 Model
 
-![alt text](https://github.com/SofiaCardosoMartins/DownFall/blob/master/final_delivery/uml/class_diagram/model/picture.png)
+![alt text](https://github.com/SofiaCardosoMartins/DownFall/blob/master/final_delivery/model/picture.png)
 
 View
 
-![alt text](https://github.com/SofiaCardosoMartins/DownFall/blob/master/final_delivery/uml/class_diagram/view/picture.png)
+![alt text](https://github.com/SofiaCardosoMartins/DownFall/blob/master/final_delivery/view/picture.png)
 
 ###### Design Patterns
 
@@ -39,15 +39,6 @@ View
 - Selecionar modo 'Single Player' ou 'Multiplayer'
 - Visualizar instruções do jogo (como superar o jogo e comandos a usar)
 - Visualizar o jogo (que acompanha o movimento de um ou de dois jogadores), bem como indicadores do seu estado (terminado com ou sem sucesso, nível do jogo, entre outros)
-
-
-###### GUI mock-ups
-
-![alt text](https://github.com/SofiaCardosoMartins/DownFall/blob/master/intermediate_delivery/gui/mockups/%231_MainMenu.png)
-![alt text](https://github.com/SofiaCardosoMartins/DownFall/blob/master/intermediate_delivery/gui/mockups/%232_Instructions.png)
-![alt text](https://github.com/SofiaCardosoMartins/DownFall/blob/master/intermediate_delivery/gui/mockups/%233_Gameplay.png)
-![alt text](https://github.com/SofiaCardosoMartins/DownFall/blob/master/intermediate_delivery/gui/mockups/%234_Lost.png)
-![alt text](https://github.com/SofiaCardosoMartins/DownFall/blob/master/intermediate_delivery/gui/mockups/%235_Won.png)
 
 ## Test Design
 
@@ -76,3 +67,9 @@ View
   - Verificar a mudança de aspeto do jogo com a mudança de nível, bem como algum tipo de notificação indicativa
   - Verificar se são dadas notificações aquando da mudança de nível
   
+###### User Manual
+
+## Main menu
+You may choose to play this game in either single or multiple mode.
+
+![alt text](https://github.com/SofiaCardosoMartins/DownFall/blob/master/final_delivery/screenshots/MainMenu.png)
